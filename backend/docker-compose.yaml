@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+    web:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        volumes:
+            - .:/app
+        ports:
+            - 8080:8080
+            - 9229:9229
+        command: nodemon --inspect=0.0.0.0:9229 /app/server.js 3000
+        environment:
+            - DATABASE_URL=mongodb://mongodb:27017/classhire
+            - MONGO_USER=service
+            - MONGO_PASSWORD=secret
+            - SECRET=jwt-secret
+        depends_on:
+            - mongodb
+    mongodb:
+        image: mongo:latest
+        container_name: mongodb
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: secret
+            MONGO_INITDB_DATABASE: classhire
+        ports:
+            - 27017:27017
+        volumes:
+            - ./config/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
