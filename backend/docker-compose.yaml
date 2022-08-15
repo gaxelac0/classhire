@@ -10,12 +10,13 @@ services:
         ports:
             - 8080:8080
             - 9229:9229
-        command: nodemon --inspect=0.0.0.0:9229 /app/server.js 3000
+        command: nodemon --inspect=0.0.0.0:9229 ./bin/www.js
         environment:
             - DATABASE_URL=mongodb://mongodb:27017/classhire
             - MONGO_USER=service
             - MONGO_PASSWORD=secret
             - SECRET=jwt-secret
+            - PORT=8080
         depends_on:
             - mongodb
     mongodb:

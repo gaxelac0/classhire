@@ -19,10 +19,13 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 const NavBar = ({ user, handleLogout }) => {
 
   const bg = useColorModeValue("white", "gray.800");
+  const ib = useColorModeValue("gray.800", "inherit");
   const mobileNav = useDisclosure();
 
+  let welcome = user ? "Welcome to Classhire, "+user.name : "Welcome to Classhire!"
+
   return (
-    <React.Fragment>
+      <React.Fragment>
       <chakra.header
         bg={bg}
         w="full"
@@ -42,7 +45,7 @@ const NavBar = ({ user, handleLogout }) => {
               <VisuallyHidden>Classhire</VisuallyHidden>
             </chakra.a>
             <chakra.h1 fontSize="xl" fontWeight="medium" ml="2">
-              Classhire
+              {welcome}
             </chakra.h1>
           </Flex>
           <HStack display="flex" alignItems="center" spacing={1}>
@@ -66,7 +69,7 @@ const NavBar = ({ user, handleLogout }) => {
                 display={{ base: "flex", md: "none" }}
                 aria-label="Open menu"
                 fontSize="20px"
-                color={useColorModeValue("gray.800", "inherit")}
+                color={ib}
                 variant="ghost"
                 icon={<AiOutlineMenu />}
                 onClick={mobileNav.onOpen}
@@ -102,17 +105,15 @@ const NavBar = ({ user, handleLogout }) => {
                   Blog
                 </Button>
                 <Button w="full" variant="ghost">
-                  Log In
-                </Button>
-                <Button w="full" variant="ghost">
-                  Sign In
+                  Log Out
+                  onClick={handleLogout}
                 </Button>
               </VStack>
             </Box>
           </HStack>
         </Flex>
       </chakra.header>
-    </React.Fragment>
+    </React.Fragment> 
   )
 }
 
