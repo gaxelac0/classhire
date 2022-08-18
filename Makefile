@@ -15,4 +15,8 @@ mongoup:
 mongodown:
 	docker compose -f ./backend/docker-compose.yaml down --volumes
 	
-.PHONY: mongoc mongoup mongodown webup
+# Code
+code: 
+	cd ./backend && code . && cd ../frontend && code .
+	
+.PHONY: mongoc mongoup mongodown webup code
