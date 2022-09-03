@@ -2,7 +2,7 @@ import { useState, React } from "react";
 import {
   Flex,
   chakra,
-  HStack,
+  Stack,
   Box,
   Image,
   Slide,
@@ -23,16 +23,69 @@ const Landing = ({ user }) => {
   // rol seleccionado
   const [role, setRole] = useState({
     "selected": false,
-    "type": undefined,
+    "id": undefined,
     "footer": undefined
   })
 
+  const onClickImg = (id, footer_desc) => {
+    console.log(role.selected)
+    console.log(role.id)
+     if (!role.selected || role.id !== id) {
+      console.log("in")
+       
+        setRole({
+          "selected": true,
+          "id": id,
+          "footer_desc": footer_desc
+        });
+
+        if(id === "student") {
+          setSIO(1);
+          setPIO(0.4);
+        } else {
+          setSIO(0.4);
+          setPIO(1);
+        }
+        
+      } else {
+        console.log("out")
+       
+        setRole({
+          "selected": false,
+          "id": undefined,
+          "footer_desc": undefined
+        });
+
+        if(id === "student") {
+          setSIO(0.4);
+        } else {
+          setPIO(0.4);
+        }
+        
+      }
+  }
+
+  function Role({ id, footer_desc, img, stateOpacity, ...rest }) {
+    return (
+    <Box p={2} {...rest}>
+        <Image
+          src={img}
+          fit="contain"
+          bg="gray.100"
+          loading="lazy"
+          opacity={stateOpacity}
+          _hover={{ opacity: 1.0 }}
+          onClick={() => {onClickImg(id, footer_desc);}}
+        />
+      </Box>
+    )
+  }
 
   return (
     <>
-      <p>{'role.selected: ' + role.selected}</p>
+      {/* <p>{'role.selected: ' + role.selected}</p>
       <p>{'role.id: ' + role.id}</p>
-      <p>{'role.footer_desc: ' + role.footer_desc}</p>
+      <p>{'role.footer_desc: ' + role.footer_desc}</p> */}
       <Flex
         bg="#edf3f8"
         _dark={{
@@ -104,97 +157,22 @@ const Landing = ({ user }) => {
           </chakra.h2>
         </Box>
       </Flex>
-      <HStack>
+      <Stack direction={['column','row']}>
         {/* Estudiantes */}
-        <Box w='50%' h='20%'>
-          <Flex bg="brand.999">
-            <Image
-              src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-              alt="students"
-              fit="cover"
-              w="full"
-              h={{
-                base: 64,
-                md: "full",
-              }}
-              bg="gray.100"
-              loading="lazy"
-              opacity={studentImageOpacity}
-              _hover={{ opacity: 1.0 }}
-              onClick={() => {
-                console.log(role.selected)
-                console.log(role.id)
-                 if (!role.selected || role.id !== "student") {
-                  console.log("in")
-                   
-                    setRole({
-                      "selected": true,
-                      "id": "student",
-                      "footer_desc": "Estudiantes."
-                    });
-                    setSIO(1);
-                    setPIO(0.4);
-                  } else {
-                    console.log("out")
-                   
-                    setRole({
-                      "selected": false,
-                      "id": undefined,
-                      "footer_desc": undefined
-                    });
-                    setSIO(0.4);
-                  }
-                } 
-              }
-            />
-          </Flex>
-        </Box>
+        <Role
+        id='student'
+        footer_desc='Estudiantes'
+        img='https://images.unsplash.com/photo-1571260899304-425eee4c7efc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
+        stateOpacity={studentImageOpacity}
+        />
         {/* Profesores */}
-        <Box w='50%' h='20%'>
-          <Flex bg="brand.400">
-            <Image
-              id="profesor"
-              src="https://images.unsplash.com/photo-1511629091441-ee46146481b6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-              alt="teachers"
-              fit="cover"
-              w="full"
-              h={{
-                base: 64,
-                md: "full",
-              }}
-              bg="gray.100"
-              loading="lazy"
-              opacity={profesorImageOpacity}
-              _hover={{ opacity: 1.0 }}
-              onClick={() => {
-                console.log(role.selected)
-                console.log(role.id)
-                 if (!role.selected || role.id !== "profesor") {
-                  console.log("in")
-                    
-                    setRole({
-                      "selected": true,
-                      "id": "profesor",
-                      "footer_desc": "Profesor."
-                    });
-                    setSIO(0.4);
-                    setPIO(1);
-                  } else {
-                    console.log("out")
-                    
-                    setRole({
-                      "selected": false,
-                      "id": undefined,
-                      "footer_desc": undefined
-                    });
-                    setPIO(0.4);
-                  }
-                } 
-            }
-            />
-          </Flex>
-        </Box>
-      </HStack>
+        <Role
+        id='profesor'
+        footer_desc='Profesores'
+        img='https://images.unsplash.com/photo-1511629091441-ee46146481b6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80'
+        stateOpacity={profesorImageOpacity}
+        />
+      </Stack>
       <Slide direction='bottom' in={role.selected} style={{ zIndex: 10 }}>
         <Box
           p='40px'
@@ -209,7 +187,7 @@ const Landing = ({ user }) => {
           </Text>
           <Button colorScheme="white" variant="outline">
             <Link href="#">
-              Acceder
+              Acceder como {role.id === 'student' ? "Estudiante" : "Profesor"}
             </Link>
           </Button>
         </Box>
