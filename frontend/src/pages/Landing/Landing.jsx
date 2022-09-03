@@ -5,33 +5,34 @@ import {
   HStack,
   Box,
   Image,
-  Lorem,
   Slide,
-  useDisclosure
+  Button,
+  Text,
+  Link,
 } from "@chakra-ui/react";
 
 
 const Landing = ({ user }) => {
 
-  // const [message, setMessage] = useState([''])
-  // const updateMessage = msg => {
-  //   setMessage(msg)
-  // }
+  // opacidad img student
+  const [studentImageOpacity, setSIO] = useState(0.4)
 
-  // const handleSubmit = (selection) => {
-   
-  // }
+  // opacidad img profesor
+  const [profesorImageOpacity, setPIO] = useState(0.4)
 
- const [footer, setFooter] = useState([''])
-  const updateFooter = msg => {
-    setFooter(msg)
-  }
+  // rol seleccionado
+  const [role, setRole] = useState({
+    "selected": false,
+    "type": undefined,
+    "footer": undefined
+  })
 
-  
-  const { isOpen, onToggle } = useDisclosure()
 
   return (
     <>
+      <p>{'role.selected: ' + role.selected}</p>
+      <p>{'role.id: ' + role.id}</p>
+      <p>{'role.footer_desc: ' + role.footer_desc}</p>
       <Flex
         bg="#edf3f8"
         _dark={{
@@ -104,6 +105,7 @@ const Landing = ({ user }) => {
         </Box>
       </Flex>
       <HStack>
+        {/* Estudiantes */}
         <Box w='50%' h='20%'>
           <Flex bg="brand.999">
             <Image
@@ -117,15 +119,41 @@ const Landing = ({ user }) => {
               }}
               bg="gray.100"
               loading="lazy"
-              opacity={0.4}
+              opacity={studentImageOpacity}
               _hover={{ opacity: 1.0 }}
-              onClick={onToggle} 
+              onClick={() => {
+                console.log(role.selected)
+                console.log(role.id)
+                 if (!role.selected || role.id !== "student") {
+                  console.log("in")
+                   
+                    setRole({
+                      "selected": true,
+                      "id": "student",
+                      "footer_desc": "Estudiantes."
+                    });
+                    setSIO(1);
+                    setPIO(0.4);
+                  } else {
+                    console.log("out")
+                   
+                    setRole({
+                      "selected": false,
+                      "id": undefined,
+                      "footer_desc": undefined
+                    });
+                    setSIO(0.4);
+                  }
+                } 
+              }
             />
           </Flex>
         </Box>
+        {/* Profesores */}
         <Box w='50%' h='20%'>
           <Flex bg="brand.400">
             <Image
+              id="profesor"
               src="https://images.unsplash.com/photo-1511629091441-ee46146481b6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
               alt="teachers"
               fit="cover"
@@ -136,14 +164,38 @@ const Landing = ({ user }) => {
               }}
               bg="gray.100"
               loading="lazy"
-              opacity={0.4}
+              opacity={profesorImageOpacity}
               _hover={{ opacity: 1.0 }}
-              onClick={onToggle} 
+              onClick={() => {
+                console.log(role.selected)
+                console.log(role.id)
+                 if (!role.selected || role.id !== "profesor") {
+                  console.log("in")
+                    
+                    setRole({
+                      "selected": true,
+                      "id": "profesor",
+                      "footer_desc": "Profesor."
+                    });
+                    setSIO(0.4);
+                    setPIO(1);
+                  } else {
+                    console.log("out")
+                    
+                    setRole({
+                      "selected": false,
+                      "id": undefined,
+                      "footer_desc": undefined
+                    });
+                    setPIO(0.4);
+                  }
+                } 
+            }
             />
           </Flex>
         </Box>
       </HStack>
-      <Slide direction='bottom' in={isOpen} style={{ zIndex: 10 }}>
+      <Slide direction='bottom' in={role.selected} style={{ zIndex: 10 }}>
         <Box
           p='40px'
           color='white'
@@ -152,7 +204,14 @@ const Landing = ({ user }) => {
           rounded='md'
           shadow='md'
         >
-          {footer}
+          <Text>
+            {role.footer_desc}{"\n"}
+          </Text>
+          <Button colorScheme="white" variant="outline">
+            <Link href="#">
+              Acceder
+            </Link>
+          </Button>
         </Box>
       </Slide>
     </>
