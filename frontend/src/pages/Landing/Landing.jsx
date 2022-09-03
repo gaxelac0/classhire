@@ -70,14 +70,15 @@ const Landing = ({ user }) => {
     <Box p={2} {...rest}>
         <Image
           src={img}
-          fit="contain"
-          bg="gray.100"
+          margin="0px auto"
+          background-repeat="no-repeat"
+          background-size="cover"
           loading="lazy"
           opacity={stateOpacity}
           _hover={{ opacity: 1.0 }}
           onClick={() => {onClickImg(id, footer_desc);}}
         />
-      </Box>
+    </Box>
     )
   }
 
@@ -161,15 +162,15 @@ const Landing = ({ user }) => {
         {/* Estudiantes */}
         <Role
         id='student'
-        footer_desc='Estudiantes'
-        img='https://images.unsplash.com/photo-1571260899304-425eee4c7efc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
+        footer_desc='Sos un estudiante que busca clases particulares o en grupo de manera online. Vas a poder buscar clases filtrandolas por diversas propiedades y encontrar a tu profesor particular ideal!'
+        img='/img/student.jpg'
         stateOpacity={studentImageOpacity}
         />
         {/* Profesores */}
         <Role
         id='profesor'
-        footer_desc='Profesores'
-        img='https://images.unsplash.com/photo-1511629091441-ee46146481b6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80'
+        footer_desc='Sos un profesor que desea impartir clases individuales, grupales o seminarios de manera online, crea tus tutoriales, guias y centralizalos en un solo lugar!'
+        img='/img/profesor.jpg'
         stateOpacity={profesorImageOpacity}
         />
       </Stack>
@@ -186,7 +187,7 @@ const Landing = ({ user }) => {
             {role.footer_desc}{"\n"}
           </Text>
           <Button colorScheme="white" variant="outline">
-            <Link href="#">
+            <Link href="/principal">
               Acceder como {role.id === 'student' ? "Estudiante" : "Profesor"}
             </Link>
           </Button>
