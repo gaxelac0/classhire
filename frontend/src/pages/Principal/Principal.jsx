@@ -25,7 +25,6 @@ import { BsGearFill } from "react-icons/bs";
 import { FiMenu, FiSearch } from "react-icons/fi";
 import { HiCode, HiCollection } from "react-icons/hi";
 import { MdHome } from "react-icons/md";
-import { Logo } from "@choc-ui/logo";
 
 
 const Principal = ({ user, handleLogout }) => {
@@ -70,15 +69,15 @@ const Principal = ({ user, handleLogout }) => {
   const SidebarContent = (props) => (
     <Box
       as="nav"
-      pos="fixed"
-      top="0"
+      pos="absolute"
+      top="4.5em"
       left="0"
       zIndex="sticky"
       h="full"
       pb="10"
       overflowX="hidden"
       overflowY="auto"
-      bg="gray.600"
+      bg="red"
       borderColor="blackAlpha.300"
       borderRightWidth="1px"
       w="60"
@@ -162,8 +161,17 @@ const Principal = ({ user, handleLogout }) => {
 
         <Box as="main" p="4">
           {/* Add content here, remove div below  */}
-          <Box borderWidth="4px" borderStyle="dashed" rounded="md" h="96" />
-        </Box>
+          <Box borderWidth="4px" borderStyle="dashed" rounded="md" h="96">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sequi voluptate autem dolorem dolorum? Debitis, minus. Doloremque blanditiis eius, consequuntur illum hic quasi quo nulla tenetur corporis perferendis sint eveniet. lorem 
+            lorem rem Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quidem, et, similique maxime fuga nesciunt porro sint fugiat ipsa voluptatibus molestiae nam expedita iusto impedit eaque, blanditiis sapiente ea delectus. lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, incidunt rem! Minus facere recusandae quaerat odio rerum cumque in iste. Facilis consequatur quam ratione ut corrupti amet quibusdam molestias Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus sit placeat odio excepturi! Sequi quidem fugiat itaque laboriosam, adipisci ullam, tempora dolor enim eos facere mollitia aperiam iure non harum?
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, voluptate iusto. Iste omnis corrupti adipisci alias placeat rerum quae harum a officia. Doloribus nihil dolore, corrupti tempore nisi aspernatur cumque!
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae reiciendis quae veniam inventore quidem error explicabo voluptates, eius sit praesentium, eum dignissimos ad deleniti quas consequatur cumque omnis? Molestias, consequatur?
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non ex reiciendis aperiam laborum quisquam? Eius aut deserunt ullam nihil debitis. Obcaecati veniam aut tenetur dignissimos dolores maxime laudantium nobis praesentium.
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Labore dolor tenetur animi officia ducimus! Necessitatibus voluptatem repellendus maiores consequuntur quasi sed tempore perspiciatis! Praesentium illo quos ab minima minus odit!
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur in ab sint dignissimos quidem amet aut corrupti eos numquam eaque, dicta rem vel! Possimus aliquid non enim adipisci ipsum ducimus?
+            lorem lorem ipsum Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi, a voluptas! Recusandae debitis laborum voluptates expedita neque modi tempora, nam dolorum dignissimos magni ab pariatur illo alias! Beatae, voluptas corrupti.
+          </Box>
+         </Box>
       </Box>
     </Box>
   );

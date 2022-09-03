@@ -187,7 +187,7 @@ const Landing = ({ user }) => {
             {role.footer_desc}{"\n"}
           </Text>
           <Button colorScheme="white" variant="outline">
-            <Link href="/principal">
+            <Link href="/">
               Acceder como {role.id === 'student' ? "Estudiante" : "Profesor"}
             </Link>
           </Button>

@@ -13,7 +13,6 @@ import {
   CloseButton,
 } from "@chakra-ui/react";
 import { AiOutlineMenu } from "react-icons/ai";
-import { Logo } from "@choc-ui/logo";
 import { ArrowForwardIcon, SearchIcon } from "@chakra-ui/icons";
 
 const NavBar = ({ user, handleLogout }) => {
@@ -196,7 +195,7 @@ const NavBar = ({ user, handleLogout }) => {
     return <NotLoggedBurgerMenu />    
   }
 
-  let welcome = user ? "" : "Bienvenido a Classhire! 🤗"
+  let welcome = user ? "Classhire" : "Bienvenido 🤗"
 
   return (
       <React.Fragment>
@@ -206,11 +205,16 @@ const NavBar = ({ user, handleLogout }) => {
         px={{ base: 2, sm: 4 }}
         py={4}
         shadow="md"
+        position="-web-sticky"
+        position="sticky"
+        display="flex"
+        
       >
         <Flex alignItems="center" justifyContent="space-between" mx="auto">
           <Flex>
             <chakra.a href="/" title="Classhire Home Page" display="flex" alignItems="center">
-              <Logo />
+             {/* <Logo /> */}
+              Classhire
               <VisuallyHidden>Classhire</VisuallyHidden>
             </chakra.a>
             <chakra.h1 fontSize="xl" fontWeight="medium" ml="2">

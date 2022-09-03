@@ -25,7 +25,8 @@ const App = () => {
 
   return (
     <>
-      <NavBar user={user} handleLogout={handleLogout} />
+      <NavBar user={user} handleLogout={handleLogout} >
+      </NavBar>
       <Routes>
         <Route
           path="/signup"
@@ -35,7 +36,8 @@ const App = () => {
           path="/login"
           element={<Login handleSignupOrLogin={handleSignupOrLogin} />}
         />
-        <Route path="/landing" element={<Landing user={user} />} />
+        <Route path="/landing" element={<Landing user={user} />} 
+        />
         <Route
           path="/profiles"
           element={user ? <Profiles /> : <Navigate to="/login" />}
@@ -50,7 +52,8 @@ const App = () => {
             )
           }
         />
-        <Route path="/" element={<Principal user={user} />} />
+        <Route path="/" element={<Principal user={user} />} 
+        />
       </Routes>
     </>
   )
