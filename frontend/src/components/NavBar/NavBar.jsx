@@ -26,13 +26,13 @@ const NavBar = ({ user, handleLogout }) => {
   // email: { type: String, required: true, lowercase: true, unique: true },
   // password: {type: String, required: true},
   // profile: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
-  // roles: [], type: String
-  user = {
-    name:"Pepe Pistolero",
-    email:"pepe@outlook.com",
-    password:"123456",
-    roles: []
-  }
+  // roles: [], type: Stringroles
+  // user = {
+  //   name:"Pepe Pistolero",
+  //   email:"pepe@outlook.com",
+  //   password:"123456",
+  //   roles: []
+  // }
 
 
   function LoggedMenuItems(props) {
