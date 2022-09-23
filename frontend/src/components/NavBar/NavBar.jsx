@@ -205,7 +205,6 @@ const NavBar = ({ user, handleLogout }) => {
         px={{ base: 2, sm: 4 }}
         py={4}
         shadow="md"
-        position="-web-sticky"
         position="sticky"
         display="flex"
         
