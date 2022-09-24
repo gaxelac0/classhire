@@ -2,29 +2,30 @@ import React from "react"
 
 import {
   chakra,
-  Box,
   Flex,
   useColorModeValue,
   VisuallyHidden,
   HStack,
   Button,
   useDisclosure,
-  VStack,
   IconButton,
-  CloseButton,
+  Drawer,
+  DrawerContent,
+  DrawerOverlay,
   Link,
-  Menu, MenuButton, MenuList, MenuItem
 } from "@chakra-ui/react";
+import { FiMenu } from "react-icons/fi";
+import { ArrowForwardIcon, SearchIcon } from "@chakra-ui/icons";
 
-import { AiOutlineMenu } from "react-icons/ai";
-import { ArrowForwardIcon, SearchIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import SidebarContent from "../../components/SideBar/SideBar";
+
 
 
 const NavBar = ({ user, handleLogout }) => {
 
   const bg = useColorModeValue("white", "gray.800");
   const ib = useColorModeValue("gray.800", "inherit");
-  const mobileNav = useDisclosure();
+  const sidebar = useDisclosure();
 
   // DEMOFRONTEND
   // name: {type: String, required: true},
@@ -123,131 +124,6 @@ const NavBar = ({ user, handleLogout }) => {
   }
 
 
-  function LoggedBurgerMenu(props) {
-    return (
-      <Box display={{ base: "inline-flex", md: "none" }}>
-        <IconButton
-          display={{ base: "flex", md: "none" }}
-          aria-label="Open menu"
-          fontSize="20px"
-          color={ib}
-          variant="ghost"
-          icon={<AiOutlineMenu />}
-          onClick={mobileNav.onOpen}
-        />
-        <VStack
-          pos="absolute"
-          top={0}
-          left={0}
-          right={0}
-          display={mobileNav.isOpen ? "flex" : "none"}
-          flexDirection="column"
-          p={2}
-          pb={4}
-          m={2}
-          bg={bg}
-          spacing={3}
-          rounded="sm"
-          shadow="sm"
-        >
-          <CloseButton
-            aria-label="Close menu"
-            onClick={mobileNav.onClose}
-          />
-          <Button w="full" variant="ghost">
-            Menu 1 (CloseMenu)
-          </Button>
-          <Button w="full" variant="ghost">
-            Menu 2 (CloseMenu)
-          </Button>
-          <Button w="full" variant="ghost">
-            Menu 3 (CloseMenu)
-          </Button>
-          <Button
-            w="full"
-            variant="ghost"
-            onClick={handleLogout}
-          >
-            Log Out
-          </Button>
-        </VStack>
-     </Box>      
-    )
-  }
-
-  function NotLoggedBurgerMenu(props) {
-    return (
-      <Box display={{ base: "inline-flex", md: "none"}}>
-        <IconButton
-          display={{ base: "flex", md: "none" }}
-          aria-label="Open menu"
-          fontSize="20px"
-          color={ib}
-          variant="ghost"
-          icon={<AiOutlineMenu />}
-          onClick={mobileNav.onOpen}
-        />
-        <VStack
-          pos="absolute"
-          top={0}
-          left={0}
-          right={0}
-          display={mobileNav.isOpen ? "flex" : "none"}
-          flexDirection="column"
-          p={2}
-          pb={4}
-          m={2}
-          bg={bg}
-          spacing={3}
-          rounded="sm"
-          shadow="sm"
-        >
-          <CloseButton
-            aria-label="Close menu"
-            onClick={mobileNav.onClose}
-          />
-          <Button w="full" variant="ghost">
-          <Link href="/search">
-            Search
-          </Link>
-          </Button>
-
-          <Button w="full" variant="ghost">
-          <Link href="/clases">
-            Clases
-          </Link>
-        </Button>
-        <Button w="full" variant="ghost">
-          <Link href="/publicar">
-            Publicar
-          </Link>
-        </Button>
-
-        <Button w="full" variant="ghost">
-          <Link href="/login">
-            Log In
-          </Link>
-        </Button>
-
-        <Button w="full" variant="ghost">
-          <Link href="/landing">
-            Registrate
-          </Link>
-        </Button>
-        </VStack>
-     </Box>      
-    )
-  }
-
-
-  function BurgerMenu(props) {
-    const loggedIn = props.loggedIn;
-    if(loggedIn) {
-      return <LoggedBurgerMenu />
-    }
-    return <NotLoggedBurgerMenu />    
-  }
-
   let welcome = user ? "Classhire" : "Bienvenido 🤗"
 
   return (
@@ -260,31 +136,48 @@ const NavBar = ({ user, handleLogout }) => {
         shadow="md"
         position="sticky"
         display="flex"
-        
-      >
-        <Flex alignItems="center" justifyContent="space-between" mx="auto">
-          <Flex>
-            <chakra.a href="/" title="Classhire Home Page" display="flex" alignItems="center">
-             {/* <Logo /> */}
-              Classhire
-              <VisuallyHidden>Classhire</VisuallyHidden>
-            </chakra.a>
-            <chakra.h1 fontSize="xl" fontWeight="medium" ml="2">
-              {welcome}
-            </chakra.h1>
-          </Flex>
-          <HStack display="flex" alignItems="center" spacing={1}>
-            <MenuItems 
-              loggedIn={user}
-            />
-            <BurgerMenu
-              loggedIn={user}
-            />
-          </HStack>
-        </Flex>
-      </chakra.header>
-    </React.Fragment> 
-  )
-}
+        >
+          <IconButton
+            alt="Acceso Rapido"
+            aria-label="Menu"
+            onClick={sidebar.onOpen}
+            icon={<FiMenu />}
+          />
+          <Flex alignItems="center" justifyContent="space-between" mx="auto">
+            <Flex>
 
+              <chakra.a href="/" title="Classhire Home Page" display="flex" alignItems="center">
+               {/* <Logo /> */}
+                Classhire
+                <VisuallyHidden>Classhire</VisuallyHidden>
+              </chakra.a>
+              <chakra.h1 fontSize="xl" fontWeight="medium" ml="2">
+                {welcome}
+              </chakra.h1>
+            </Flex>
+            <HStack display="flex" alignItems="center" spacing={1}>
+              <MenuItems 
+                loggedIn={user}
+              />
+            </HStack>
+          </Flex>
+        </chakra.header>
+        <chakra.body
+
+        >
+          <Drawer
+            isOpen={sidebar.isOpen}
+            onClose={sidebar.onClose}
+            placement="left"
+          >
+            <DrawerOverlay />
+            <DrawerContent>
+              <SidebarContent w="full" borderRight="none" />
+            </DrawerContent>
+          </Drawer>
+        </chakra.body>
+      </React.Fragment> 
+    )
+  }
+  
 export default NavBar

@@ -84,51 +84,6 @@ const Search = ({ user, handleLogout }) => {
       bgGradient='linear(to-b, #FFFFFF, #D4D4D4 )'
       minH="100vh"
     >
-      <SidebarContent
-        display={{
-          base: "none",
-          md: "unset",
-        }}
-      />
-      <Drawer
-        isOpen={sidebar.isOpen}
-        onClose={sidebar.onClose}
-        placement="left"
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <SidebarContent w="full" borderRight="none" />
-        </DrawerContent>
-      </Drawer>
-      <Box
-        ml={{
-          base: 0,
-          md: 60,
-        }}
-        transition=".3s ease"
-      >
-        {/* <Flex
-          as="header"
-          align="center"
-          justify="space-between"
-          w="full"
-          px="4"
-          //bg="gray.700"
-          borderBottomWidth="1px"
-          //borderColor="blackAlpha.300"
-          h="14"
-        >
-          <IconButton
-            aria-label="Menu"
-            display={{
-              base: "inline-flex",
-              md: "none",
-            }}
-            onClick={sidebar.onOpen}
-            icon={<FiMenu />}
-            size="sm"
-          />
-        </Flex> */}
 
         <FilterForm/>
 
@@ -148,7 +103,7 @@ const Search = ({ user, handleLogout }) => {
 
         <Pagination/>
       </Box>
-    </Box>
+
   );
 };
 

@@ -23,7 +23,8 @@ const Publicacion = ({ user, handleLogout }) => {
   const sidebar = useDisclosure();
 
   let teacher = {
-    name:"Mario Hernandez"
+    name:"Mario Hernandez",
+    description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti non necessitatibus voluptatem soluta asperiores laboriosam ratione illum, sunt odit fugit quis dolorum dolore nobis recusandae facere, sint doloribus eius obcaecati!"
   }
 
   return (

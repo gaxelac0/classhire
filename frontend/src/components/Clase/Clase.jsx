@@ -28,8 +28,8 @@ const Clase = ({ user, handleLogout, teacher, title }) => {
         py={{ base: 18, md: 24 }}>
         <Flex>
           
-          <Flex>
-            <VStack>
+        <Flex>
+          <VStack spacing={{ base: 4, sm: 6 }}>
             <Image
               rounded={'md'}
               alt={'product image'}
@@ -37,8 +37,19 @@ const Clase = ({ user, handleLogout, teacher, title }) => {
               fit={'cover'}
               align={'center'}
               w={'100%'}
-              h={{ base: '100%', sm: '400px', lg: '500px' }}
+              h={{ base: '150%', sm: '200px', lg: '250px' }}
             />
+            <StackDivider
+              borderColor={useColorModeValue('gray.200', 'gray.600')}
+            />
+            <Text
+              fontSize={{ base: '16px', lg: '18px' }}
+              color={useColorModeValue('yellow.500', 'yellow.300')}
+              fontWeight={'500'}
+              textTransform={'uppercase'}
+              mb={'4'}>
+              Sobre el Profe
+            </Text>
             <Image
               rounded={'md'}
               alt={'teacher photo'}
@@ -46,13 +57,26 @@ const Clase = ({ user, handleLogout, teacher, title }) => {
               fit={'cover'}
               align={'center'}
               w={'100%'}
-              h={{ base: '100%', sm: '200px', lg: '250px' }}
+              h={{ base: '50%', sm: '100px', lg: '125px' }}
             />
             <Heading as='h3'>
               {teacher.name}
             </Heading>
-            </VStack>
-          </Flex>
+            <StackDivider
+              borderColor={useColorModeValue('gray.200', 'gray.600')}
+            />
+            <Text
+              fontSize={{ base: '12px', lg: '16px' }}
+              color={useColorModeValue('yellow.500', 'yellow.300')}
+              fontWeight={'250'}
+              mb={'4'}>
+              {teacher.description}
+            </Text>
+          </VStack>
+        </Flex>
+        <StackDivider
+          borderColor={useColorModeValue('gray.200', 'gray.600')}
+        />
         </Flex>
         <Stack spacing={{ base: 6, md: 10 }}>
           <Box as={'header'}>
@@ -123,38 +147,6 @@ const Clase = ({ user, handleLogout, teacher, title }) => {
                 fontWeight={'500'}
                 textTransform={'uppercase'}
                 mb={'4'}>
-                Sobre el profesor
-              </Text>
-
-              <List spacing={2}>
-
-                <ListItem>
-                  <Text as={'span'} fontWeight={'bold'}>
-                    Cronograma:
-                  </Text>{' '}
-                  Flexible
-                </ListItem>
-                <ListItem>
-                  <Text as={'span'} fontWeight={'bold'}>
-                    Clases Incluidas:
-                  </Text>{' '}
-                  6
-                </ListItem>
-                <ListItem>
-                  <Text as={'span'} fontWeight={'bold'}>
-                    Idioma:
-                  </Text>{' '}
-                  Espanol
-                </ListItem>
-              </List>
-            </Box>
-            <Box>
-              <Text
-                fontSize={{ base: '16px', lg: '18px' }}
-                color={useColorModeValue('yellow.500', 'yellow.300')}
-                fontWeight={'500'}
-                textTransform={'uppercase'}
-                mb={'4'}>
                 Sobre este curso
               </Text>
 
@@ -207,7 +199,7 @@ const Clase = ({ user, handleLogout, teacher, title }) => {
             <MdCall />
             <Text>Contacto garantizado en menos de 48 horas</Text>
           </Stack>
-        </Stack>``
+        </Stack>
       </SimpleGrid>
     </Container>
   );

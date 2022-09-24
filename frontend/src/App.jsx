@@ -3,13 +3,15 @@ import { Routes, Route, useNavigate, Navigate } from 'react-router-dom'
 import NavBar from './components/NavBar/NavBar'
 import Signup from './pages/Signup/Signup'
 import Login from './pages/Login/Login'
-import Landing from './pages/Landing/Landing'
+import Onboard from './pages/Onboard/Onboard'
 import Search from './pages/Search/Search'
 import Publicacion from './pages/Publicacion/Publicacion'
 import Profiles from './pages/Profiles/Profiles'
 import Principal from './pages/Principal/Principal'
 import ChangePassword from './pages/ChangePassword/ChangePassword'
 import * as authService from './services/authService'
+import CompleteOnboardStudentFrm from './pages/Onboard/CompleteOnboardStudentFrm'
+import CompleteOnboardTeacherFrm from './pages/Onboard/CompleteOnboardTeacherFrm'
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser())
@@ -38,12 +40,16 @@ const App = () => {
           path="/login"
           element={<Login handleSignupOrLogin={handleSignupOrLogin} />}
         />
-        <Route path="/landing" element={<Landing user={user} />} 
+        <Route path="/onboard" element={<Onboard user={user} />} 
         />
+        <Route path="/complete-onboard/student" element={<CompleteOnboardStudentFrm user={user} />} 
+        />
+        <Route path="/complete-onboard/profesor" element={<CompleteOnboardTeacherFrm user={user} />} 
+        /> 
         <Route path="/search" element={<Search user={user} />} 
         /> 
         <Route path="/publicacion" element={<Publicacion user={user} />} 
-        /> 
+        />
         <Route
           path="/profiles"
           element={user ? <Profiles /> : <Navigate to="/login" />}
