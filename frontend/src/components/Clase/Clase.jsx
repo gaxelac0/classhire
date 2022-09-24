@@ -1,6 +1,5 @@
 import {
   Box,
-  chakra,
   Container,
   Stack,
   Text,
@@ -12,12 +11,10 @@ import {
   SimpleGrid,
   StackDivider,
   useColorModeValue,
-  VisuallyHidden,
   List,
   ListItem,
 } from '@chakra-ui/react';
-import { FaChalkboardTeacher, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
-import { MdAccessible, MdAddChart, MdAddShoppingCart, MdCall, MdCallReceived, MdLocalActivity, MdLocalShipping } from 'react-icons/md';
+import { MdCall } from 'react-icons/md';
 
 const Clase = ({ user, handleLogout, teacher, title }) => {
   return (

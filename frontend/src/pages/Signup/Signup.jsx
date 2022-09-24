@@ -1,23 +1,6 @@
 import { useState } from "react";
 import { Link as LinkRoute, useNavigate } from 'react-router-dom'
 import * as authService from '../../services/authService'
-import {
-  Flex,
-  Heading,
-  Input,
-  Button,
-  InputGroup,
-  Stack,
-  InputLeftElement,
-  chakra,
-  Box,
-  Link,
-  Avatar,
-  FormControl,
-  FormHelperText,
-  InputRightElement
-} from "@chakra-ui/react";
-import { FaUserAlt, FaLock } from "react-icons/fa";
 
 import styles from './Signup.module.css'
 

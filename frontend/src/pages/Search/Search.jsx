@@ -3,7 +3,6 @@ import {
   Box,
   Divider
 } from "@chakra-ui/react";
-import { FiMenu } from "react-icons/fi";
 
 import ClaseCard from "../../components/ClaseCard/ClaseCard";
 import FilterForm from "../../components/FilterForm/FilterForm";

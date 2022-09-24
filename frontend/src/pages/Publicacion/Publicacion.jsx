@@ -1,24 +1,13 @@
 import { React } from "react";
 import {
   Box,
-  Drawer,
-  DrawerContent,
-  DrawerOverlay,
   Flex,
-  IconButton,
-  useDisclosure,
-  chakra,
-  Link,
-  Image
 } from "@chakra-ui/react";
-import { FiMenu } from "react-icons/fi";
 import Clase from "../../components/Clase/Clase";
 
 
 
 const Publicacion = ({ user, handleLogout }) => {
-
-  const sidebar = useDisclosure();
 
   let teacher = {
     name:"Mario Hernandez",

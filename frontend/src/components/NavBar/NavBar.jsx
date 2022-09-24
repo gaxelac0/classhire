@@ -24,7 +24,6 @@ import SidebarContent from "../../components/SideBar/SideBar";
 const NavBar = ({ user, handleLogout }) => {
 
   const bg = useColorModeValue("white", "gray.800");
-  const ib = useColorModeValue("gray.800", "inherit");
   const sidebar = useDisclosure();
 
   function LoggedMenuItems(props) {
