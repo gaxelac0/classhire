@@ -19,8 +19,8 @@ const FilterForm = () => {
       width="full"
       alignItems="center"
       justifyContent="center"
-      px={1}
-      py={1}
+      px={2}
+      py={2}
       >
         <chakra.form
           method="POST"
@@ -77,7 +77,7 @@ const FilterForm = () => {
 
               <FormControl as={GridItem} colSpan={[6, 3]}>
                 <FormLabel
-                  htmlFor="country"
+                  //htmlFor="Materia"
                   fontSize="sm"
                   fontWeight="md"
                   color="gray.700"
@@ -85,13 +85,14 @@ const FilterForm = () => {
                     color: "gray.50",
                   }}
                 >
-                  Country / Region
+                  Materia
                 </FormLabel>
+
                 <Select
-                  id="country"
+                  id="Materia"
                   name="country"
                   autoComplete="country"
-                  placeholder="Select option"
+                  placeholder="Seleccionar Opción"
                   mt={1}
                   focusBorderColor="brand.400"
                   shadow="sm"
@@ -99,15 +100,15 @@ const FilterForm = () => {
                   w="full"
                   rounded="md"
                 >
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
+                  <option>Matemática</option>
+                  <option>Química</option>
+                  <option>Física</option>
                 </Select>
               </FormControl>
 
               <FormControl as={GridItem} colSpan={[6, 3]}>
                 <FormLabel
-                  htmlFor="country"
+                  //htmlFor="country"
                   fontSize="sm"
                   fontWeight="md"
                   color="gray.700"
@@ -115,13 +116,13 @@ const FilterForm = () => {
                     color: "gray.50",
                   }}
                 >
-                  Country / Region
+                  Tipo de clase
                 </FormLabel>
                 <Select
-                  id="country"
-                  name="country"
-                  autoComplete="country"
-                  placeholder="Select option"
+                  id="TipoClase"
+                  //name="country"
+                  //autoComplete="country"
+                  placeholder="Seleccionar Opción"
                   mt={1}
                   focusBorderColor="brand.400"
                   shadow="sm"
@@ -129,16 +130,15 @@ const FilterForm = () => {
                   w="full"
                   rounded="md"
                 >
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
+                  <option>Individual</option>
+                  <option>Grupal</option>
                 </Select>
               </FormControl>
 
 
               <FormControl as={GridItem} colSpan={[6, 3]}>
                 <FormLabel
-                  htmlFor="country"
+                  //htmlFor="Frecuencia"
                   fontSize="sm"
                   fontWeight="md"
                   color="gray.700"
@@ -146,13 +146,13 @@ const FilterForm = () => {
                     color: "gray.50",
                   }}
                 >
-                  Country / Region
+                  Frecuencia
                 </FormLabel>
                 <Select
-                  id="country"
-                  name="country"
-                  autoComplete="country"
-                  placeholder="Select option"
+                  id="Frecuencia"
+                  //name="country"
+                  //autoComplete="country"
+                  placeholder="Seleccionar Opción"
                   mt={1}
                   focusBorderColor="brand.400"
                   shadow="sm"
@@ -160,15 +160,15 @@ const FilterForm = () => {
                   w="full"
                   rounded="md"
                 >
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
+                  <option>Única</option>
+                  <option>Semanal</option>
+                  <option>Mensual</option>
                 </Select>
               </FormControl>
 
               <FormControl as={GridItem} colSpan={[6, 3]}>
                 <FormLabel
-                  htmlFor="country"
+                  //htmlFor="country"
                   fontSize="sm"
                   fontWeight="md"
                   color="gray.700"
@@ -176,13 +176,13 @@ const FilterForm = () => {
                     color: "gray.50",
                   }}
                 >
-                  Country / Region
+                  Calificación
                 </FormLabel>
                 <Select
                   id="country"
-                  name="country"
-                  autoComplete="country"
-                  placeholder="Select option"
+                  //name="country"
+                  //autoComplete="country"
+                  placeholder="Seleccionar Opción"
                   mt={1}
                   focusBorderColor="brand.400"
                   shadow="sm"
@@ -190,15 +190,17 @@ const FilterForm = () => {
                   w="full"
                   rounded="md"
                 >
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
                 </Select>
               </FormControl>
-
-
             </SimpleGrid>
           </Stack>
+          
+          
           <Box
             px={{
               base: 4,
@@ -206,19 +208,22 @@ const FilterForm = () => {
             }}
             py={3}
             bg="gray.50"
-            _dark={{
-              bg: "#121212",
-            }}
+
             textAlign="right"
             maxW="max"
           >
             <Button
-              type="submit"
-              colorScheme="teal"
+              //Por ahora que no haga nada
+              //type="submit"
+              //colorScheme="teal"
               _focus={{
                 shadow: "",
               }}
               fontWeight="md"
+              bgGradient='linear(to-r, teal.500, teal.400)'
+              _hover={{
+                bgGradient: 'linear(to-r, teal.600, teal.500)',
+              }}
             >
               Save
             </Button>
@@ -229,4 +234,4 @@ const FilterForm = () => {
   )
 }
 
-  export default FilterForm
+export default FilterForm

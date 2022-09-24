@@ -10,6 +10,7 @@ import {
   useDisclosure,
   List, 
   ListItem,
+  Divider
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 
@@ -26,9 +27,6 @@ const Search = ({ user, handleLogout }) => {
     const PagButton = (props) => {
       const activeStyle = {
         bg: "brand.600",
-        _dark: {
-          bg: "brand.500",
-        },
         color: "white",
       };
       return (
@@ -37,14 +35,15 @@ const Search = ({ user, handleLogout }) => {
           px={4}
           py={2}
           rounded="md"
-          bg="white"
-          color="gray.700"
-          _dark={{
-            color: "white",
-            bg: "gray.800",
+          //bg="grey"
+          //color="gray.700"
+          bgGradient='linear(to-r, teal.500, teal.400)'
+          _hover={{
+            bgGradient: 'linear(to-r, #808080, #A4A4A4)',
           }}
+          
           opacity={props.disabled && 0.6}
-          _hover={!props.disabled && activeStyle}
+          //_hover={!props.disabled && activeStyle}
           cursor={props.disabled && "not-allowed"}
           {...(props.active && activeStyle)}
         >
@@ -55,10 +54,10 @@ const Search = ({ user, handleLogout }) => {
   
     return (
       <Flex
-        bg="#edf3f8"
-        _dark={{
-          bg: "#3e3e3e",
-        }}
+        bg="#D4D4D4"
+        // _dark={{
+        //   bg: "#3e3e3e",
+        // }}
         p={50}
         w="full"
         alignItems="center"
@@ -78,12 +77,11 @@ const Search = ({ user, handleLogout }) => {
   };
 
   return (
+    //Box que contiene toda la pagina Seach
     <Box
       as="section"
-      bg="gray.700"
-      _dark={{
-        bg: "gray.700",
-      }}
+      //bg="gray.200"
+      bgGradient='linear(to-b, #FFFFFF, #D4D4D4 )'
       minH="100vh"
     >
       <SidebarContent
@@ -109,18 +107,15 @@ const Search = ({ user, handleLogout }) => {
         }}
         transition=".3s ease"
       >
-        <Flex
+        {/* <Flex
           as="header"
           align="center"
           justify="space-between"
           w="full"
           px="4"
-          bg="gray.700"
-          _dark={{
-            bg: "gray.800",
-          }}
+          //bg="gray.700"
           borderBottomWidth="1px"
-          borderColor="blackAlpha.300"
+          //borderColor="blackAlpha.300"
           h="14"
         >
           <IconButton
@@ -133,23 +128,24 @@ const Search = ({ user, handleLogout }) => {
             icon={<FiMenu />}
             size="sm"
           />
-        </Flex>
+        </Flex> */}
+
         <FilterForm/>
-        <List>
-          <ListItem>
-            <ClaseCard/>
-          </ListItem>
-          <ListItem>
-            <ClaseCard/>
-          </ListItem>
-          <ListItem>
-            <ClaseCard/>
-          </ListItem>
-          {/* You can also use custom icons from react-icons */}
-          <ListItem>
-            <ClaseCard/>
-          </ListItem>
-        </List>
+
+        <Divider h="5px" />
+
+        <ClaseCard/>
+
+        <Divider h="15px" />
+
+        <ClaseCard/>
+
+        <Divider h="15px" />
+
+        <ClaseCard/>
+
+        <Divider h="15px" />
+
         <Pagination/>
       </Box>
     </Box>

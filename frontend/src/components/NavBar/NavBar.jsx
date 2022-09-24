@@ -1,4 +1,5 @@
 import React from "react"
+
 import {
   chakra,
   Box,
@@ -11,9 +12,13 @@ import {
   VStack,
   IconButton,
   CloseButton,
+  Link,
+  Menu, MenuButton, MenuList, MenuItem
 } from "@chakra-ui/react";
+
 import { AiOutlineMenu } from "react-icons/ai";
-import { ArrowForwardIcon, SearchIcon } from "@chakra-ui/icons";
+import { ArrowForwardIcon, SearchIcon, ChevronDownIcon } from "@chakra-ui/icons";
+
 
 const NavBar = ({ user, handleLogout }) => {
 
@@ -63,11 +68,47 @@ const NavBar = ({ user, handleLogout }) => {
         color="brand.500"
         display={{ base: "none", md: "inline-flex" }}
       >
-        <Button colorScheme="teal" variant="ghost">Features</Button>
-        <Button colorScheme="teal" variant="ghost">Precio</Button>
-        <Button colorScheme="teal" variant="ghost">Blog</Button>
-        <Button colorScheme="teal" variant="outline">Log In</Button>
-        <Button colorScheme="teal" rightIcon={<ArrowForwardIcon />} variant="solid">Registrate</Button>
+        <Button colorScheme="teal" variant="ghost">
+          <Link href="/search">
+            Search
+          </Link>
+        </Button>
+        <Button colorScheme="teal" variant="ghost">
+          <Link href="/clases">
+            Clases
+          </Link>
+        </Button>
+        <Button colorScheme="teal" variant="ghost">
+          <Link href="/publicar">
+            Publicar
+          </Link>
+        </Button>
+
+        {/* Entiendo que hay opcion de PERFIL si no inicio sesion */}
+
+        {/* <Button colorScheme="teal" variant="ghost">
+          <Link href="/profiles">
+            Perfil
+          </Link>
+        </Button> */}
+
+        {/* <Button colorScheme="teal" variant="outline">Log In</Button> */}
+
+        <Button colorScheme="teal" variant="outline">
+          <Link href="/login">
+            Log In
+          </Link>
+        </Button>
+
+        {/* El Registro lo mando a la pagina de landing donde elige que tipo de registro es */}
+        <Button colorScheme="teal" rightIcon={<ArrowForwardIcon />} variant="solid">
+          <Link href="/landing">
+            Registrate
+          </Link>
+        </Button>
+        {/* <Button colorScheme="teal" rightIcon={<ArrowForwardIcon />} variant="solid">Registrate</Button> */}
+
+
       </HStack>
     </>
     )
@@ -136,7 +177,7 @@ const NavBar = ({ user, handleLogout }) => {
 
   function NotLoggedBurgerMenu(props) {
     return (
-      <Box display={{ base: "inline-flex", md: "none" }}>
+      <Box display={{ base: "inline-flex", md: "none"}}>
         <IconButton
           display={{ base: "flex", md: "none" }}
           aria-label="Open menu"
@@ -166,21 +207,33 @@ const NavBar = ({ user, handleLogout }) => {
             onClick={mobileNav.onClose}
           />
           <Button w="full" variant="ghost">
-            Menu 1 (CloseMenu)
+          <Link href="/search">
+            Search
+          </Link>
           </Button>
+
           <Button w="full" variant="ghost">
-            Menu 2 (CloseMenu)
-          </Button>
-          <Button w="full" variant="ghost">
-            Menu 3 (CloseMenu)
-          </Button>
-          <Button
-            w="full"
-            variant="ghost"
-            onClick={handleLogout}
-          >
-            Sign In
-          </Button>
+          <Link href="/clases">
+            Clases
+          </Link>
+        </Button>
+        <Button w="full" variant="ghost">
+          <Link href="/publicar">
+            Publicar
+          </Link>
+        </Button>
+
+        <Button w="full" variant="ghost">
+          <Link href="/login">
+            Log In
+          </Link>
+        </Button>
+
+        <Button w="full" variant="ghost">
+          <Link href="/landing">
+            Registrate
+          </Link>
+        </Button>
         </VStack>
      </Box>      
     )

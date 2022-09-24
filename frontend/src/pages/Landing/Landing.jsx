@@ -120,18 +120,15 @@ const Landing = ({ user }) => {
         >
           <chakra.h1
             fontSize={{
-              base: "3xl",
-              sm: "3xl",
+              base: "2xl",
+              sm: "2xl",
             }}
-            fontWeight="extrabold"
+            fontWeight="bold"
             letterSpacing="tight"
             lineHeight="shorter"
             color="gray.900"
-            _dark={{
-              color: "gray.100",
-            }}
           >
-            <chakra.span display="block">Looks like it's your first time</chakra.span>
+            <chakra.span display="block">Bienvenido a Classhire</chakra.span>
           </chakra.h1>
           <chakra.h2
             fontSize={{
@@ -142,9 +139,6 @@ const Landing = ({ user }) => {
             letterSpacing="tight"
             lineHeight="shorter"
             color="gray.900"
-            _dark={{
-              color: "gray.100",
-            }}
           >
             <chakra.span
               display="block"
@@ -153,7 +147,7 @@ const Landing = ({ user }) => {
                 color: "gray.500",
               }}
             >
-              Select your role and start today.
+              Seleccione un rol y comience hoy
             </chakra.span>
           </chakra.h2>
         </Box>

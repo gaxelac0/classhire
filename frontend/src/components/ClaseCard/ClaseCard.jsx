@@ -5,14 +5,19 @@ import {
   Image,
   Link,
   Flex,
+  Text,
+  HStack,
+  Tag,
+  TagLabel,
+  TagCloseButton
 } from "@chakra-ui/react";
+
 
 
   const ClaseCard = () => {
     return (
       <>
       <Flex
-  
       width="full"
       alignItems="center"
       justifyContent="center"
@@ -25,39 +30,36 @@ import {
         rounded="lg"
         shadow="lg"
         bg="white"
-        _dark={{
-          bg: "gray.800",
-        }}
         maxW="max"
       >
         <Flex justifyContent="space-between" alignItems="center">
           <chakra.span
             fontSize="sm"
             color="gray.600"
-            _dark={{
-              color: "gray.400",
-            }}
           >
-            Mar 10, 2019
+            Mar 10 de Octubre, 2022
           </chakra.span>
           <Link
+            href="/ver-clase"
             px={3}
             py={1}
-            bg="gray.600"
-            color="gray.100"
             fontSize="sm"
             fontWeight="700"
             rounded="md"
+            bgGradient='linear(to-r, teal.500, teal.400)'
             _hover={{
-              bg: "gray.500",
+              bgGradient: 'linear(to-r, teal.600, teal.500)',
             }}
           >
-            Design
+            Entrar
           </Link>
         </Flex>
 
         <Box mt={2}>
-          <Link
+          <Text fontSize={30} as="b">
+            Análisis Matemático
+          </Text>
+          {/* <Link
             fontSize="2xl"
             color="gray.700"
             _dark={{
@@ -72,8 +74,8 @@ import {
               textDecor: "underline",
             }}
           >
-            Accessibility tools for designers and developers
-          </Link>
+            Matemática avanzada
+          </Link> */}
           <chakra.p
             mt={2}
             color="gray.600"
@@ -81,26 +83,74 @@ import {
               color: "gray.300",
             }}
           >
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora
-            expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos
-            enim reprehenderit nisi, accusamus delectus nihil quis facere in modi
-            ratione libero!
+            Aborda temas como las derivadas, las integrales, los límites, las series y diversos tipos de funciones complejas. 
+            El análisis matemático tiene como fin resolver cálculos complejos a través de la abstracción. 
+            Para ello, se vale de herramientas como las funciones.
           </chakra.p>
         </Box>
 
-        <Flex justifyContent="space-between" alignItems="center" mt={4}>
-          <Link
-            to="/ver-clase"
-            color="brand.600"
-            _dark={{
-              color: "brand.400",
-            }}
-            _hover={{
-              textDecor: "underline",
-            }}
-          >
-            Read more
-          </Link>
+        <Flex justifyContent="space-between" alignItems="center" mt={5}>
+
+          {/* <Text fontSize={18}>
+            Calificación:{" "}
+              <Link
+              //href="/ver-clase"
+              color="brand.600"
+              _hover={{
+                textDecor: "underline",
+              }}
+            >
+              4
+            </Link>
+          </Text> */}
+          
+          <HStack spacing={2}>
+
+              <Tag
+                size="sm"
+                key="sm"
+                borderRadius='full'
+                variant='solid'
+                colorScheme='green'
+              >
+                <TagLabel>Matemática</TagLabel>
+                <TagCloseButton />
+              </Tag>
+
+              <Tag
+                size="sm"
+                key="sm"
+                borderRadius='full'
+                variant='solid'
+                colorScheme='green'
+              >
+                <TagLabel>Individual</TagLabel>
+                <TagCloseButton />
+              </Tag>
+
+              <Tag
+                size="sm"
+                key="sm"
+                borderRadius='full'
+                variant='solid'
+                colorScheme='green'
+              >
+                <TagLabel>Semanal</TagLabel>
+                <TagCloseButton />
+              </Tag>
+
+              <Tag
+                size="sm"
+                key="sm"
+                borderRadius='full'
+                variant='solid'
+                colorScheme='green'
+              >
+                <TagLabel>4</TagLabel>
+                <TagCloseButton />
+              </Tag>
+
+          </HStack>
 
           <Flex alignItems="center">
             <Image
@@ -113,8 +163,8 @@ import {
                 base: "none",
                 sm: "block",
               }}
-              src="https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=40&q=80"
-              alt="avatar"
+              src="https://s03.s3c.es/imag/_v0/770x420/0/d/f/profesor-pizarra-dreamstime.jpg"
+              alt="imag"
             />
             <Link
               color="gray.700"
@@ -124,12 +174,12 @@ import {
               fontWeight="700"
               cursor="pointer"
             >
-              Khatab wedaa
+              Joe Fatheree
             </Link>
           </Flex>
         </Flex>
       </Box>
-    </Flex>;
+    </Flex>
     </>
     )
   }
