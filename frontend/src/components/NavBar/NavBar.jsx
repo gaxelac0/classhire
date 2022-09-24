@@ -37,9 +37,15 @@ const NavBar = ({ user, handleLogout }) => {
               display={{ base: "none", md: "inline-flex" }}
       >
         <Button colorScheme="teal" variant="ghost">Profesores</Button>
-        <Button colorScheme="teal" variant="ghost">Clases</Button>
-        <Button colorScheme="teal" variant="ghost">Perfil</Button>
-        <Button colorScheme="teal" leftIcon={<SearchIcon />} variant="outline">Search</Button>
+        <Button colorScheme="teal" variant="ghost">Mis Clases</Button>
+        
+        <Link href="/profile">
+          <Button colorScheme="teal" variant="ghost">Perfil</Button>
+        </Link>
+        <Link href="/search">
+          <Button colorScheme="teal" leftIcon={<SearchIcon />} variant="outline">Buscar Clases</Button>
+        </Link>
+        
         <Button colorScheme="teal" rightIcon={<ArrowForwardIcon />} variant="ghost" onClick={handleLogout}>Log Out</Button>
       </HStack>
     </>

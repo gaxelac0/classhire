@@ -186,15 +186,15 @@ const CompleteOnboardStudentFrm = ({ user, handleLogout }) => {
                       </InputGroup>
                       </FormControl>
                       <FormControl id="student" float="right">
+                      <Link href="/profile">
                         <Button
-                          variant="solid"
-                          bg="#0D74FF"
-                          color="white"
-                          _hover={{}}>
-                            <Link href="/profile">
-                            Enviar
-                            </Link>
-                        </Button>
+                            variant="solid"
+                            bg="teal"
+                            color="white"
+                            _hover={{}}>
+                              
+                          Enviar</Button>
+                        </Link>
                       </FormControl>
                     </VStack>
                   </Box>

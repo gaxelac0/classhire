@@ -12,8 +12,6 @@ import {
   Image
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
-
-import SidebarContent from "../../components/SideBar/SideBar";
 import Clase from "../../components/Clase/Clase";
 
 
@@ -36,22 +34,7 @@ const Publicacion = ({ user, handleLogout }) => {
       }}
       minH="100vh"
     >
-      <SidebarContent
-        display={{
-          base: "none",
-          md: "unset",
-        }}
-      />
-      <Drawer
-        isOpen={sidebar.isOpen}
-        onClose={sidebar.onClose}
-        placement="left"
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <SidebarContent w="full" borderRight="none" />
-        </DrawerContent>
-      </Drawer>
+      
       <Box
         ml={{
           base: 0,
@@ -59,33 +42,6 @@ const Publicacion = ({ user, handleLogout }) => {
         }}
         transition=".3s ease"
       >
-        <Flex
-          as="header"
-          align="center"
-          justify="space-between"
-          w="full"
-          px="4"
-          bg="gray.700"
-          _dark={{
-            bg: "gray.800",
-          }}
-          borderBottomWidth="1px"
-          borderColor="blackAlpha.300"
-          h="14"
-        >
-          <IconButton
-            aria-label="Menu"
-            display={{
-              base: "inline-flex",
-              md: "none",
-            }}
-            onClick={sidebar.onOpen}
-            icon={<FiMenu />}
-            size="sm"
-          />
-        </Flex>
-
-
         <Flex
           width="full"
           height="full"

@@ -6,7 +6,7 @@ import Login from './pages/Login/Login'
 import Onboard from './pages/Onboard/Onboard'
 import Search from './pages/Search/Search'
 import Publicacion from './pages/Publicacion/Publicacion'
-import Profiles from './pages/Profiles/Profiles'
+import Profile from './pages/Profile/Profile'
 import Principal from './pages/Principal/Principal'
 import ChangePassword from './pages/ChangePassword/ChangePassword'
 import * as authService from './services/authService'
@@ -52,8 +52,8 @@ const App = () => {
         <Route path="/publicacion" element={<Publicacion user={user} />} 
         />
         <Route
-          path="/profiles"
-          element={user ? <Profiles /> : <Navigate to="/login" />}
+          path="/profile"
+          element={user ? <Profile /> : <Navigate to="/login" />}
         />
         <Route
           path="/changePassword"
