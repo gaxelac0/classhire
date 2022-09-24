@@ -12,6 +12,7 @@ import ChangePassword from './pages/ChangePassword/ChangePassword'
 import * as authService from './services/authService'
 import CompleteOnboardStudentFrm from './pages/Onboard/CompleteOnboardStudentFrm'
 import CompleteOnboardTeacherFrm from './pages/Onboard/CompleteOnboardTeacherFrm'
+import NotFound from './pages/NotFound/NotFound'
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser())
@@ -64,7 +65,9 @@ const App = () => {
             )
           }
         />
-        <Route path="/" element={<Principal user={user} />} 
+        <Route path="/" element={<Principal user={user} />}
+        />
+        <Route path="*" element={<NotFound user={user} />} 
         />
       </Routes>
     </>

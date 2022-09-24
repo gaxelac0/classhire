@@ -27,20 +27,6 @@ const NavBar = ({ user, handleLogout }) => {
   const ib = useColorModeValue("gray.800", "inherit");
   const sidebar = useDisclosure();
 
-  // DEMOFRONTEND
-  // name: {type: String, required: true},
-  // email: { type: String, required: true, lowercase: true, unique: true },
-  // password: {type: String, required: true},
-  // profile: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
-  // roles: [], type: Stringroles
-  // user = {
-  //   name:"Pepe Pistolero",
-  //   email:"pepe@outlook.com",
-  //   password:"123456",
-  //   roles: []
-  // }
-
-
   function LoggedMenuItems(props) {
     return (
       <>
@@ -54,7 +40,7 @@ const NavBar = ({ user, handleLogout }) => {
         <Button colorScheme="teal" variant="ghost">Clases</Button>
         <Button colorScheme="teal" variant="ghost">Perfil</Button>
         <Button colorScheme="teal" leftIcon={<SearchIcon />} variant="outline">Search</Button>
-        <Button colorScheme="teal" rightIcon={<ArrowForwardIcon />} variant="ghost">Log Out</Button>
+        <Button colorScheme="teal" rightIcon={<ArrowForwardIcon />} variant="ghost" onClick={handleLogout}>Log Out</Button>
       </HStack>
     </>
     )
@@ -103,7 +89,7 @@ const NavBar = ({ user, handleLogout }) => {
 
         {/* El Registro lo mando a la pagina de landing donde elige que tipo de registro es */}
         <Button colorScheme="teal" rightIcon={<ArrowForwardIcon />} variant="solid">
-          <Link href="/landing">
+          <Link href="/register">
             Registrate
           </Link>
         </Button>

@@ -18,9 +18,24 @@ function getToken() {
   return token
 }
 
+  // DEMOFRONTEND
+  // name: {type: String, required: true},
+  // email: { type: String, required: true, lowercase: true, unique: true },
+  // password: {type: String, required: true},
+  // profile: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
+  // roles: [], type: Stringroles
 function getUserFromToken() {
-  const token = getToken()
-  return token ? jwt_decode(token).user : null
+
+  let user = {
+    name:"Pepe Pistolero",
+    email:"pepe@outlook.com",
+    roles: [],
+  };
+
+  return user;
+  
+  //const token = getToken()
+  //return token ? jwt_decode(token).user : null
 }
 
 function removeToken() {

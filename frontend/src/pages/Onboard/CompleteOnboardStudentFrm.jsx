@@ -16,36 +16,71 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Textarea,
-  Image
+  Image,
+  Checkbox,
+  Select,
+  Link,
 } from "@chakra-ui/react";
 import {
   AddIcon, DeleteIcon,
 } from '@chakra-ui/icons'
-import { BsGithub, BsDiscord, BsPerson } from 'react-icons/bs';
 import { FaBaby } from "react-icons/fa";
 
 const CompleteOnboardStudentFrm = ({ user, handleLogout }) => {
 
-  var Estudio = function(description, current) {
-    const desc = description;
-    const curr = current;
-    return { desc, curr}
+  const [estudiosList, setEstudiosList] = useState([{ type: "", description: "", current: ""}])
+
+  // Agrega para completar un estudio mas
+  const handleEstudioAdd = () => {
+    console.log("Before handleAdd: ", estudiosList);
+    setEstudiosList([...estudiosList, {type: "", description: "", current: ""}])
+    console.log("After handleAdd: ", estudiosList);
   }
 
-  const [estudios, setEstudios] = useState([])
+  const handleEstudioInputChange = (e, index) => {
+    console.log("***************************************")
+    console.log(e.target)
+    const { value } = e.target;
+    console.log("e.target: ", e.target)
+    const list = [...estudiosList];
+    list[index]["description"] = value;
+    console.log("Before handleEstudioInputChange" + estudiosList[index])
+    setEstudiosList(list);
+    console.log("After handleEstudioInputChange" + estudiosList[index])
+    console.log("***************************************")
+  };
 
-  const handleAddEstudio = () => {
-    setEstudios(old => [...old, {}])
-    console.log(estudios);
-  }
+  const handleEstudioSelectChange = (e, index) => {
+    console.log("***************************************")
+    console.log(e.target)
+    const { value } = e.target;
+    console.log("e.target: ", e.target)
+    const list = [...estudiosList];
+    list[index]["type"] = value;
+    console.log("Before handleEstudioSelectChange" + estudiosList[index])
+    setEstudiosList(list);
+    console.log("After handleEstudioSelectChange" + estudiosList[index])
+    console.log("***************************************")
+  };
 
-  const handleRemoveEstudio = (e) => {
-    this.setState({
-      estudios: this.state.estudios.filter(function(estudio) { 
-        return estudio !== e.target.value 
-      })});
-  }
+  const handleEstudioCheckboxChange = (e, index) => {
+    console.log("***************************************")
+    console.log(e.target)
+    const { checked } = e.target;
+    console.log("e.target: ", e.target)
+    const list = [...estudiosList];
+    list[index]["current"] = checked;
+    console.log("Before handleEstudioInputChange" + estudiosList[index])
+    setEstudiosList(list);
+    console.log("After handleEstudioInputChange" + estudiosList[index])
+    console.log("***************************************")
+  };
+
+  const handleEstudioRemove = (index) => {
+    const list = [...estudiosList];
+    list.splice(index, 1);
+    setEstudiosList(list);
+  };
 
   return (
   
@@ -72,8 +107,6 @@ const CompleteOnboardStudentFrm = ({ user, handleLogout }) => {
                   <Box boxSize="150px">
                     <Image src="/img/student-icon.png"/>
                   </Box>
-
-                  
                   <Heading>Estudiantes</Heading>
                   <Text mt={{ sm: 3, md: 3, lg: 5 }} color="gray.500">
                     Necesitamos que completes este pequeno formulario antes de proceder
@@ -84,7 +117,7 @@ const CompleteOnboardStudentFrm = ({ user, handleLogout }) => {
                 <Box bg="white" borderRadius="lg">
                   <Box m={8} color="#0B0E3F">
                     <VStack spacing={5}>
-                      <FormControl id="name">
+                      <FormControl id="student">
                         <FormLabel>Fecha de Nacimiento</FormLabel>
                         <InputGroup borderColor="#E0E1E7">
                           <InputLeftElement
@@ -94,38 +127,73 @@ const CompleteOnboardStudentFrm = ({ user, handleLogout }) => {
                           <Input type="date" size="md" />
                         </InputGroup>
                       </FormControl>
-                      <FormControl id="name">
-                        <HStack>
-                        <FormLabel>Estudios Cursados</FormLabel>
-                        <IconButton size="xs" icon={<AddIcon/>} onClick={handleAddEstudio}/>
-                        </HStack>
-                        
+                      <FormControl id="student">
+
+                        <FormLabel>Estudios Realizados (max. 4)</FormLabel>
                         <InputGroup borderColor="#E0E1E7">
-                        
-
                           <VStack>
-                          {Array.from(estudios).map((c, index) => {
-                            return (
-                              <>
-                              <HStack>
-                                <Input id={"description_"+index} type="text" size="md" />
-                                <IconButton size="xs" icon={<DeleteIcon/>} onClick={handleRemoveEstudio}/>
-                                </HStack>
-                              </>
-                            )
-                          })}
-                          </VStack>
+                            {estudiosList.map((singleEstudio, index) => (
+                              <Box key={index}>
+    
+                                  <HStack>
 
+                                    <Select 
+                                    placeholder="Ingresa nivel de estudio"
+                                    onChange={(e) => handleEstudioSelectChange(e, index)}
+                                    >
+                                      <option value="primaria">Primaria</option>
+                                      <option value="secundario">Secundario</option>
+                                      <option value="terciario">Terciario</option>
+                                      <option value="universitario">Universitario</option>
+                                    </Select>
+
+                                    <Input
+                                      id={"estudioDesc_"+index}
+                                      type="text"
+                                      placeholder="descripcion"
+                                      value={singleEstudio.description}
+                                      onChange={(e) => handleEstudioInputChange(e, index)}
+                                    />
+                                    <Checkbox
+                                      id={"estudioCheckbox_"+index}
+                                      placeholder="Terminado?"
+                                      value={singleEstudio.current}
+                                      onChange={(e) => handleEstudioCheckboxChange(e, index)}
+                                    />
+                                    <VStack>
+                                      {estudiosList.length !== 1 && (
+                                        <IconButton size="xs" icon={<DeleteIcon/>} onClick={() => handleEstudioRemove(index)}/>
+                                      )}
+                                      {estudiosList.length - 1 === index && estudiosList.length < 4 && (
+                                        <IconButton size="xs" icon={<AddIcon/>} onClick={handleEstudioAdd}/>
+                                      )}
+                                    </VStack>
+                                  </HStack>
+                                </Box>
+                            ))}
+                          {/* <div className="output">
+                            <h2>Output</h2>
+                            {estudiosList &&
+                              estudiosList.map((obj, index) => (
+                                <ul key={index}>
+                                  {obj && <li>{obj.type+":"+obj.description+":"+obj.current}</li>}
+                                </ul>
+                              ))}
+                          </div> */}
+                        </VStack>
                           
-                        </InputGroup>
+                          
+                      </InputGroup>
                       </FormControl>
-                      <FormControl id="name" float="right">
+                      <FormControl id="student" float="right">
                         <Button
                           variant="solid"
                           bg="#0D74FF"
                           color="white"
                           _hover={{}}>
-                          Enviar
+                            <Link href="/profile">
+                            Enviar
+                            </Link>
                         </Button>
                       </FormControl>
                     </VStack>
