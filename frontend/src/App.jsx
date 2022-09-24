@@ -5,6 +5,7 @@ import Signup from './pages/Signup/Signup'
 import Login from './pages/Login/Login'
 import Landing from './pages/Landing/Landing'
 import Search from './pages/Search/Search'
+import Publicacion from './pages/Publicacion/Publicacion'
 import Profiles from './pages/Profiles/Profiles'
 import Principal from './pages/Principal/Principal'
 import ChangePassword from './pages/ChangePassword/ChangePassword'
@@ -40,6 +41,8 @@ const App = () => {
         <Route path="/landing" element={<Landing user={user} />} 
         />
         <Route path="/search" element={<Search user={user} />} 
+        /> 
+        <Route path="/publicacion" element={<Publicacion user={user} />} 
         /> 
         <Route
           path="/profiles"

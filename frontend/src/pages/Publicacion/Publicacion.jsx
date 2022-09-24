@@ -7,15 +7,24 @@ import {
   Flex,
   IconButton,
   useDisclosure,
+  chakra,
+  Link,
+  Image
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 
 import SidebarContent from "../../components/SideBar/SideBar";
+import Clase from "../../components/Clase/Clase";
+
 
 
 const Publicacion = ({ user, handleLogout }) => {
 
   const sidebar = useDisclosure();
+
+  let teacher = {
+    name:"Mario Hernandez"
+  }
 
   return (
     <Box
@@ -75,7 +84,33 @@ const Publicacion = ({ user, handleLogout }) => {
           />
         </Flex>
 
-          
+
+        <Flex
+          width="full"
+          height="full"
+          alignItems="center"
+          justifyContent="center"
+          px={8}
+        >
+          <Box
+            mx="auto"
+            px={8}
+            py={4}
+            rounded="lg"
+            shadow="lg"
+            bg="white"
+            _dark={{
+              bg: "gray.800",
+            }}
+            maxW="max"
+            maxH="max"
+          >
+
+
+            <Clase title={'Clase Individual de Matematicas'} teacher={teacher} />
+          </Box>
+        </Flex>
+
 
       </Box>
     </Box>
