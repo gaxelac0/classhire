@@ -8,7 +8,7 @@ import {
   Td,
   TableCaption,
   TableContainer,
-  Center,
+  Flex,
 } from '@chakra-ui/react'
 
 
@@ -18,7 +18,8 @@ import BackgroundLayout from '../../components/Layout/BackgroundLayout'
 
 const Tabla = () => {
   return (
-  <Center>
+
+    <Flex>
     <Box overflowX="auto">
       <TableContainer>
         <Table variant='simple'>
@@ -51,7 +52,10 @@ const Tabla = () => {
       </TableContainer>
       <Pagination/>
     </Box>
-  </Center>
+    
+    </Flex>
+
+
   )
 }
 

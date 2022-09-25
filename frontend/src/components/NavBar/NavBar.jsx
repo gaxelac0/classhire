@@ -19,6 +19,7 @@ import { FiMenu } from "react-icons/fi";
 import { ArrowForwardIcon, SearchIcon } from "@chakra-ui/icons";
 
 import SidebarContent from "../../components/SideBar/SideBar";
+import ClasshireLogo from "../Logo/ClasshireLogo";
 
 
 
@@ -134,13 +135,8 @@ const NavBar = ({ user, handleLogout }) => {
           />
           <Flex alignItems="center" justifyContent="space-between" mx="auto">
             <Flex>
-
               <chakra.a href="/" title="Classhire Home Page" display="flex" alignItems="center">
-               {/* <Logo /> */}
-                <Image src="/img/classhire-logo.png"
-                w={"300px"}
-                h={"100px"}
-                />
+                <ClasshireLogo w="300px" h="100px"/>
                 <VisuallyHidden>Classhire</VisuallyHidden>
               </chakra.a>
             </Flex>
