@@ -5,7 +5,7 @@ import Signup from './pages/Signup/Signup'
 import Login from './pages/Login/Login'
 import Onboard from './pages/Onboard/Onboard'
 import Search from './pages/Search/Search'
-import Publicacion from './pages/Publicacion/Publicacion'
+import Clase from './pages/Clase/Clase'
 import Profile from './pages/Profile/Profile'
 import Principal from './pages/Principal/Principal'
 import ChangePassword from './pages/ChangePassword/ChangePassword'
@@ -52,7 +52,7 @@ const App = () => {
       /> 
       <Route path="/search" element={<Search user={user} />} 
       /> 
-      <Route path="/publicacion" element={<Publicacion user={user} />} 
+      <Route path="/clase" element={<Clase user={user} />} 
       />
       <Route
         path="/profile"

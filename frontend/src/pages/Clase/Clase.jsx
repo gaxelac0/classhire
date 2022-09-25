@@ -16,7 +16,15 @@ import {
 } from '@chakra-ui/react';
 import { MdCall } from 'react-icons/md';
 
-const Clase = ({ user, handleLogout, teacher, title }) => {
+import BackgroundLayout from "../../components/Layout/BackgroundLayout"
+
+
+let teacher = {
+  name:"Mario Hernandez",
+  description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti non necessitatibus voluptatem soluta asperiores laboriosam ratione illum, sunt odit fugit quis dolorum dolore nobis recusandae facere, sint doloribus eius obcaecati!"
+}
+
+const ClaseComponent = ({teacher, title }) => {
   return (
     <Container maxW={'7xl'}>
       <SimpleGrid
@@ -199,6 +207,15 @@ const Clase = ({ user, handleLogout, teacher, title }) => {
         </Stack>
       </SimpleGrid>
     </Container>
+  );
+}
+
+const Clase = () => {
+  return (
+    <BackgroundLayout
+      component={<ClaseComponent title={'Clase Individual de Matematicas'} teacher={teacher} />}
+    >
+    </BackgroundLayout>
   );
 }
 

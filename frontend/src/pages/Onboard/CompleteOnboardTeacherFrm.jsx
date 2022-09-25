@@ -26,7 +26,9 @@ import {
 } from '@chakra-ui/icons'
 import { FaUniversity } from "react-icons/fa";
 
-const CompleteOnboardTeacherFrm = ({ user, handleLogout }) => {
+import BackgroundLayout from "../../components/Layout/BackgroundLayout";
+
+const CompleteOnboardTeacherFrmComponent = () => {
 
   const [experienciasList, setExperienciasList] = useState([{ type: "", description: "", current: ""}])
 
@@ -84,16 +86,7 @@ const CompleteOnboardTeacherFrm = ({ user, handleLogout }) => {
 
 
   return (
-  
-		<Flex
-          width="full"
-          height="full"
-          alignItems="center"
-          justifyContent="center"
-          px={8}
-          bg="teal"
-        >
-        <Container  maxW="full" mt={0} centerContent overflow="hidden">
+      <Container  maxW="full" mt={0} centerContent overflow="hidden">
       <Flex>
         <Box
           bg="white"
@@ -209,8 +202,15 @@ const CompleteOnboardTeacherFrm = ({ user, handleLogout }) => {
         </Box>
       </Flex>
     </Container>
-        </Flex>
   );
 };
+
+const CompleteOnboardTeacherFrm = () => {
+  return (
+    <BackgroundLayout
+      component={<CompleteOnboardTeacherFrmComponent/>}
+    />
+  );
+}
 
 export default CompleteOnboardTeacherFrm

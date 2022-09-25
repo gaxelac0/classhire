@@ -25,8 +25,9 @@ import {
   AddIcon, DeleteIcon,
 } from '@chakra-ui/icons'
 import { FaBaby } from "react-icons/fa";
+import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 
-const CompleteOnboardStudentFrm = ({ user, handleLogout }) => {
+const CompleteOnboardStudentFrmComponent = ({ user, handleLogout }) => {
 
   const [estudiosList, setEstudiosList] = useState([{ type: "", description: "", current: ""}])
 
@@ -83,16 +84,7 @@ const CompleteOnboardStudentFrm = ({ user, handleLogout }) => {
   };
 
   return (
-  
-		<Flex
-          width="full"
-          height="full"
-          alignItems="center"
-          justifyContent="center"
-          px={8}
-          bg="teal"
-        >
-        <Container  maxW="full" mt={0} centerContent overflow="hidden">
+      <Container  maxW="full" mt={0} centerContent overflow="hidden">
       <Flex>
         <Box
           bg="white"
@@ -181,8 +173,6 @@ const CompleteOnboardStudentFrm = ({ user, handleLogout }) => {
                               ))}
                           </div> */}
                         </VStack>
-                          
-                          
                       </InputGroup>
                       </FormControl>
                       <FormControl id="student" float="right">
@@ -205,8 +195,16 @@ const CompleteOnboardStudentFrm = ({ user, handleLogout }) => {
         </Box>
       </Flex>
     </Container>
-        </Flex>
   );
 };
+
+
+const CompleteOnboardStudentFrm = () => {
+  return (
+    <BackgroundLayout
+      component={<CompleteOnboardStudentFrmComponent/>}
+    />
+  );
+}
 
 export default CompleteOnboardStudentFrm
