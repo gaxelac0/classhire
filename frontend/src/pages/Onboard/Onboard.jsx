@@ -91,9 +91,6 @@ const Onboard = ({ user }) => {
       <p>{'role.footer_desc: ' + role.footer_desc}</p> */}
       <Flex
         bg="#edf3f8"
-        _dark={{
-          bg: "#3e3e3e",
-        }}
         w="full"
         alignItems="center"
         justifyContent="center"
@@ -129,9 +126,6 @@ const Onboard = ({ user }) => {
             letterSpacing="tight"
             lineHeight="shorter"
             color="gray.900"
-            _dark={{
-              color: "gray.100",
-            }}
           >
             <chakra.span display="block">Te damos la bienvenida a Classhire</chakra.span>
           </chakra.h1>
@@ -144,16 +138,10 @@ const Onboard = ({ user }) => {
             letterSpacing="tight"
             lineHeight="shorter"
             color="gray.900"
-            _dark={{
-              color: "gray.100",
-            }}
           >
             <chakra.span
               display="block"
               color="brand.600"
-              _dark={{
-                color: "gray.500",
-              }}
             >
               Selecciona tu rol y empeza ahora!
             </chakra.span>

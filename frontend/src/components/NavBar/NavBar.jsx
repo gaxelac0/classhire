@@ -13,6 +13,7 @@ import {
   DrawerContent,
   DrawerOverlay,
   Link,
+  Image
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 import { ArrowForwardIcon, SearchIcon } from "@chakra-ui/icons";
@@ -114,9 +115,6 @@ const NavBar = ({ user, handleLogout }) => {
     return <NotLoggedMenuItems/>
   }
 
-
-  let welcome = user ? "Classhire" : "Bienvenido 🤗"
-
   return (
       <React.Fragment>
       <chakra.header
@@ -139,12 +137,12 @@ const NavBar = ({ user, handleLogout }) => {
 
               <chakra.a href="/" title="Classhire Home Page" display="flex" alignItems="center">
                {/* <Logo /> */}
-                Classhire
+                <Image src="/img/classhire-logo.png"
+                w={"300px"}
+                h={"100px"}
+                />
                 <VisuallyHidden>Classhire</VisuallyHidden>
               </chakra.a>
-              <chakra.h1 fontSize="xl" fontWeight="medium" ml="2">
-                {welcome}
-              </chakra.h1>
             </Flex>
             <HStack display="flex" alignItems="center" spacing={1}>
               <MenuItems 

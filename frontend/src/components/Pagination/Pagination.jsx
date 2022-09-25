@@ -11,10 +11,6 @@ const Pagination = () => {
     
     return (
         <Flex
-        bg="#D4D4D4"
-        // _dark={{
-        //   bg: "#3e3e3e",
-        // }}
         p={50}
         w="full"
         alignItems="center"

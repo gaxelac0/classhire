@@ -33,9 +33,6 @@ const FilterForm = () => {
           rounded="lg"
           shadow="lg"
           bg="white"
-          _dark={{
-            bg: "gray.800",
-          }}
           maxW="max"
         >
           <Stack
@@ -43,9 +40,6 @@ const FilterForm = () => {
             py={5}
             p={[null, 6]}
             bg="white"
-            _dark={{
-              bg: "#141517",
-            }}
             spacing={6}
           >
             <SimpleGrid columns={6} spacing={6}>
@@ -55,9 +49,6 @@ const FilterForm = () => {
                   fontSize="sm"
                   fontWeight="md"
                   color="gray.700"
-                  _dark={{
-                    color: "gray.50",
-                  }}
                 >
                   Materia
                 </FormLabel>
@@ -81,9 +72,6 @@ const FilterForm = () => {
                   fontSize="sm"
                   fontWeight="md"
                   color="gray.700"
-                  _dark={{
-                    color: "gray.50",
-                  }}
                 >
                   Materia
                 </FormLabel>
@@ -112,9 +100,6 @@ const FilterForm = () => {
                   fontSize="sm"
                   fontWeight="md"
                   color="gray.700"
-                  _dark={{
-                    color: "gray.50",
-                  }}
                 >
                   Tipo de clase
                 </FormLabel>
@@ -142,9 +127,6 @@ const FilterForm = () => {
                   fontSize="sm"
                   fontWeight="md"
                   color="gray.700"
-                  _dark={{
-                    color: "gray.50",
-                  }}
                 >
                   Frecuencia
                 </FormLabel>
@@ -172,9 +154,6 @@ const FilterForm = () => {
                   fontSize="sm"
                   fontWeight="md"
                   color="gray.700"
-                  _dark={{
-                    color: "gray.50",
-                  }}
                 >
                   Calificación
                 </FormLabel>

@@ -62,15 +62,9 @@ import {
           {/* <Link
             fontSize="2xl"
             color="gray.700"
-            _dark={{
-              color: "white",
-            }}
             fontWeight="700"
             _hover={{
               color: "gray.600",
-              _dark: {
-                color: "gray.200",
-              },
               textDecor: "underline",
             }}
           >
@@ -79,9 +73,6 @@ import {
           <chakra.p
             mt={2}
             color="gray.600"
-            _dark={{
-              color: "gray.300",
-            }}
           >
             Aborda temas como las derivadas, las integrales, los límites, las series y diversos tipos de funciones complejas. 
             El análisis matemático tiene como fin resolver cálculos complejos a través de la abstracción. 
@@ -168,9 +159,6 @@ import {
             />
             <Link
               color="gray.700"
-              _dark={{
-                color: "gray.200",
-              }}
               fontWeight="700"
               cursor="pointer"
             >

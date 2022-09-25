@@ -5,6 +5,8 @@ import {
 } from "@chakra-ui/react";
 import Clase from "../../components/Clase/Clase";
 
+import BackgroundLayout from "../../components/Layout/BackgroundLayout";
+
 
 
 const Publicacion = ({ user, handleLogout }) => {
@@ -15,51 +17,10 @@ const Publicacion = ({ user, handleLogout }) => {
   }
 
   return (
-    <Box
-      as="section"
-      bg="gray.700"
-      _dark={{
-        bg: "gray.700",
-      }}
-      minH="100vh"
+    <BackgroundLayout
+      component={<Clase title={'Clase Individual de Matematicas'} teacher={teacher} />}
     >
-      
-      <Box
-        ml={{
-          base: 0,
-          md: 60,
-        }}
-        transition=".3s ease"
-      >
-        <Flex
-          width="full"
-          height="full"
-          alignItems="center"
-          justifyContent="center"
-          px={8}
-        >
-          <Box
-            mx="auto"
-            px={8}
-            py={4}
-            rounded="lg"
-            shadow="lg"
-            bg="white"
-            _dark={{
-              bg: "gray.800",
-            }}
-            maxW="max"
-            maxH="max"
-          >
-
-
-            <Clase title={'Clase Individual de Matematicas'} teacher={teacher} />
-          </Box>
-        </Flex>
-
-
-      </Box>
-    </Box>
+    </BackgroundLayout>
   );
 };
 
