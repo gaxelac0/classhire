@@ -10,15 +10,12 @@ const BackgroundLayout = (props) => {
 
   return (
     <>
+      <Flex>
       <Box
         as="body"
         bg="teal"
       >
         <Box
-          ml={{
-            base: 60,
-            md: 0,
-          }}
           transition=".3s ease"
         >
           <Flex
@@ -44,6 +41,8 @@ const BackgroundLayout = (props) => {
           </Flex>
         </Box>
       </Box>
+      </Flex>
+      
     </>
   );
 };
