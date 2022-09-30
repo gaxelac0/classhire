@@ -40,7 +40,7 @@ import {
             Mar 10 de Octubre, 2022
           </chakra.span>
           <Link
-            href="/ver-clase"
+            href="/clase"
             px={3}
             py={1}
             fontSize="sm"

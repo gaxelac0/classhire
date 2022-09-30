@@ -13,10 +13,25 @@ import {
   useColorModeValue,
   List,
   ListItem,
+  ModalFooter,
+  Input,
+  FormControl,
+  FormLabel,
+  ModalBody,
+  ModalCloseButton,
+  ModalHeader, 
+  ModalContent,
+  Modal,
+  ModalOverlay,
+  useDisclosure
 } from '@chakra-ui/react';
 import { MdCall } from 'react-icons/md';
 
+import { useRef, React } from 'react';
+
 import BackgroundLayout from "../../components/Layout/BackgroundLayout"
+
+
 
 
 let teacher = {
@@ -25,6 +40,16 @@ let teacher = {
 }
 
 const ClaseComponent = ({teacher, title }) => {
+
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const initialRef = useRef(null)
+  const finalRef = useRef(null)
+
+
+
+
   return (
     <Container maxW={'7xl'}>
       <SimpleGrid
@@ -190,6 +215,7 @@ const ClaseComponent = ({teacher, title }) => {
             mt={8}
             size={'lg'}
             py={'7'}
+            onClick={onOpen}
             bg={useColorModeValue('gray.900', 'gray.50')}
             color={useColorModeValue('white', 'gray.900')}
             textTransform={'uppercase'}
@@ -205,8 +231,48 @@ const ClaseComponent = ({teacher, title }) => {
             <Text>Contacto garantizado en menos de 48 horas</Text>
           </Stack>
         </Stack>
+
       </SimpleGrid>
+
+      <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Contratando la clase</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>Telefono</FormLabel>
+              <Input ref={initialRef} placeholder='Telefono' />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Horario</FormLabel>
+              <Input placeholder='Horario' />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Descripcion de contratacion</FormLabel>
+              <Input placeholder='Descripcion al profesor del interes por la clase' />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='teal' mr={3}>
+              Contratar
+            </Button>
+            <Button onClick={onClose}>Cancelar</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+
     </Container>
+    
   );
 }
 

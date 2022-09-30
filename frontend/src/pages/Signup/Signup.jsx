@@ -208,7 +208,7 @@ const SignupCard = () => {
                 _hover={{
                   bg: 'teal.700',
                 }}>
-					<Link href="/complete-onboard/profesor">
+					<Link href="/onboard">
 					Sign up
 					</Link>
                 
