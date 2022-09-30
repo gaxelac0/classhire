@@ -117,8 +117,9 @@ const CompleteOnboardTeacherFrmComponent = () => {
                           <InputLeftElement
                             pointerEvents="none"
                             children={<FaUniversity color="gray.800" />}
+                            
                           />
-                          <Input type="text" size="md" />
+                          <Input type="text" size="md" value="Ingenierito de Nacimiento" />
                         </InputGroup>
                       </FormControl>
                       <FormControl id="teacher">

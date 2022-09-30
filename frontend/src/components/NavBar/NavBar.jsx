@@ -16,7 +16,7 @@ import {
   Image
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
-import { ArrowForwardIcon, SearchIcon } from "@chakra-ui/icons";
+import { ArrowForwardIcon, SearchIcon, PlusSquareIcon } from "@chakra-ui/icons";
 
 import SidebarContent from "../../components/SideBar/SideBar";
 import ClasshireLogo from "../Logo/ClasshireLogo";
@@ -37,15 +37,20 @@ const NavBar = ({ user, handleLogout }) => {
               color="brand.500"
               display={{ base: "none", md: "inline-flex" }}
       >
-        <Button colorScheme="teal" variant="ghost">Profesores</Button>
-        <Button colorScheme="teal" variant="ghost">Mis Clases</Button>
-        
+        <Link href="/">
+          <Button colorScheme="teal" variant="ghost">Inicio</Button>
+        </Link>
         <Link href="/profile">
           <Button colorScheme="teal" variant="ghost">Perfil</Button>
         </Link>
         <Link href="/search">
-          <Button colorScheme="teal" leftIcon={<SearchIcon />} variant="outline">Buscar Clases</Button>
+          <Button colorScheme="teal" leftIcon={<SearchIcon />} variant="outline">Clases</Button>
         </Link>
+        <Button colorScheme="teal" leftIcon={<PlusSquareIcon />} variant="outline">
+          <Link href="/clase/add">
+            Publicar Clase
+          </Link>
+        </Button>
         
         <Button colorScheme="teal" rightIcon={<ArrowForwardIcon />} variant="ghost" onClick={handleLogout}>Log Out</Button>
       </HStack>
@@ -64,19 +69,10 @@ const NavBar = ({ user, handleLogout }) => {
       >
         <Button colorScheme="teal" variant="ghost">
           <Link href="/search">
-            Search
+            Buscar Clases
           </Link>
         </Button>
-        <Button colorScheme="teal" variant="ghost">
-          <Link href="/clases">
-            Clases
-          </Link>
-        </Button>
-        <Button colorScheme="teal" variant="ghost">
-          <Link href="/publicar">
-            Publicar
-          </Link>
-        </Button>
+
 
         {/* Entiendo que hay opcion de PERFIL si no inicio sesion */}
 
@@ -96,7 +92,7 @@ const NavBar = ({ user, handleLogout }) => {
 
         {/* El Registro lo mando a la pagina de landing donde elige que tipo de registro es */}
         <Button colorScheme="teal" rightIcon={<ArrowForwardIcon />} variant="solid">
-          <Link href="/register">
+          <Link href="/signup">
             Registrate
           </Link>
         </Button>

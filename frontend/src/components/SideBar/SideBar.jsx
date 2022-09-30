@@ -4,6 +4,7 @@ import {
   Flex,
   Icon,
   Image,
+  Link,
 } from "@chakra-ui/react";
 import { FaClipboardCheck, FaRss } from "react-icons/fa";
 import { AiFillGift } from "react-icons/ai";
@@ -70,13 +71,22 @@ const NavItem = (props) => {
               fontSize="sm"
               aria-label="Main Navigation"
             >
-              <NavItem icon={MdHome}>Home</NavItem>
-              <NavItem icon={FaRss}>Articles</NavItem>
-              <NavItem icon={HiCollection}>Collections</NavItem>
-              <NavItem icon={FaClipboardCheck}>Checklists</NavItem>
-              <NavItem icon={HiCode}>Integrations</NavItem>
-              <NavItem icon={AiFillGift}>Changelog</NavItem>
-              <NavItem icon={BsGearFill}>Settings</NavItem>
+              <NavItem icon={MdHome}>
+                <Link href="/"> Home
+                </Link>
+                </NavItem>
+              <NavItem icon={FaRss}>
+                <Link href="/profile"> Perfil
+                </Link>
+              </NavItem>
+              <NavItem icon={HiCollection}>
+                <Link href="/search"> Clases
+                </Link>
+              </NavItem>
+              <NavItem icon={FaClipboardCheck}>
+                <Link href="#"> Profesores
+                </Link>
+              </NavItem>
             </Flex>
           </Box></>
 			)

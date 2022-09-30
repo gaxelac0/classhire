@@ -3,24 +3,26 @@ import {
   Flex,
   Heading,
   Input,
-  Button,
-  InputGroup,
-  Stack,
-  InputLeftElement,
-  chakra,
-  Box,
-  Link,
-  Avatar,
   FormControl,
-  FormHelperText,
-  InputRightElement
+  Box,
+  FormLabel,
+  Checkbox,
+  Stack,
+  Link,
+  Button,
+  Text,
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom'
 import * as authService from '../../services/authService'
+import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 
+import {
 
-const Login = props => {
+} from '@chakra-ui/react';
+
+{/*
+const LoginOld = props => {
 
   const navigate = useNavigate()
 
@@ -147,6 +149,70 @@ const Login = props => {
         </Link>
       </Box>
     </Flex>
+  )
+}
+*/}
+
+
+const LoginComponent = props => {
+
+  return (
+    <Flex
+      align={'center'}
+      justify={'center'}>
+      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+        <Stack align={'center'}>
+          <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+          <Text fontSize={'lg'} color={'gray.600'}>
+            to enjoy all of our cool <Link color={'blue.400'}>features</Link> ✌️
+          </Text>
+        </Stack>
+        <Box
+          rounded={'lg'}
+          boxShadow={'lg'}
+          p={8}>
+          <Stack spacing={4}>
+            <FormControl id="email">
+              <FormLabel>Email address</FormLabel>
+              <Input type="email" />
+            </FormControl>
+            <FormControl id="password">
+              <FormLabel>Password</FormLabel>
+              <Input type="password" />
+            </FormControl>
+            <Stack spacing={10}>
+              <Stack
+                direction={{ base: 'column', sm: 'row' }}
+                align={'start'}
+                justify={'space-between'}>
+                <Checkbox>Remember me</Checkbox>
+                <Link color={'teal.400'}>Forgot password?</Link>
+              </Stack>
+              <Button
+                bg={'teal.400'}
+                color={'white'}
+                _hover={{
+                  bg: 'teal.500',
+                }}>
+                <Link href="/profile">
+                Sign in
+                </Link>
+               
+              </Button>
+            </Stack>
+          </Stack>
+        </Box>
+      </Stack>
+    </Flex>
+  );
+
+}
+
+const Login = props => {
+  return (
+    <BackgroundLayout
+      component={<LoginComponent/>}
+    />
   )
 }
 

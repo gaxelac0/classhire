@@ -14,6 +14,7 @@ import CompleteOnboardStudentFrm from './pages/Onboard/CompleteOnboardStudentFrm
 import CompleteOnboardTeacherFrm from './pages/Onboard/CompleteOnboardTeacherFrm'
 import NotFound from './pages/NotFound/NotFound'
 import Footer from './components/Footer/Footer'
+import CrearClase from './pages/Clase/CrearClase'
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser())
@@ -53,6 +54,8 @@ const App = () => {
       <Route path="/search" element={<Search user={user} />} 
       /> 
       <Route path="/clase" element={<Clase user={user} />} 
+      />
+      <Route path="/clase/add" element={<CrearClase user={user} />} 
       />
       <Route
         path="/profile"
