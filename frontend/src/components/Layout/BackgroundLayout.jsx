@@ -6,6 +6,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { ArrowBackIcon } from '@chakra-ui/icons'
 
 // Componente para normalizar los estilos de la aplicacion en todas sus paginas
 // Recibe el componente a mostrar como props.component
@@ -39,8 +40,8 @@ const BackgroundLayout = (props) => {
               marginBottom={"1em"}
             >
               {/*history bar*/}
-              <Button
-                onClick={() => navigate(-1)}>Volver atras 
+              <Button mb="3"
+                onClick={() => navigate(-1)}><ArrowBackIcon/>
               </Button>
               {/*Componente a mostrar*/}
               {props.component}

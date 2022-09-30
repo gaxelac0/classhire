@@ -1,7 +1,7 @@
 import { React } from "react";
 import {
   Box,
-
+  Center,
   VStack,
   Button,
   Flex,
@@ -9,12 +9,12 @@ import {
   chakra,
   Grid,
   GridItem,
-  Container
+  Container, SimpleGrid,
+  InputGroup, InputLeftElement, Input
 } from "@chakra-ui/react";
-
-
+import BkgHome from "../../images/HomBackground.jpg"
+import {SearchIcon} from '@chakra-ui/icons'
 import BackgroundLayout from "../../components/Layout/BackgroundLayout"
-
 
 const Feature = ({ heading, text }) => {
 	return (
@@ -30,36 +30,45 @@ const Feature = ({ heading, text }) => {
 const PrincipalComponent = () => {
 	return (
 		<>
-		<Box as={Container} maxW="7xl" mt={14} p={4}>
+		<Box 
+			display="flex"
+			justifyContent="Center"
+			width='100%'
+			py="130px"
+			bgImage={BkgHome}
+			bgSize="contain"
+			bgPosition='center'
+			bgRepeat='no-repeat'
+			//mt="-180px"
+			//mb="-180px"
+		>
+			<SimpleGrid
+				columns={{ sm: 1, md: 1 }}
+				spacing='8'
+				textAlign='center'
+			>
+				<chakra.h1 fontSize="6xl" fontWeight="900" color="#000000" >
+					Classhire
+				</chakra.h1>
+				<chakra.h2 fontSize="3xl" fontWeight="700" >
+					Marketplace de profesores particulares
+				</chakra.h2>
+				<Divider mb="20"></Divider>
+				<InputGroup>
+					<InputLeftElement
+						pointerEvents='none'
+						children={<SearchIcon color='white' />}
+					/>
+					<Input focusBorderColor="#6BB495" type="search" placeholder='Buscar Materia' />
+				</InputGroup>
+			</SimpleGrid>
+		</Box>
+
+		<Box as={Container} maxW="7xl" p={4}>
+			<Divider mt={2} mb={10} />
 			<Grid
-				templateColumns={{
-				base: 'repeat(1, 1fr)',
-				sm: 'repeat(2, 1fr)',
-				md: 'repeat(2, 1fr)',
-				}}
-				gap={4}>
-				<GridItem colSpan={1}>
-				<VStack alignItems="flex-start" spacing="20px">
-					<chakra.h2 fontSize="3xl" fontWeight="700">
-					Medium length title
-					</chakra.h2>
-					<Button colorScheme="green" size="md">
-					Call To Action
-					</Button>
-				</VStack>
-				</GridItem>
-				<GridItem>
-				<Flex>
-					<chakra.p>
-					Provide your customers a story they would enjoy keeping in mind
-					the objectives of your website. Pay special attention to the tone
-					of voice.
-					</chakra.p>
-				</Flex>
-				</GridItem>
-			</Grid>
-			<Divider mt={12} mb={12} />
-			<Grid
+				justifyContent="Center"
+				textAlign="center"
 				templateColumns={{
 				base: 'repeat(1, 1fr)',
 				sm: 'repeat(2, 1fr)',
@@ -67,23 +76,38 @@ const PrincipalComponent = () => {
 				}}
 				gap={{ base: '8', sm: '12', md: '16' }}>
 				<Feature
-				heading={'First Feature'}
-				text={'Short text describing one of you features/service'}
+					heading={'Buscá'}
+					text={'Amplia variedad de materias, profesores con modalidad de clases individual o grupal'}
 				/>
 				<Feature
-				heading={'Second Feature'}
-				text={'Short text describing one of you features/service'}
+					heading={'Elegí'}
+					text={'Seleccioná al profesor y modalidad que se ajuste a tus necesidades'}
 				/>
 				<Feature
-				heading={'Third Feature'}
-				text={'Short text describing one of you features/service'}
+					heading={'Aprendé'}
+					text={'Con clases particulares se aprende más rápido'}
 				/>
 				<Feature
-				heading={'Fourth Feature'}
-				text={'Short text describing one of you features/service'}
+					heading={'Calificá'}
+					text={'Tu experiencia sirve a otros'}
 				/>
 			</Grid>
 		</Box>
+		<Grid
+			justifyContent="Center"
+			templateColumns={{
+				sm: 'repeat(2, 1fr)',
+				md: 'repeat(2, 1fr)',
+				}}
+			gap={{ base: '8', sm: '12', md: '16' }}
+		>
+			<Button colorScheme='teal' size='lg' variant='outline' >
+  			  	Aprender
+  			</Button>
+			<Button colorScheme='teal' size='lg' variant='outline'>
+  			  	Dar clases
+  			</Button>
+		</Grid>
 	</>
 	); 
 }

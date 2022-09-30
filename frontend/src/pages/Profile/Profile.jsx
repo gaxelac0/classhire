@@ -17,7 +17,7 @@ const FittedTab = () => {
       <TabList mb='1em'>
         <Tab>Materias</Tab>
         <Tab>Datos Personales</Tab>
-        <Tab>Otra Cosa</Tab>
+        {/* <Tab>Otra Cosa</Tab> */}
       </TabList>
       {/* Contenido de los elementos */}
       <TabPanels> 
@@ -40,9 +40,9 @@ const FittedTab = () => {
           </Center>
         </TabPanel>
         {/* Otra Cosa */}
-        <TabPanel>
+        {/* <TabPanel>
           <p>No me acuerdo que contenido iba acá</p>
-        </TabPanel>
+        </TabPanel> */}
       </TabPanels>
     </Tabs>
   )
