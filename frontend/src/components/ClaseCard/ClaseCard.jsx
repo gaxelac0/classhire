@@ -102,7 +102,7 @@ import {
                 key="sm"
                 borderRadius='full'
                 variant='solid'
-                colorScheme='green'
+                colorScheme='teal'
               >
                 <TagLabel>Matemática</TagLabel>
                 <TagCloseButton />
@@ -113,7 +113,7 @@ import {
                 key="sm"
                 borderRadius='full'
                 variant='solid'
-                colorScheme='green'
+                colorScheme='teal'
               >
                 <TagLabel>Individual</TagLabel>
                 <TagCloseButton />
@@ -124,7 +124,7 @@ import {
                 key="sm"
                 borderRadius='full'
                 variant='solid'
-                colorScheme='green'
+                colorScheme='teal'
               >
                 <TagLabel>Semanal</TagLabel>
                 <TagCloseButton />
@@ -135,7 +135,7 @@ import {
                 key="sm"
                 borderRadius='full'
                 variant='solid'
-                colorScheme='green'
+                colorScheme='teal'
               >
                 <TagLabel>4</TagLabel>
                 <TagCloseButton />
