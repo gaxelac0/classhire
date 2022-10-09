@@ -14,7 +14,17 @@ import {
 
 
 
-  const ClaseCard = () => {
+  const ClaseCard = (props) => {
+
+    const property = {
+      title: props.title,
+      date: props.date,
+      description: props.description,
+      tags: props.tags,
+      profImage: props.profImage,
+      profName: props.profName,
+    }
+
     return (
       <>
       <Flex
@@ -37,7 +47,7 @@ import {
             fontSize="sm"
             color="gray.600"
           >
-            Mar 10 de Octubre, 2022
+            {property.date}
           </chakra.span>
           <Link
             href="/clase"
@@ -57,7 +67,7 @@ import {
 
         <Box mt={2}>
           <Text fontSize={30} as="b">
-            Análisis Matemático
+            {property.title}
           </Text>
           {/* <Link
             fontSize="2xl"
@@ -74,9 +84,7 @@ import {
             mt={2}
             color="gray.600"
           >
-            Aborda temas como las derivadas, las integrales, los límites, las series y diversos tipos de funciones complejas. 
-            El análisis matemático tiene como fin resolver cálculos complejos a través de la abstracción. 
-            Para ello, se vale de herramientas como las funciones.
+            {property.description}
           </chakra.p>
         </Box>
 
@@ -97,50 +105,19 @@ import {
           
           <HStack spacing={2}>
 
+            
+            {property.tags.map((t) => (
               <Tag
-                size="sm"
-                key="sm"
-                borderRadius='full'
-                variant='solid'
-                colorScheme='teal'
+              size="sm"
+              key="sm"
+              borderRadius='full'
+              variant='solid'
+              colorScheme='teal'
               >
-                <TagLabel>Matemática</TagLabel>
+                <TagLabel>{t}</TagLabel>
                 <TagCloseButton />
               </Tag>
-
-              <Tag
-                size="sm"
-                key="sm"
-                borderRadius='full'
-                variant='solid'
-                colorScheme='teal'
-              >
-                <TagLabel>Individual</TagLabel>
-                <TagCloseButton />
-              </Tag>
-
-              <Tag
-                size="sm"
-                key="sm"
-                borderRadius='full'
-                variant='solid'
-                colorScheme='teal'
-              >
-                <TagLabel>Semanal</TagLabel>
-                <TagCloseButton />
-              </Tag>
-
-              <Tag
-                size="sm"
-                key="sm"
-                borderRadius='full'
-                variant='solid'
-                colorScheme='teal'
-              >
-                <TagLabel>4</TagLabel>
-                <TagCloseButton />
-              </Tag>
-
+            ))}
           </HStack>
 
           <Flex alignItems="center">
@@ -154,7 +131,7 @@ import {
                 base: "none",
                 sm: "block",
               }}
-              src="https://s03.s3c.es/imag/_v0/770x420/0/d/f/profesor-pizarra-dreamstime.jpg"
+              src={property.profImage}
               alt="imag"
             />
             <Link
@@ -162,7 +139,7 @@ import {
               fontWeight="700"
               cursor="pointer"
             >
-              Joe Fatheree
+              {property.profName}
             </Link>
           </Flex>
         </Flex>

@@ -1,16 +1,37 @@
 import { 
-  Box, Center, Button,
-  Table, Thead, Tbody, Tr, Th, Td, TableCaption, TableContainer,
-  Tabs,Tab, TabList, TabPanels, TabPanel,
-  Image, Text
+  Box, 
+  Center, 
+  Button,
+  Table, 
+  Thead, 
+  Tbody,
+  Tr, 
+  Th, 
+  Td, 
+  TableCaption, 
+  TableContainer,
+  Tabs,
+  Tab, 
+  TabList, 
+  TabPanels, 
+  TabPanel,
+  Image, 
+  Text,
+  HStack,
+  IconButton,
 } from '@chakra-ui/react'
+
+import { PhoneIcon, DeleteIcon } from '@chakra-ui/icons'
 
 
 import Pagination from '../../components/Pagination/Pagination'
 import BackgroundLayout from '../../components/Layout/BackgroundLayout'
 
+import { clases } from '../../mock/mocks'
+import { FaComment } from 'react-icons/fa'
 
-const FittedTab = () => {
+
+const FittedTab = ({user}) => {
   return(
     <Tabs variant='soft-rounded' colorScheme="teal">
       {/* Elemmentos del perfil */}
@@ -23,7 +44,7 @@ const FittedTab = () => {
       <TabPanels> 
         {/* Materias */}
         <TabPanel>
-          <TablaMaterias/>
+          <TablaMaterias user={user}/>
         </TabPanel>
         {/* Datos Personales */}
         <TabPanel>
@@ -48,36 +69,64 @@ const FittedTab = () => {
   )
 }
 
-const TablaMaterias = () => {
+const TablaMaterias = ({user}) => {
   return (
   <Center>
     <Box overflowX="auto">
       <TableContainer>
         <Table variant='simple'>
-          <TableCaption>Ultimas 5 clases contratadas</TableCaption>
+          <TableCaption>Ultimas 5 clases {user.role === "student" ? "contratadas" : "publicadas"}</TableCaption>
           <Thead>
             <Tr>
               <Th>Titulo</Th>
               <Th>Profesor</Th>
               <Th>Fecha</Th>
+              <Th>Acciones</Th>
             </Tr>
           </Thead>
           <Tbody>
+
+            {clases.map((c) => (
             <Tr>
-              <Td>Analisis Matematico - Individual</Td>
-              <Td>Mario Hernandez</Td>
-              <Td>25/09/2022</Td>
+              <Td>{c.title}</Td>
+              <Td>{c.profName}</Td>
+              <Td>{c.date}</Td>
+              {user.role === "student" 
+              ? 
+              <>
+                <Td>
+                  <HStack>
+                    <IconButton
+                      colorScheme='teal'
+                      aria-label='Call Segun'
+                      size='lg'
+                      icon={<DeleteIcon />}
+                    />
+                    <IconButton
+                      colorScheme='teal'
+                      aria-label='Call Segun'
+                      size='lg'
+                      icon={<FaComment />}
+                    />
+                  </HStack>
+                </Td> 
+              </>
+              :
+              <>
+                <Td>
+                  <HStack>
+                    {c.date}
+                    {c.date}
+                  </HStack>
+                </Td> 
+              </>
+              }
             </Tr>
-            <Tr>
-            <Td>Analisis Matematico - Individual</Td>
-              <Td>Mario Hernandez</Td>
-              <Td>25/09/2022</Td>
-            </Tr>
-            <Tr>
-            <Td>Analisis Matematico - Individual</Td>
-              <Td>Mario Hernandez</Td>
-              <Td>25/09/2022</Td>
-            </Tr>
+            ))}
+
+
+
+            
           </Tbody>
         </Table>
       </TableContainer>
@@ -113,12 +162,13 @@ const TablaDatos = () => {
   )
 }
 
-const Profile = () => {
+const Profile = ({user}) => {
 
   return (
     <>
       <BackgroundLayout
-        component={<FittedTab/>}
+        component={<FittedTab
+        user={user}/>}
       />
     </>
   )

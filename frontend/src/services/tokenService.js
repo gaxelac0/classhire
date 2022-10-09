@@ -29,7 +29,7 @@ function getUserFromToken() {
   let user = {
     name:"Pepe Pistolero",
     email:"pepe@outlook.com",
-    roles: [],
+    role: "student",
   };
 
   return user;
