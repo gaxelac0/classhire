@@ -16,15 +16,6 @@ import {
 
   const ClaseCard = (props) => {
 
-    const property = {
-      title: props.title,
-      date: props.date,
-      description: props.description,
-      tags: props.tags,
-      profImage: props.profImage,
-      profName: props.profName,
-    }
-
     return (
       <>
       <Flex
@@ -47,7 +38,7 @@ import {
             fontSize="sm"
             color="gray.600"
           >
-            {property.date}
+            {props.date}
           </chakra.span>
           <Link
             href="/clase"
@@ -67,7 +58,7 @@ import {
 
         <Box mt={2}>
           <Text fontSize={30} as="b">
-            {property.title}
+            {props.title}
           </Text>
           {/* <Link
             fontSize="2xl"
@@ -84,7 +75,7 @@ import {
             mt={2}
             color="gray.600"
           >
-            {property.description}
+            {props.description}
           </chakra.p>
         </Box>
 
@@ -106,7 +97,7 @@ import {
           <HStack spacing={2}>
 
             
-            {property.tags.map((t) => (
+            {props.tags.map((t) => (
               <Tag
               size="sm"
               key="sm"
@@ -131,7 +122,7 @@ import {
                 base: "none",
                 sm: "block",
               }}
-              src={property.profImage}
+              src={props.profImage}
               alt="imag"
             />
             <Link
@@ -139,7 +130,7 @@ import {
               fontWeight="700"
               cursor="pointer"
             >
-              {property.profName}
+              {props.profName}
             </Link>
           </Flex>
         </Flex>

@@ -119,7 +119,8 @@ const PrincipalComponent = () => {
 							title={c.title} 
 							price={c.price} 
 							rating={c.rating}
-							image={c.image} 
+							image={c.image}
+							imageAlt={"imageAlt"}
 							reviewCount={c.reviewCount} 
 						/>
 					))}

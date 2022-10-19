@@ -4,13 +4,7 @@ import { StarIcon } from "@chakra-ui/icons";
 
 const MiniClaseCard = (props) => {
 
-  const property = {
-    imageUrl: props.image,
-    title: props.title,
-    formattedPrice: props.price,
-    reviewCount: props.reviewCount,
-    rating: props.rating,
-  };
+
 
   return (
     <Flex
@@ -28,8 +22,8 @@ const MiniClaseCard = (props) => {
         shadow="lg"
       >
         <Image
-          src={property.imageUrl}
-          alt={property.imageAlt}
+          src={props.image}
+          alt={props.imageAlt}
           roundedTop="lg"
         />
 
@@ -57,11 +51,11 @@ const MiniClaseCard = (props) => {
             lineHeight="tight"
             noOfLines={1}
           >
-            {property.title}
+            {props.title}
           </Text>
 
           <Box>
-            {property.formattedPrice}
+            {props.price}
             <Box as="span" color="gray.600" fontSize="sm">
               / h
             </Box>
@@ -73,11 +67,11 @@ const MiniClaseCard = (props) => {
               .map((_, i) => (
                 <StarIcon
                   key={i}
-                  color={i < property.rating ? "teal.500" : "gray.300"}
+                  color={i < props.rating ? "teal.500" : "gray.300"}
                 />
               ))}
             <Box as="span" ml="2" color="gray.600" fontSize="sm">
-              {property.reviewCount} reviews
+              {props.reviewCount} reviews
             </Box>
           </Box>
         </Box>
