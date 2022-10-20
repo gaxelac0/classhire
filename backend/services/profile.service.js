@@ -2,7 +2,7 @@ var Clase = require("../models/clase.model")
 var User = require("../models/user.model")
 var Profile = require("../models/profile.model")
 const BaseError = require("../utils/error/BaseError")
-const NotFoundError = require("../utils/error/NotFoundError")
+const NotFoundError = require("../utils/error/NotFoundError.js")
 const HttpStatusCodes = require("../utils/HttpStatusCodes")
 
 // Saving the context of this module inside the _the variable

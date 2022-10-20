@@ -2,7 +2,7 @@ var Clase = require("../models/clase.model");
 var User = require("../models/user.model");
 var Profile = require("../models/profile.model");
 const BaseError = require("../utils/error/BaseError");
-const NotFoundError = require("../utils/error/NotFoundError");
+const NotFoundError = require("../utils/error/NotFoundError.js");
 const HttpStatusCodes = require("../utils/HttpStatusCodes");
 var constants = require('../utils/constants');
 
@@ -39,6 +39,8 @@ exports.addReview = async function (body) {
         throw new NotFoundError("err", HttpStatusCodes.NOT_FOUND, `Clase id(${body.clase_id}) no encontrada.`); 
     }
 
+    // TODO: validar que el usuario haciendo la review tenga contratada la clase
+
     let clase = result.docs[0];
     clase.comments.push({ type: body.type, comment: body.comment, profile_author_id: body.user.profile });
     clase.reviewCount = clase.reviewCount + 1;
@@ -66,7 +68,7 @@ exports.addClase = async function (body) {
     let profile = await Profile.findOne(user.profile)
 
     if (profile.role !== constants.RoleEnum[2]) {
-        throw new BaseError("err", HttpStatusCodes.UNAUTHORIZED, true, 'Unauthorized');
+        throw new BaseError("err", HttpStatusCodes.UNAUTHORIZED, true, 'Unauthorized: solo el rol teacher puede crear clases.');
 	}
 
     try {

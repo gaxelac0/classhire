@@ -1,8 +1,10 @@
-var Clase = require('../models/clase.model')
-var Profile = require('../models/profile.model')
-var User = require('../models/user.model')
+var Clase = require('../models/clase.model');
+var Profile = require('../models/profile.model');
+var User = require('../models/user.model');
 
-var constants = require('../utils/constants')
+var mongoose = require('mongoose');
+
+var constants = require('../utils/constants');
 
 var claseService = require('../services/clase.service');
 
@@ -11,8 +13,13 @@ exports.getClases = async function getClases(req, res) {
 	var page = req.query.page ? req.query.page : 1
 	var limit = req.query.limit ? req.query.limit : 10;
 
+	query = {};
+	if (req.body.ids && req.body.ids.length > 0) {
+		query["_id"] = {"$in": req.body.ids};
+	}
+	
 	try {
-		let clases = await claseService.getClases({}, page, limit);
+		let clases = await claseService.getClases(query, page, limit);
 		return res.status(200).json({ status: "ok", data: clases });
 	} catch (e) {
 		return res.status(400).json({ status: "err", message: e.message });

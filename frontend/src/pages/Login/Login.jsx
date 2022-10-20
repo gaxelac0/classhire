@@ -156,6 +156,35 @@ const LoginOld = props => {
 
 const LoginComponent = props => {
 
+  const navigate = useNavigate()
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  })
+
+  const [message, setMessage] = useState([''])
+  const updateMessage = msg => {
+    setMessage(msg)
+  }
+
+  const handleChange = e => {
+    updateMessage('')
+    console.log(e)
+    setFormData({ ...formData, [e.target.id]: e.target.value })
+  }
+
+  const handleSubmit = async evt => {
+    evt.preventDefault()
+    try {
+      await authService.login(formData)
+      props.handleSignupOrLogin()
+      navigate('/')
+    } catch (err) {
+      updateMessage(err.message)
+    }
+  }
+
   return (
     <Flex
       align={'center'}
@@ -171,36 +200,49 @@ const LoginComponent = props => {
           rounded={'lg'}
           boxShadow={'lg'}
           p={8}>
-          <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Password</FormLabel>
-              <Input type="password" />
-            </FormControl>
-            <Stack spacing={10}>
-              <Stack
-                direction={{ base: 'column', sm: 'row' }}
-                align={'start'}
-                justify={'space-between'}>
-                <Checkbox>Remember me</Checkbox>
-                <Link color={'teal.400'}>Forgot password?</Link>
+
+
+          <form
+            onSubmit={handleSubmit}
+          >
+
+            <Stack spacing={4}>
+              <FormControl id="email">
+                <FormLabel>Email address</FormLabel>
+                <Input type="email" 
+                value={formData.email}
+                onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl id="password">
+                <FormLabel>Password</FormLabel>
+                <Input type="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <Stack spacing={10}>
+                <Stack
+                  direction={{ base: 'column', sm: 'row' }}
+                  align={'start'}
+                  justify={'space-between'}>
+                  <Checkbox>Remember me</Checkbox>
+                  <Link color={'teal.400'}>Forgot password?</Link>
+                </Stack>
+                <Button
+                  type="submit"
+                  bg={'teal.400'}
+                  color={'white'}
+                  _hover={{
+                    bg: 'teal.500',
+                  }}>
+                  <Link href="/profile">
+                  Sign in
+                  </Link>
+                </Button>
               </Stack>
-              <Button
-                bg={'teal.400'}
-                color={'white'}
-                _hover={{
-                  bg: 'teal.500',
-                }}>
-                <Link href="/profile">
-                Sign in
-                </Link>
-               
-              </Button>
             </Stack>
-          </Stack>
+          </form>
         </Box>
       </Stack>
     </Flex>

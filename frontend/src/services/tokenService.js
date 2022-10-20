@@ -26,16 +26,16 @@ function getToken() {
   // roles: [], type: Stringroles
 function getUserFromToken() {
 
-  let user = {
+  /*let user = {
     name:"Pepe Pistolero",
     email:"pepe@outlook.com",
     role: "student",
   };
 
-  return user;
+  return user;*/
   
-  //const token = getToken()
-  //return token ? jwt_decode(token).user : null
+  const token = getToken()
+  return token ? jwt_decode(token).user : null
 }
 
 function removeToken() {
