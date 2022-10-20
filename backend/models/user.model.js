@@ -1,8 +1,8 @@
-import mongoose from 'mongoose'
-import bcrypt from 'bcrypt'
+var mongoose = require('mongoose');
+var bcrypt = require('bcrypt');
 const SALT_ROUNDS = 6
 
-const userSchema = new mongoose.Schema({
+var userSchema = new mongoose.Schema({
   name: {type: String, required: true},
   email: { type: String, required: true, lowercase: true, unique: true },
   password: {type: String, required: true},
@@ -38,4 +38,4 @@ userSchema.methods.comparePassword = function (tryPassword, cb) {
 
 const User = mongoose.model('User', userSchema)
 
-export { User }
+module.exports = User;

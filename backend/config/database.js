@@ -1,6 +1,6 @@
-import mongoose from 'mongoose'
+var mongoose = require('mongoose');
 
-const db = mongoose.connection
+const db = mongoose.connection;
 
 mongoose.connect(process.env.DATABASE_URL, {
   user: process.env.MONGO_USER,

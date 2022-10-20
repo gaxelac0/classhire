@@ -1,7 +1,7 @@
-import { Profile } from '../models/profile.js'
-import { v2 as cloudinary } from 'cloudinary'
+var Profile = require('../models/profile.model')
+var cloudinary = require('cloudinary').v2;
 
-function index(req, res) {
+exports.index = async function index(req, res) {
   Profile.find({})
   .then(profiles => res.json(profiles))
   .catch(err => {
@@ -10,7 +10,7 @@ function index(req, res) {
   })
 }
 
-function addPhoto(req, res) {
+exports.addPhoto = async function addPhoto(req, res) {
   const imageFile = req.files.photo.path
   Profile.findById(req.params.id)
   .then(profile => {
@@ -28,5 +28,3 @@ function addPhoto(req, res) {
     })
   })
 }
-
-export { index, addPhoto }

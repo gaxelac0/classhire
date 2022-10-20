@@ -1,8 +1,9 @@
-import { Router } from 'express'
-import * as profileCtrl from '../controllers/profile.js'
-import { decodeUserFromToken, checkAuth } from '../middleware/auth.js'
+const express = require('express');
+const profileCtrl = require('../controllers/profile.js');
+const decodeUserFromToken = require('../middleware/auth.js').decodeUserFromToken;
+const checkAuth = require('../middleware/auth.js').checkAuth;
 
-const router = Router()
+var router = express.Router()
 
 /*---------- Public Routes ----------*/
 
@@ -12,4 +13,4 @@ router.use(decodeUserFromToken)
 router.get('/', checkAuth, profileCtrl.index)
 router.put('/:id/add-photo', checkAuth, profileCtrl.addPhoto)
 
-export { router }
+module.exports = router;

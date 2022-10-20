@@ -1,11 +1,12 @@
-import { Router } from 'express'
-import * as claseCtrl from '../controllers/clase.js'
-import { decodeUserFromToken, checkAuth } from '../middleware/auth.js'
-import { body } from 'express-validator'
+const express = require('express');
 
-import { FrecuenciaEnum } from '../models/clase.js'
+const claseCtrl = require('../controllers/clase.js');
+const decodeUserFromToken = require('../middleware/auth.js').decodeUserFromToken;
+const checkAuth = require('../middleware/auth.js').checkAuth;
+const body = require('express-validator').body;
+const FrecuenciaEnum = require('../models/clase.model').FrecuenciaEnum;
 
-const router = Router()
+var router = express.Router()
 
 /*---------- Public Routes ----------*/
 
@@ -27,5 +28,4 @@ router.post('/review',
     body('comment').exists().notEmpty(),
     claseCtrl.addReview)
 
-
-export { router }
+module.exports = router;

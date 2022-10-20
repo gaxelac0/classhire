@@ -1,16 +1,16 @@
-import 'dotenv/config.js'
-import express from 'express'
-import logger from 'morgan'
-import cors from 'cors'
-import formData from 'express-form-data'
+require('dotenv/config.js');
+var express = require('express');
+var logger = require('morgan');
+var cors = require('cors');
+var formData = require('express-form-data');
 
-import { router as profileRouter } from './routes/profile.js'
-import { router as authRouter } from './routes/auth.js'
-import { router as claseRouter } from './routes/clase.js'
+var profileRouter = require('./routes/profile.js');
+var authRouter = require('./routes/auth.js');
+var claseRouter = require('./routes/clase.js');
 
-import './config/database.js'
+require('./config/database.js');
 
-const app = express()
+var app = express()
 
 app.use(cors())
 app.use(logger('dev'))
@@ -31,4 +31,4 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500).json({ err: err.message })
 })
 
-export { app }
+module.exports = app;

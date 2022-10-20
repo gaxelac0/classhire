@@ -1,11 +1,11 @@
-import { User } from '../models/user.js'
-import { Profile } from '../models/profile.js'
-import jwt from 'jsonwebtoken'
+var User = require('../models/user.model')
+var Profile = require('../models/profile.model')
+var jwt = require('jsonwebtoken')
 
-function signup(req, res) {
-  Profile.findOne({ email: req.body.email })
-  .then(profile => {
-    if (profile) {
+exports.signup = async function signup(req, res) {
+  User.findOne({ email: req.body.email })
+  .then(user => {
+    if (user) {
       throw new Error('Account already exists')
     } else if (!process.env.SECRET) {
       throw new Error('no SECRET in .env file')
@@ -30,7 +30,7 @@ function signup(req, res) {
   })
 }
 
-function login(req, res) {
+exports.login = async function login(req, res) {
   User.findOne({ email: req.body.email })
   .then(user => {
     if (!user) return res.status(401).json({ err: 'User not found' })
@@ -48,7 +48,7 @@ function login(req, res) {
   })
 }
 
-function changePassword(req, res) {
+exports.changePassword = async function changePassword(req, res) {
   User.findById(req.user._id)
   .then(user => {
     if (!user) return res.status(401).json({ err: 'User not found' })
@@ -72,5 +72,5 @@ function changePassword(req, res) {
 function createJWT(user) {
   return jwt.sign({ user }, process.env.SECRET, { expiresIn: '24h' })
 }
+exports.createJWT = createJWT;
 
-export { signup, login, changePassword }

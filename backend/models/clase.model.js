@@ -1,17 +1,17 @@
-import mongoose from 'mongoose'
+var mongoose = require('mongoose');
 
 
 const FrecuenciaEnum = ["unica", "diaria", "semanal", "mensual"];
-const frecuenciaSchema = new mongoose.Schema({value: { type: String, enum: FrecuenciaEnum}});
+var frecuenciaSchema = new mongoose.Schema({value: { type: String, enum: FrecuenciaEnum}});
 
-const commentSchema = new mongoose.Schema({
+var commentSchema = new mongoose.Schema({
   type: {type: String, required: true}, /* can be positive, negative, neutral */
   comment: {type: String, required: true}
 },{
 timestamps: true,
 })
 
-const claseSchema = new mongoose.Schema({
+var claseSchema = new mongoose.Schema({
     title: {type: String, required: true},
     price: {type: Number, required: true},
     rating: {type: Number, default: 0}, 
@@ -27,7 +27,6 @@ const claseSchema = new mongoose.Schema({
   timestamps: true,
 })
 
-
 const Clase = mongoose.model('Clase', claseSchema)
 
-export { Clase, FrecuenciaEnum }
+module.exports = Clase;

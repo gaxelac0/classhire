@@ -1,10 +1,11 @@
-import { Router } from 'express'
-import * as authCtrl from '../controllers/auth.js'
-import { decodeUserFromToken, checkAuth } from '../middleware/auth.js'
-import { check } from 'express-validator'
-import { validateField } from '../middleware/field_validator.js'
+const express = require('express');
+const authCtrl = require('../controllers/auth.js');
+const decodeUserFromToken = require('../middleware/auth.js').decodeUserFromToken;
+const checkAuth = require('../middleware/auth.js').checkAuth;
+const check = require('express-validator').check;
+const validateField = require('../middleware/field_validator.js').validateField;
 
-const router = Router()
+var router = express.Router()
 
 /*---------- Public Routes ----------*/
 router.post(
@@ -31,4 +32,4 @@ router.post(
 router.use(decodeUserFromToken)
 router.post('/changePassword', checkAuth, authCtrl.changePassword)
 
-export { router }
+module.exports = router;

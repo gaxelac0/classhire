@@ -1,8 +1,8 @@
-import jwt from 'jsonwebtoken'
+const jwt = require('jsonwebtoken');
 
 const SECRET = process.env.SECRET
 
-const decodeUserFromToken = (req, res, next) => {
+exports.decodeUserFromToken = async function decodeUserFromToken(req, res, next) {
   let token = req.get('Authorization') || req.query.token || req.body.token
   if (token) {
     token = token.replace('Bearer ', '')
@@ -19,8 +19,7 @@ const decodeUserFromToken = (req, res, next) => {
   }
 }
 
-function checkAuth(req, res, next) {
+exports.checkAuth = async function checkAuth(req, res, next) {
   return req.user ? next() : res.status(401).json({ msg: 'Not Authorized' })
 }
 
-export { decodeUserFromToken, checkAuth }
