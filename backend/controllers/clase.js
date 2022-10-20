@@ -32,12 +32,12 @@ function addClase(req, res) {
             })
             .catch(err => {
               Clase.findByIdAndDelete(newClase._id)
-              res.status(500).json({ err: err.errmsg })
+              res.status(500).json({ err: err.message })
             })
         })
         .catch(err => {
           Clase.findByIdAndDelete(newClase._id)
-          res.status(500).json({ err: err.errmsg })
+          res.status(500).json({ err: err.message })
         })
     })
     .catch(err => {
@@ -46,4 +46,41 @@ function addClase(req, res) {
 
 }
 
-export { index, addClase }
+
+function addReview(req, res) {
+  const body = req.body;
+
+  const type = body.type;
+  const comment = body.comment;
+
+  Clase.findOne({_id: body.clase_id})
+    .then(async clase => {
+
+      clase.comments.push({type: type, comment: comment})
+      clase.reviewCount = clase.reviewCount+1;
+
+      let cantNeg = clase.reviewNegative;
+      let cantPos = clase.reviewPositive;
+      if (type === "positive") {
+        cantPos = cantPos+1;
+      } else {
+        cantNeg = cantNeg+1;
+      }
+      clase.reviewPositive = cantPos;
+      clase.reviewNegative = cantNeg;
+
+      let percentage = (100 * cantPos) / clase.reviewCount;
+
+      clase.rating = percentage/20;
+    
+      await clase.save()
+      res.status(200).json({status: "ok", msg: "Review posteada"});
+  
+    })
+    .catch(err => {
+      res.status(500).json({ err: err.message })
+    })
+
+}
+
+export { index, addClase, addReview }

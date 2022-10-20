@@ -5,4 +5,6 @@ RUN npm install -g nodemon
 WORKDIR /app
 COPY . .
 
+RUN ls -l
+
 RUN npm install

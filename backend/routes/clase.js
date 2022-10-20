@@ -12,14 +12,20 @@ const router = Router()
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
-router.get('/', checkAuth, claseCtrl.index)
+router.get('/',
+    checkAuth,
+    claseCtrl.index)
+
 router.post('/add',
-    body('frecuencia')
-        .exists()
-        .notEmpty()
-        .isIn(FrecuenciaEnum),
+    body('frecuencia').exists().notEmpty().isIn(FrecuenciaEnum), // TODO: check this validation
     checkAuth,
     claseCtrl.addClase)
+
+router.post('/review',
+    checkAuth,
+    body('type').exists().notEmpty(),
+    body('comment').exists().notEmpty(),
+    claseCtrl.addReview)
 
 
 export { router }
