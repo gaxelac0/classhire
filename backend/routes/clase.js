@@ -24,6 +24,7 @@ router.post('/add',
 
 router.post('/review',
     checkAuth,
+    body('id').exists().notEmpty(),
     body('type').exists().notEmpty(),
     body('comment').exists().notEmpty(),
     claseCtrl.addReview)

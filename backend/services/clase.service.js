@@ -3,28 +3,53 @@ var Clase = require("../models/clase.model")
 // Saving the context of this module inside the _the variable
 _this = this
 
-exports.getClase  = async function (filtro) {
-    try {
-        var clases = await Clase.find(filtro);
-    } catch (e) {
-        throw Error("No se pudo encontrar la clase")
-    }
+async function getClases(query, page, limit) {
 
-    if (!clases) {
-        return false;
+    // Options setup for the mongoose paginate
+    var options = {
+        page,
+        limit
     }
-    return clases;
+    // Try Catch the awaited promise to handle the error 
+    try {
+        console.log("Query", query)
+        var Clases = await Clase.paginate(query, options)
+        // Return the Clase list that was retured by the mongoose promise
+        return Clases;
+
+    } catch (e) {
+        // return a Error message describing the reason 
+        console.log("error services", e)
+        throw Error('Error while Paginating Clases');
+    }
 }
+exports.getClases = getClases;
 
-exports.getClaseById = async function (id) {
+exports.addReview = async function (id, type, comment) {
+
     try {
-        var clases = await Clase.findById(id);
-    } catch (e) {
-        throw Error("No se pudo encontrar la clase")
-    }
+        var result = await getClases({ _id: id }, 1, 1)
 
-    if (!clases) {
-        return false;
+        let clase = result.docs[0];
+        clase.comments.push({ type: type, comment: comment })
+        clase.reviewCount = clase.reviewCount + 1;
+
+        let cantNeg = clase.reviewNegative;
+        let cantPos = clase.reviewPositive;
+        if (type === "positive") {
+            cantPos = cantPos + 1;
+        } else {
+            cantNeg = cantNeg + 1;
+        }
+        clase.reviewPositive = cantPos;
+        clase.reviewNegative = cantNeg;
+
+        let percentage = (100 * cantPos) / clase.reviewCount;
+
+        clase.rating = percentage / 20;
+
+        return await clase.save();
+    } catch (e) {
+        console.log("error services", e)
     }
-    return clases;
 }

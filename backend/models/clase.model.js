@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-
+var mongoosePaginate = require('mongoose-paginate')
 
 const FrecuenciaEnum = ["unica", "diaria", "semanal", "mensual"];
 var frecuenciaSchema = new mongoose.Schema({value: { type: String, enum: FrecuenciaEnum}});
@@ -27,6 +27,7 @@ var claseSchema = new mongoose.Schema({
   timestamps: true,
 })
 
+claseSchema.plugin(mongoosePaginate)
 const Clase = mongoose.model('Clase', claseSchema)
 
 module.exports = Clase;
