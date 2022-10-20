@@ -6,7 +6,8 @@ var frecuenciaSchema = new mongoose.Schema({value: { type: String, enum: Frecuen
 
 var commentSchema = new mongoose.Schema({
   type: {type: String, required: true}, /* can be positive, negative, neutral */
-  comment: {type: String, required: true}
+  comment: {type: String, required: true},
+  profile_author_id: {type: mongoose.Schema.Types.ObjectId, ref: "Profile"}
 },{
 timestamps: true,
 })

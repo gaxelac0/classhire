@@ -15,7 +15,7 @@ var router = express.Router()
 router.use(decodeUserFromToken)
 router.get('/',
     checkAuth,
-    claseCtrl.index)
+    claseCtrl.getClases)
 
 router.post('/add',
     body('frecuencia').exists().notEmpty().isIn(FrecuenciaEnum), // TODO: check this validation
