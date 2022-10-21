@@ -74,8 +74,41 @@ exports.addClase = async function (body) {
     try {
         profile.clases.push(newClase);
         await profile.save();
+        return newClase;
     } catch (e) {
         Clase.findByIdAndDelete(newClase._id)
+        throw new BaseError("err", HttpStatusCodes.INTERNAL_SERVER, true, err.message);
+    }
+}
+
+exports.deleteClase = async function (body) {
+    let clase = await Clase.findOne({_id: body.clase_id});
+    //let profile = await Profile.findOne({_id: body.user.profile});
+
+    if (!clase) {
+        throw new NotFoundError("err", HttpStatusCodes.NOT_FOUND, true, 'La clase no existe');
+	}
+
+    
+
+    try {
+
+        Profile.findOne({'_id': body.user.profile}, async function(err, profile){
+            if (err) {
+                console.log(err);            
+            }else{
+                await profile.clases.pull(body.clase_id);
+                await clase.delete();
+                await profile.save();
+            }
+        });
+
+       //profile.clases.pull(clase);
+
+        
+        //profile.clases.pop(clase);
+        //await profile.save();
+    } catch (e) {
         throw new BaseError("err", HttpStatusCodes.INTERNAL_SERVER, true, err.message);
     }
 }

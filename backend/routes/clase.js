@@ -17,10 +17,14 @@ router.get('/',
     checkAuth,
     claseCtrl.getClases)
 
-router.post('/add',
+router.post('/',
     body('frecuencia').exists().notEmpty().isIn(FrecuenciaEnum), // TODO: check this validation
     checkAuth,
     claseCtrl.addClase)
+
+router.delete('/',
+    checkAuth,
+    claseCtrl.deleteClase)
 
 router.post('/review',
     checkAuth,

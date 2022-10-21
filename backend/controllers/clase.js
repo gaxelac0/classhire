@@ -17,6 +17,10 @@ exports.getClases = async function getClases(req, res) {
 	if (req.body.ids && req.body.ids.length > 0) {
 		query["_id"] = {"$in": req.body.ids};
 	}
+
+	if (req.body.ratingMin) {
+		query["rating"] = {"$gte": req.body.ratingMin};
+	}
 	
 	try {
 		let clases = await claseService.getClases(query, page, limit);
@@ -32,6 +36,18 @@ exports.addClase = async function addClase(req, res) {
 	try {
 		let clase = await claseService.addClase(body);
 		return res.status(200).json({ status: "ok", message: "Clase dada de alta exitosamente", data: clase });
+	} catch (e) {
+		return res.status(e.statusCode).json({ status: e.name, message: e.message });
+	}
+}
+
+
+exports.deleteClase = async function deleteClase(req, res) {
+	const body = req.body;
+	body.user = req.user;
+	try {
+		await claseService.deleteClase(body);
+		return res.status(200).json({ status: "ok", message: "Clase eliminada exitosamente" });
 	} catch (e) {
 		return res.status(e.statusCode).json({ status: e.name, message: e.message });
 	}
