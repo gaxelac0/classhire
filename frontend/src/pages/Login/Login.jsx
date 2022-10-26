@@ -179,7 +179,7 @@ const LoginComponent = props => {
     try {
       await authService.login(formData)
       props.handleSignupOrLogin()
-      navigate('/')
+      navigate('/profile')
     } catch (err) {
       updateMessage(err.message)
     }
@@ -209,9 +209,9 @@ const LoginComponent = props => {
             <Stack spacing={4}>
               <FormControl id="email">
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" 
-                value={formData.email}
-                onChange={handleChange}
+                <Input type="email"
+                  value={formData.email}
+                  onChange={handleChange}
                 />
               </FormControl>
               <FormControl id="password">
@@ -236,9 +236,7 @@ const LoginComponent = props => {
                   _hover={{
                     bg: 'teal.500',
                   }}>
-                  <Link href="/profile">
                   Sign in
-                  </Link>
                 </Button>
               </Stack>
             </Stack>
@@ -253,7 +251,11 @@ const LoginComponent = props => {
 const Login = props => {
   return (
     <BackgroundLayout
-      component={<LoginComponent/>}
+      component={
+        <LoginComponent
+        handleSignupOrLogin={props.handleSignupOrLogin}
+        />
+      }
     />
   )
 }

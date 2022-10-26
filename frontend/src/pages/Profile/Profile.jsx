@@ -31,7 +31,17 @@ import { clases } from '../../mock/mocks'
 import { FaComment } from 'react-icons/fa'
 
 
-const FittedTab = ({user}) => {
+import { useState, useEffect } from 'react'
+import * as claseService from '../../services/claseService'
+
+
+const FittedTab = (props) => {
+
+  useEffect(() => {
+    console.log("received clases in FittedTab")
+    console.log(props.clases)
+  }, [])
+
   return(
     <Tabs variant='soft-rounded' colorScheme="teal">
       {/* Elemmentos del perfil */}
@@ -44,7 +54,7 @@ const FittedTab = ({user}) => {
       <TabPanels> 
         {/* Materias */}
         <TabPanel>
-          <TablaMaterias user={user}/>
+          <TablaMaterias user={props.user} clases={props.clases}/>
         </TabPanel>
         {/* Datos Personales */}
         <TabPanel>
@@ -69,13 +79,20 @@ const FittedTab = ({user}) => {
   )
 }
 
-const TablaMaterias = ({user}) => {
+const TablaMaterias = (props) => {
+
+  useEffect(() => {
+    console.log("received clases in TablaMaterias")
+    console.log(props.clases)
+  }, [])
+
   return (
   <Center>
     <Box overflowX="auto">
       <TableContainer>
         <Table variant='simple'>
-          <TableCaption>Ultimas 5 clases {user.role === "student" ? "contratadas" : "publicadas"}</TableCaption>
+          <TableCaption>Ultimas 5 clases {props.user.role === "student" ? "contratadas" : "publicadas"}</TableCaption>
+          <TableCaption>UserName: {props.user.name}</TableCaption>
           <Thead>
             <Tr>
               <Th>Titulo</Th>
@@ -86,12 +103,12 @@ const TablaMaterias = ({user}) => {
           </Thead>
           <Tbody>
 
-            {clases.map((c) => (
+            {props.clases.map((c) => (
             <Tr>
               <Td>{c.title}</Td>
               <Td>{c.profName}</Td>
               <Td>{c.date}</Td>
-              {user.role === "student" 
+              {props.user.role === "student" 
               ? 
               <>
                 <Td>
@@ -164,11 +181,25 @@ const TablaDatos = () => {
 
 const Profile = ({user}) => {
 
+
+  const [clases, setClases] = useState([])
+
+  useEffect(() => {
+    const fetchClases = async () => {
+      const clasesData = await claseService.getClasesByUser()
+      setClases(clasesData.data.docs)
+      console.log("retrieving clases")
+      console.log(clasesData.data.docs)
+    }
+    fetchClases()
+  }, [])
+
   return (
     <>
       <BackgroundLayout
         component={<FittedTab
-        user={user}/>}
+        user={user}
+        clases={clases}/>}
       />
     </>
   )

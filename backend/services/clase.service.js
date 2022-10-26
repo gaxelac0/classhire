@@ -93,7 +93,7 @@ exports.deleteClase = async function (body) {
 
     try {
 
-        Profile.findOne({'_id': body.user.profile}, async function(err, profile){
+        await Profile.findOne({'_id': body.user.profile}, async function(err, profile){
             if (err) {
                 console.log(err);            
             }else{

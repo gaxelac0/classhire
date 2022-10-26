@@ -1,35 +1,20 @@
 var User = require('../models/user.model')
 var Profile = require('../models/profile.model')
-var jwt = require('jsonwebtoken')
 var constants = require('../utils/constants')
 
+var authService = require('../services/auth.service')
+
 exports.signup = async function signup(req, res) {
-  User.findOne({ email: req.body.email })
-  .then(user => {
-    if (user) {
-      throw new Error('Account already exists')
-    } else if (!process.env.SECRET) {
-      throw new Error('no SECRET in .env file')
-    } else {
-      req.body.role = constants.RoleEnum[0];
-      Profile.create(req.body)
-      .then(newProfile => {
-        req.body.profile = newProfile._id
-        User.create(req.body)
-        .then(user => {
-          const token = createJWT({user, profile: newProfile})
-          res.status(200).json({ token })
-        })
-        .catch(err => {
-          Profile.findByIdAndDelete(req.body.profile)
-          res.status(500).json({ err: err.errmsg })
-        })
-      })
-    }
-  })
-  .catch(err => {
-    res.status(500).json({ err: err.message })
-  })
+
+  // Role vacio, luego sera completado en el complete onboard
+  req.body.role = constants.RoleEnum[0];
+
+  try { 
+    let token = await authService.signUp(req.body);
+		return res.status(200).json({ status: "ok", token: token });
+	} catch (e) { 
+		return res.status(e.statusCode).json({ status: e.name, msg: e.message }) 
+	}
 }
 
 exports.login = async function login(req, res) {
@@ -39,7 +24,8 @@ exports.login = async function login(req, res) {
     user.comparePassword(req.body.password, async (err, isMatch) => {
       if (isMatch) {
         let profile = await Profile.findOne(user.profile);
-        const token = createJWT({user, profile});
+        const token = authService.createJWT({user, profile});
+        console.log(token);
         res.json({ token })
       } else {
         res.status(401).json({ err: 'Incorrect user or password' })
@@ -70,11 +56,4 @@ exports.changePassword = async function changePassword(req, res) {
     })
   })
 }
-
-/* --== Helper Functions ==-- */
-
-function createJWT(userDetails) {
-  return jwt.sign(userDetails, process.env.SECRET, { expiresIn: '24h' })
-}
-exports.createJWT = createJWT;
 

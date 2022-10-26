@@ -14,7 +14,9 @@
             // 5. Name of the configuration
             "name": "Docker: Attach to Node",
             // 6. Connect to /node directory of docker
-            "remoteRoot": "/app"
-        }
+            "remoteRoot": "/app",
+            
+        },
+        
     ]
 }
