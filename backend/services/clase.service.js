@@ -5,6 +5,7 @@ const BaseError = require("../utils/error/BaseError");
 const NotFoundError = require("../utils/error/NotFoundError.js");
 const HttpStatusCodes = require("../utils/HttpStatusCodes");
 var constants = require('../utils/constants');
+var mongoose = require('mongoose');
 
 // Saving the context of this module inside the _the variable
 _this = this;
@@ -31,12 +32,62 @@ async function getClases(query, page, limit) {
 }
 exports.getClases = getClases;
 
+
+async function getClasesByProfileId(body, page, limit) {
+
+    // Options setup for the mongoose paginate
+    var options = {
+        page,
+        limit
+    };
+
+    let profile_id = body.profile_id;
+
+    try {
+        
+        var myAggregate = Profile.aggregate([
+            {
+                "$match": {
+                    "_id": mongoose.Types.ObjectId(profile_id)
+                }
+            },
+            {
+                "$project": {
+                    "_id": 0,
+                    "clases": {
+                        "$filter": {
+                            "input": "$clases",
+                            "cond": { }
+                        }
+                    }
+                }
+            } 
+        ]);
+        var result = await Profile.aggregatePaginate(myAggregate, options);
+
+        var clases_ids = result.docs[0].clases;
+
+        var Clases = await getClases({ids: clases_ids}, page, limit); 
+
+
+        //console.log("aggregate", myAggregate);
+        //console.log("clases", Clases);
+        return Clases;
+
+    } catch (e) {
+        // return a Error message describing the reason 
+        console.log("error services", e);
+        throw Error('Error while Paginating Clases');
+    }
+}
+exports.getClasesByProfileId = getClasesByProfileId;
+
 exports.addReview = async function (body) {
 
     var result = await getClases({ _id: body.clase_id }, 1, 1);
 
     if (result.total == 0) {
-        throw new NotFoundError("err", HttpStatusCodes.NOT_FOUND, `Clase id(${body.clase_id}) no encontrada.`); 
+        throw new NotFoundError("err", HttpStatusCodes.NOT_FOUND, `Clase id(${body.clase_id}) no encontrada.`);
     }
 
     // TODO: validar que el usuario haciendo la review tenga contratada la clase
@@ -69,7 +120,7 @@ exports.addClase = async function (body) {
 
     if (profile.role !== constants.RoleEnum[2]) {
         throw new BaseError("err", HttpStatusCodes.UNAUTHORIZED, true, 'Unauthorized: solo el rol teacher puede crear clases.');
-	}
+    }
 
     try {
         profile.clases.push(newClase);
@@ -82,30 +133,28 @@ exports.addClase = async function (body) {
 }
 
 exports.deleteClase = async function (body) {
-    let clase = await Clase.findOne({_id: body.clase_id});
+    let clase = await Clase.findOne({ _id: body.clase_id });
     //let profile = await Profile.findOne({_id: body.user.profile});
 
     if (!clase) {
         throw new NotFoundError("err", HttpStatusCodes.NOT_FOUND, true, 'La clase no existe');
-	}
-
-    
+    }
 
     try {
 
-        await Profile.findOne({'_id': body.user.profile}, async function(err, profile){
+        await Profile.findOne({ '_id': body.user.profile }, async function (err, profile) {
             if (err) {
-                console.log(err);            
-            }else{
+                console.log(err);
+            } else {
                 await profile.clases.pull(body.clase_id);
                 await clase.delete();
                 await profile.save();
             }
         });
 
-       //profile.clases.pull(clase);
+        //profile.clases.pull(clase);
 
-        
+
         //profile.clases.pop(clase);
         //await profile.save();
     } catch (e) {

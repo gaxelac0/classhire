@@ -9,11 +9,12 @@ const FrecuenciaEnum = require('../models/clase.model').FrecuenciaEnum;
 var router = express.Router()
 
 /*---------- Public Routes ----------*/
-router.get('/', claseCtrl.getClases)
+router.post('/', claseCtrl.getClases)
+router.post('/byprofile', claseCtrl.getClasesByProfileId)
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
-router.post('/',
+router.post('/add',
     body('frecuencia').exists().notEmpty().isIn(FrecuenciaEnum), // TODO: check this validation
     checkAuth,
     claseCtrl.addClase)

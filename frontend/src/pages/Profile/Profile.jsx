@@ -1,21 +1,21 @@
-import { 
-  Box, 
-  Center, 
+import {
+  Box,
+  Center,
   Button,
-  Table, 
-  Thead, 
+  Table,
+  Thead,
   Tbody,
-  Tr, 
-  Th, 
-  Td, 
-  TableCaption, 
+  Tr,
+  Th,
+  Td,
+  TableCaption,
   TableContainer,
   Tabs,
-  Tab, 
-  TabList, 
-  TabPanels, 
+  Tab,
+  TabList,
+  TabPanels,
   TabPanel,
-  Image, 
+  Image,
   Text,
   HStack,
   IconButton,
@@ -42,7 +42,7 @@ const FittedTab = (props) => {
     console.log(props.clases)
   }, [])
 
-  return(
+  return (
     <Tabs variant='soft-rounded' colorScheme="teal">
       {/* Elemmentos del perfil */}
       <TabList mb='1em'>
@@ -51,10 +51,10 @@ const FittedTab = (props) => {
         {/* <Tab>Otra Cosa</Tab> */}
       </TabList>
       {/* Contenido de los elementos */}
-      <TabPanels> 
+      <TabPanels>
         {/* Materias */}
         <TabPanel>
-          <TablaMaterias user={props.user} clases={props.clases}/>
+          <TablaMaterias user={props.user} clases={props.clases} pagination={props.pagination} />
         </TabPanel>
         {/* Datos Personales */}
         <TabPanel>
@@ -67,7 +67,7 @@ const FittedTab = (props) => {
             />
           </Center>
           <Center>
-            <TablaDatos/>
+            <TablaDatos />
           </Center>
         </TabPanel>
         {/* Otra Cosa */}
@@ -87,69 +87,101 @@ const TablaMaterias = (props) => {
   }, [])
 
   return (
-  <Center>
-    <Box overflowX="auto">
-      <TableContainer>
-        <Table variant='simple'>
-          <TableCaption>Ultimas 5 clases {props.user.role === "student" ? "contratadas" : "publicadas"}</TableCaption>
-          <TableCaption>UserName: {props.user.name}</TableCaption>
-          <Thead>
-            <Tr>
-              <Th>Titulo</Th>
-              <Th>Profesor</Th>
-              <Th>Fecha</Th>
-              <Th>Acciones</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
+    <Center>
+      <Box overflowX="auto">
+        <TableContainer>
+          <Table variant='simple'>
+            <TableCaption>Ultimas {props.clases.length} clases {props.user.role === "student" ? "contratadas" : "publicadas"}</TableCaption>
+            <TableCaption color="red">UserName: {props.user.name}</TableCaption>
+            <TableCaption color="red">page: {props.pagination.page}</TableCaption>
+            <TableCaption color="red">totalPages: {props.pagination.totalPages}</TableCaption>
+            <Thead>
+              <Tr>
+                {props.user.role === "student"
+                  ?
 
-            {props.clases.map((c) => (
-            <Tr>
-              <Td>{c.title}</Td>
-              <Td>{c.profName}</Td>
-              <Td>{c.date}</Td>
-              {props.user.role === "student" 
-              ? 
-              <>
-                <Td>
-                  <HStack>
-                    <IconButton
-                      colorScheme='teal'
-                      aria-label='Call Segun'
-                      size='lg'
-                      icon={<DeleteIcon />}
-                    />
-                    <IconButton
-                      colorScheme='teal'
-                      aria-label='Call Segun'
-                      size='lg'
-                      icon={<FaComment />}
-                    />
-                  </HStack>
-                </Td> 
-              </>
-              :
-              <>
-                <Td>
-                  <HStack>
-                    {c.date}
-                    {c.date}
-                  </HStack>
-                </Td> 
-              </>
-              }
-            </Tr>
-            ))}
+                  <>
+                    <Th>Titulo</Th>
+                    <Th>Profesor</Th>
+                    <Th>Fecha</Th>
+                    <Th>Acciones</Th>
+                  </>
+
+                  :
+
+                  <>
+                    <Th>Titulo</Th>
+                    <Th>Fecha</Th>
+                    <Th>Acciones</Th>
+                  </>
+
+                }
+              </Tr>
+            </Thead>
+            <Tbody>
+
+              {props.clases.map((c) => (
+                <Tr>
+
+                  {props.user.role === "student"
+                    ?
+                    <>
+                      <Td>{c.title}</Td>
+                      <Td>{c.profName}</Td>
+                      <Td>{c.date}</Td>
+                    </>
+
+                    :
+
+                    <>
+                      <Td>{c.title}</Td>
+                      <Td>{c.date}</Td>
+                    </>
 
 
+                  }
+                  {props.user.role === "student"
+                    ?
+                    <>
+                      <Td>
+                        <HStack>
+                          <IconButton
+                            colorScheme='teal'
+                            aria-label='Call Segun'
+                            size='lg'
+                            icon={<DeleteIcon />}
+                          />
+                          <IconButton
+                            colorScheme='teal'
+                            aria-label='Call Segun'
+                            size='lg'
+                            icon={<FaComment />}
+                          />
+                        </HStack>
+                      </Td>
+                    </>
+                    :
+                    <>
+                      <Td>
+                        <HStack>
+                          {c.date}
+                          {c.date}
+                        </HStack>
+                      </Td>
+                    </>
+                  }
+                </Tr>
+              ))}
 
-            
-          </Tbody>
-        </Table>
-      </TableContainer>
-      <Pagination/>
-    </Box>
-  </Center>
+
+
+
+            </Tbody>
+          </Table>
+        </TableContainer>
+        <Pagination pagination={props.pagination} />
+      </Box>
+    </Center>
   )
 }
 
@@ -179,17 +211,26 @@ const TablaDatos = () => {
   )
 }
 
-const Profile = ({user}) => {
+const Profile = ({ user }) => {
 
 
   const [clases, setClases] = useState([])
+  const [pagination, setPagination] = useState({
+    page: 0,
+    totalPages: 0
+  })
 
   useEffect(() => {
     const fetchClases = async () => {
-      const clasesData = await claseService.getClasesByUser()
-      setClases(clasesData.data.docs)
-      console.log("retrieving clases")
-      console.log(clasesData.data.docs)
+      const clasesData = await claseService.getClasesByUser(user.profile, 1, 5);
+      setClases(clasesData.data.docs);
+      setPagination({
+        page:clasesData.data.page,
+        totalPages:clasesData.data.pages
+      });
+      console.log("retrieving clases");
+      console.log(clases);
+      console.log(pagination);
     }
     fetchClases()
   }, [])
@@ -198,11 +239,13 @@ const Profile = ({user}) => {
     <>
       <BackgroundLayout
         component={<FittedTab
-        user={user}
-        clases={clases}/>}
+          user={user}
+          clases={clases}
+          pagination={pagination} 
+          />}
       />
     </>
   )
 }
- 
+
 export default Profile

@@ -7,7 +7,22 @@ import PagButton from "./PagButton";
 
 
 
-const Pagination = () => {
+const Pagination = (props) => {
+
+    const buttons = [];
+
+    for (var i = 1; i <= props.pagination.totalPages; i++) {
+
+        if (i == props.page) {
+            buttons.push(
+                <PagButton active>{i}</PagButton>
+            );
+        } else {
+            buttons.push(
+                <PagButton>{i}</PagButton>
+            );
+        }
+    }
     
     return (
         <Flex
@@ -18,11 +33,7 @@ const Pagination = () => {
         >
         <Flex>
         <PagButton disabled>previous</PagButton>
-        <PagButton active>1</PagButton>
-        <PagButton>2</PagButton>
-        <PagButton>3</PagButton>
-        <PagButton>4</PagButton>
-        <PagButton>5</PagButton>
+        {buttons}
         <PagButton>Next</PagButton>
         </Flex>
         </Flex>

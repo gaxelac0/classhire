@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var mongoosePaginate = require('mongoose-paginate')
+var mongoosePaginate = require('mongoose-paginate');
 
 const FrecuenciaEnum = ["unica", "diaria", "semanal", "mensual"];
 var frecuenciaSchema = new mongoose.Schema({value: { type: String, enum: FrecuenciaEnum}});
@@ -10,7 +10,7 @@ var commentSchema = new mongoose.Schema({
   profile_author_id: {type: mongoose.Schema.Types.ObjectId, ref: "Profile"}
 },{
 timestamps: true,
-})
+});
 
 var claseSchema = new mongoose.Schema({
     title: {type: String, required: true},
@@ -26,9 +26,10 @@ var claseSchema = new mongoose.Schema({
     comments: [commentSchema]
 },{
   timestamps: true,
-})
+});
 
-claseSchema.plugin(mongoosePaginate)
-const Clase = mongoose.model('Clase', claseSchema)
+claseSchema.plugin(mongoosePaginate);
+
+const Clase = mongoose.model('Clase', claseSchema);
 
 module.exports = Clase;

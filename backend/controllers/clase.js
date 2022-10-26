@@ -30,6 +30,19 @@ exports.getClases = async function getClases(req, res) {
 	}
 }
 
+exports.getClasesByProfileId = async function getClasesByProfileId(req, res) {
+
+	var page = req.query.page ? req.query.page : 1
+	var limit = req.query.limit ? req.query.limit : 10;
+
+	try {
+		let clases = await claseService.getClasesByProfileId(req.body, page, limit);
+		return res.status(200).json({ status: "ok", data: clases });
+	} catch (e) {
+		return res.status(400).json({ status: "err", message: e.message });
+	}
+}
+
 exports.addClase = async function addClase(req, res) {
 	const body = req.body;
 	body.user = req.user;
