@@ -58,7 +58,7 @@ const App = () => {
       <Route path="/clase/add" element={<CrearClase user={user} />} 
       />
       <Route
-        path="/profile"
+        path="/profile/:page"
         element={user ? <Profile user={user} /> : <Navigate to="/login" />}
       />
       <Route

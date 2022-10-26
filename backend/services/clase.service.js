@@ -37,15 +37,15 @@ async function getClasesByProfileId(body, page, limit) {
 
     // Options setup for the mongoose paginate
     var options = {
-        page,
-        limit
+        page: page,
+        limit: limit
     };
 
     let profile_id = body.profile_id;
 
     try {
         
-        var myAggregate = Profile.aggregate([
+        const myAggregate = Profile.aggregate([
             {
                 "$match": {
                     "_id": mongoose.Types.ObjectId(profile_id)
@@ -63,7 +63,7 @@ async function getClasesByProfileId(body, page, limit) {
                 }
             } 
         ]);
-        var result = await Profile.aggregatePaginate(myAggregate, options);
+        var result = await Clase.paginate(myAggregate, options);
 
         var clases_ids = result.docs[0].clases;
 

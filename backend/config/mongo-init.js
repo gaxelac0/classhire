@@ -111,5 +111,5 @@ db.users.insertOne({
 	profile: ObjectId("demoteacher0"),
 	name: "Joe Fateree",
 	email: "teacher@outlook.com",
-	password: "123456"
+	password: "$2b$06$T8qZKC8v28SC2SfcVRWLgOgaEwwDy.DXlI2BbnOjpLTm9ApOE67Ru"
 });

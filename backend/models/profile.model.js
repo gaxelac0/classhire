@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var mongoosePaginate = require('mongoose-paginate');
+//var mongoosePaginate = require('mongoose-paginate');
 var aggregatePaginate = require('mongoose-aggregate-paginate-v2');
 
 var RoleEnum = require('../utils/constants').RoleEnum;
@@ -13,7 +13,7 @@ var profileSchema = new mongoose.Schema({
   timestamps: true,
 })
 
-profileSchema.plugin(mongoosePaginate)
+//profileSchema.plugin(mongoosePaginate)
 profileSchema.plugin(aggregatePaginate);
 var Profile = mongoose.model('Profile', profileSchema)
 

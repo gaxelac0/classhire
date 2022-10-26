@@ -28,11 +28,19 @@ import Pagination from '../../components/Pagination/Pagination'
 import BackgroundLayout from '../../components/Layout/BackgroundLayout'
 
 import { clases } from '../../mock/mocks'
+
+
 import { FaComment } from 'react-icons/fa'
 
 
 import { useState, useEffect } from 'react'
 import * as claseService from '../../services/claseService'
+
+import { useSearchParams } from 'react-router-dom'
+
+import { useFocusEffect } from '@chakra-ui/react'
+
+import { useParams } from 'react-router-dom'
 
 
 const FittedTab = (props) => {
@@ -213,6 +221,7 @@ const TablaDatos = () => {
 
 const Profile = ({ user }) => {
 
+  let { page } = useParams();
 
   const [clases, setClases] = useState([])
   const [pagination, setPagination] = useState({
@@ -220,9 +229,10 @@ const Profile = ({ user }) => {
     totalPages: 0
   })
 
+
   useEffect(() => {
     const fetchClases = async () => {
-      const clasesData = await claseService.getClasesByUser(user.profile, 1, 5);
+      const clasesData = await claseService.getClasesByUser(user.profile, page, 5);
       setClases(clasesData.data.docs);
       setPagination({
         page:clasesData.data.page,
@@ -233,7 +243,7 @@ const Profile = ({ user }) => {
       console.log(pagination);
     }
     fetchClases()
-  }, [])
+  }, [page])
 
   return (
     <>
