@@ -122,7 +122,7 @@ exports.addClase = async function (body) {
         throw new BaseError("err", HttpStatusCodes.UNAUTHORIZED, true, 'Unauthorized: solo el rol teacher puede crear clases.');
     }
 
-    try {
+    try { 
         profile.clases.push(newClase);
         await profile.save();
         return newClase;
