@@ -33,50 +33,56 @@ const App = () => {
   return (
     <>
 
-    <NavBar user={user} handleLogout={handleLogout} 
-    />
+      <NavBar user={user} handleLogout={handleLogout}
+      />
 
-    <Routes>
-      <Route
-        path="/signup"
-        element={<Signup handleSignupOrLogin={handleSignupOrLogin} />}
-      />
-      <Route
-        path="/login"
-        element={<Login handleSignupOrLogin={handleSignupOrLogin} />}
-      />
-      <Route path="/onboard" element={<Onboard user={user} />} 
-      />
-      <Route path="/complete-onboard/student" element={<CompleteOnboardStudentFrm user={user} />} 
-      />
-      <Route path="/complete-onboard/profesor" element={<CompleteOnboardTeacherFrm user={user} />} 
-      /> 
-      <Route path="/search" element={<Search user={user} />} 
-      /> 
-      <Route path="/clase" element={<Clase user={user} />} 
-      />
-      <Route path="/clase/add" element={<CrearClase user={user} />} 
-      />
-      <Route
-        path="/profile/:page"
-        element={user ? <Profile user={user} /> : <Navigate to="/login" />}
-      />
-      <Route
-        path="/changePassword"
-        element={
-          user ? (
-            <ChangePassword handleSignupOrLogin={handleSignupOrLogin} />
-          ) : (
-            <Navigate to="/login" />
-          )
-        }
-      />
-      <Route path="/" element={<Principal user={user} />}
-      />
-      <Route path="*" element={<NotFound user={user} />} 
-      />
-    </Routes>
-    <Footer/>
+      <Routes>
+        <Route
+          path="/signup"
+          element={<Signup handleSignupOrLogin={handleSignupOrLogin} />}
+        />
+        <Route
+          path="/login"
+          element={<Login handleSignupOrLogin={handleSignupOrLogin} />}
+        />
+        <Route path="/onboard" element={<Onboard user={user} />}
+        />
+        <Route path="/complete-onboard/student" element={<CompleteOnboardStudentFrm user={user} />}
+        />
+        <Route path="/complete-onboard/profesor" element={<CompleteOnboardTeacherFrm user={user} />}
+        />
+        <Route path="/search" element={<Search user={user} />}
+        />
+        <Route path="/clase" element={<Clase user={user} />}
+        />
+        <Route path="/clase/add" element={<CrearClase user={user} />}
+        />
+        <Route path="/profile" element={<Navigate to="/profile/1"/>}
+        />
+        <Route
+          path="/profile/:page"
+          element={user
+            ? !user.role
+              ? <Navigate to="/onboard" />
+              : <Profile user={user} />
+            : <Navigate to="/login" />}
+        />
+        <Route
+          path="/changePassword"
+          element={
+            user ? (
+              <ChangePassword handleSignupOrLogin={handleSignupOrLogin} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route path="/" element={<Principal user={user} />}
+        />
+        <Route path="*" element={<NotFound user={user} />}
+        />
+      </Routes>
+      <Footer />
     </>
   )
 }

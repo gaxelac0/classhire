@@ -17,6 +17,8 @@ import { useNavigate } from 'react-router-dom'
 import * as authService from '../../services/authService'
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 
+import { useToast } from '@chakra-ui/react'
+
 import {
 
 } from '@chakra-ui/react';
@@ -24,7 +26,7 @@ import {
 const LoginComponent = props => {
 
   const navigate = useNavigate()
-
+  const toast = useToast()
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -33,10 +35,19 @@ const LoginComponent = props => {
   const [message, setMessage] = useState([''])
   const updateMessage = msg => {
     setMessage(msg)
+    if(msg && (msg !== '' || msg[0]!== '')) {
+      toast({
+        title: 'Error!',
+        description: msg,
+        status: 'error',
+        position: 'top-right',
+        duration: 6000,
+        isClosable: true,
+      })
+    }  
   }
 
   const handleChange = e => {
-    updateMessage('')
     console.log(e)
     setFormData({ ...formData, [e.target.id]: e.target.value })
   }

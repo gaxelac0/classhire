@@ -25,7 +25,7 @@ async function getProfiles(query, page, limit) {
     } catch (e) {
         // return a Error message describing the reason 
         console.log("error services", e)
-        throw Error('Error while Paginating Profiles');
+        throw new BaseError("err", HttpStatusCodes.INTERNAL_SERVER, true, e.message);
     }
 }
 exports.getProfiles = getProfiles;

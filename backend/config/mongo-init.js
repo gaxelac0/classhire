@@ -100,7 +100,8 @@ db.clases.insertMany([
 
 db.profiles.insertOne({
 	_id: ObjectId("demoteacher0"),
-	name: "Joe Fateree",
+	firstName: "Joe",
+	lastName: "Fateree",
 	photo: "",
 	clases: [ObjectId("clase0000001"), ObjectId("clase0000002"), ObjectId("clase0000003"), ObjectId("clase0000004"), ObjectId("clase0000005"), ObjectId("clase0000006")],
 	role: "teacher"
@@ -109,7 +110,8 @@ db.profiles.insertOne({
 db.users.insertOne({
 	_id: ObjectId("demoteacher0"),
 	profile: ObjectId("demoteacher0"),
-	name: "Joe Fateree",
+	firstName: "Joe",
+	lastName: "Fateree",
 	email: "teacher@outlook.com",
 	password: "$2b$06$T8qZKC8v28SC2SfcVRWLgOgaEwwDy.DXlI2BbnOjpLTm9ApOE67Ru"
 });

@@ -27,7 +27,7 @@ async function getClases(query, page, limit) {
     } catch (e) {
         // return a Error message describing the reason 
         console.log("error services", e);
-        throw Error('Error while Paginating Clases');
+        throw new BaseError("err", HttpStatusCodes.INTERNAL_SERVER, true, e.message);
     }
 }
 exports.getClases = getClases;
@@ -77,7 +77,7 @@ async function getClasesByProfileId(body, page, limit) {
     } catch (e) {
         // return a Error message describing the reason 
         console.log("error services", e);
-        throw Error('Error while Paginating Clases');
+        throw new BaseError("err", HttpStatusCodes.INTERNAL_SERVER, true, e.message);
     }
 }
 exports.getClasesByProfileId = getClasesByProfileId;
@@ -128,7 +128,7 @@ exports.addClase = async function (body) {
         return newClase;
     } catch (e) {
         Clase.findByIdAndDelete(newClase._id)
-        throw new BaseError("err", HttpStatusCodes.INTERNAL_SERVER, true, err.message);
+        throw new BaseError("err", HttpStatusCodes.INTERNAL_SERVER, true, e.message);
     }
 }
 
@@ -158,6 +158,6 @@ exports.deleteClase = async function (body) {
         //profile.clases.pop(clase);
         //await profile.save();
     } catch (e) {
-        throw new BaseError("err", HttpStatusCodes.INTERNAL_SERVER, true, err.message);
+        throw new BaseError("err", HttpStatusCodes.INTERNAL_SERVER, true, e.message);
     }
 }

@@ -12,7 +12,7 @@ exports.signup = async function signup(req, res) {
   try { 
     let token = await authService.signUp(req.body);
 		return res.status(200).json({ status: "ok", token: token });
-	} catch (e) { 
+	} catch (e) {
 		return res.status(e.statusCode).json({ status: e.name, msg: e.message }) 
 	}
 }
@@ -20,7 +20,7 @@ exports.signup = async function signup(req, res) {
 exports.login = async function login(req, res) {
   User.findOne({ email: req.body.email })
   .then(user => {
-    if (!user) return res.status(401).json({ err: 'User not found' })
+    if (!user) return res.status(401).json({ err: 'Incorrect user or password' })
     user.comparePassword(req.body.password, async (err, isMatch) => {
       if (isMatch) {
         let profile = await Profile.findOne(user.profile);
@@ -40,7 +40,7 @@ exports.login = async function login(req, res) {
 exports.changePassword = async function changePassword(req, res) {
   User.findById(req.user._id)
   .then(user => {
-    if (!user) return res.status(401).json({ err: 'User not found' })
+    if (!user) return res.status(401).json({ err: 'Incorrect user or password' })
     user.comparePassword(req.body.password, (err, isMatch) => {
       if (isMatch) {
         user.password = req.body.newPw

@@ -10,8 +10,8 @@ async function signup(user, photo) {
       body: JSON.stringify(user),
     })
     const json = await res.json()
-    if (json.err) {
-      throw new Error(json.err)
+    if (json.status === 'err') {
+      throw new Error(json.msg)
     } else if (json.token) {
       tokenService.setToken(json.token)
       if (photo) {
