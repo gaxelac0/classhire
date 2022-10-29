@@ -133,7 +133,7 @@ const PrincipalComponent = () => {
 	); 
 }
 
-const Principal = ({ user, handleLogout }) => {
+const Principal = (props) => {
   return (
 	<BackgroundLayout component={<PrincipalComponent/>}/>
   );

@@ -276,7 +276,7 @@ const ClaseComponent = ({teacher, title }) => {
   );
 }
 
-const Clase = () => {
+const Clase = (props) => {
   return (
     <BackgroundLayout
       component={<ClaseComponent title={'Clase Individual de Matematicas'} teacher={teacher} />}

@@ -35,44 +35,22 @@ exports.getClases = getClases;
 
 async function getClasesByProfileId(body, page, limit) {
 
-    // Options setup for the mongoose paginate
-    var options = {
-        page: page,
-        limit: limit
-    };
-
     let profile_id = body.profile_id;
 
     try {
         
-        const myAggregate = Profile.aggregate([
-            {
-                "$match": {
-                    "_id": mongoose.Types.ObjectId(profile_id)
-                }
-            },
-            {
-                "$project": {
-                    "_id": 0,
-                    "clases": {
-                        "$filter": {
-                            "input": "$clases",
-                            "cond": { }
-                        }
-                    }
-                }
-            } 
-        ]);
-        var result = await Clase.paginate(myAggregate, options);
+        let profile = await Profile.findOne({_id: body.profile_id})
 
-        var clases_ids = result.docs[0].clases;
+        console.log(`getClasesByProfileId  - retrieving clases(${profile.clases.length}) for profileId ${profile_id}`)
+        console.log(profile.clases);
 
-        var Clases = await getClases({ids: clases_ids}, page, limit); 
+        var result = profile.clases;
+        if(profile.clases.length > 0) {
+            var result = await getClases({ids: profile.clases}, page, limit);
+            return {docs: result.docs, page: result.page, totalPages: result.pages};
+        }
 
-
-        //console.log("aggregate", myAggregate);
-        //console.log("clases", Clases);
-        return Clases;
+        return {page: 0, totalPages: 0};
 
     } catch (e) {
         // return a Error message describing the reason 

@@ -119,7 +119,7 @@ const CompleteOnboardTeacherFrmComponent = () => {
                             children={<FaUniversity color="gray.800" />}
                             
                           />
-                          <Input type="text" size="md" value="Ingenierito de Nacimiento" />
+                          <Input type="text" size="md" value="Ingenierito" />
                         </InputGroup>
                       </FormControl>
                       <FormControl id="teacher">
@@ -206,7 +206,7 @@ const CompleteOnboardTeacherFrmComponent = () => {
   );
 };
 
-const CompleteOnboardTeacherFrm = () => {
+const CompleteOnboardTeacherFrm = (props) => {
   return (
     <BackgroundLayout
       component={<CompleteOnboardTeacherFrmComponent/>}

@@ -34,7 +34,7 @@ async function setRole(body) {
     try {
         let profile = await Profile.findOne({_id: body.profile});
         profile.role = body.role;
-        await profile.save();
+        return await profile.save();
     } catch (e) {
         throw new BaseError("err", HttpStatusCodes.INTERNAL_SERVER, true, e.message);
     }

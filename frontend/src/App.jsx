@@ -17,23 +17,26 @@ import Footer from './components/Footer/Footer'
 import CrearClase from './pages/Clase/CrearClase'
 
 const App = () => {
-  const [user, setUser] = useState(authService.getUser())
+  const [userState, setUserState] = useState(authService.getUser())
   const navigate = useNavigate()
 
   const handleLogout = () => {
     authService.logout()
-    setUser(null)
+    setUserState(null)
     navigate('/')
   }
 
+
+
   const handleSignupOrLogin = () => {
-    setUser(authService.getUser())
+    setUserState(authService.getUser())
   }
+
 
   return (
     <>
 
-      <NavBar user={user} handleLogout={handleLogout}
+      <NavBar userState={userState} handleLogout={handleLogout}
       />
 
       <Routes>
@@ -45,41 +48,44 @@ const App = () => {
           path="/login"
           element={<Login handleSignupOrLogin={handleSignupOrLogin} />}
         />
-        <Route path="/onboard" element={<Onboard user={user} />}
+        
+        <Route path="/complete-onboard/student" element={<CompleteOnboardStudentFrm userState={userState} />}
         />
-        <Route path="/complete-onboard/student" element={<CompleteOnboardStudentFrm user={user} />}
+        <Route path="/complete-onboard/profesor" element={<CompleteOnboardTeacherFrm userState={userState} />}
         />
-        <Route path="/complete-onboard/profesor" element={<CompleteOnboardTeacherFrm user={user} />}
+        <Route path="/search" element={<Search userState={userState} />}
         />
-        <Route path="/search" element={<Search user={user} />}
+        <Route path="/clase" element={<Clase userState={userState} />}
         />
-        <Route path="/clase" element={<Clase user={user} />}
-        />
-        <Route path="/clase/add" element={<CrearClase user={user} />}
+        <Route path="/clase/add" element={<CrearClase userState={userState} />}
         />
         <Route path="/profile" element={<Navigate to="/profile/1"/>}
         />
         <Route
           path="/profile/:page"
-          element={user
-            ? !user.role
-              ? <Navigate to="/onboard" />
-              : <Profile user={user} />
-            : <Navigate to="/login" />}
-        />
-        <Route
-          path="/changePassword"
-          element={
-            user ? (
-              <ChangePassword handleSignupOrLogin={handleSignupOrLogin} />
-            ) : (
-              <Navigate to="/login" />
-            )
+          element={userState
+            ? userState.role && userState.role !== '' ? <Profile userState={userState} /> : <Navigate to="/onboard" />
+            : <Navigate to="/login" />
           }
         />
-        <Route path="/" element={<Principal user={user} />}
+      <Route path="/onboard" element={userState
+            ? userState.role || userState.role === '' ? <Onboard userState={userState} /> : <Navigate to="/profile" />
+            : <Navigate to="/login" />
+          }
         />
-        <Route path="*" element={<NotFound user={user} />}
+
+
+        <Route
+          path="/changePassword"
+          element={userState 
+            ?   <ChangePassword handleSignupOrLogin={handleSignupOrLogin} />
+            :   <Navigate to="/login" />
+            
+          }
+        />
+        <Route path="/" element={<Principal userState={userState} />}
+        />
+        <Route path="*" element={<NotFound userState={userState} />}
         />
       </Routes>
       <Footer />

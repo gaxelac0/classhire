@@ -18,24 +18,14 @@ function getToken() {
   return token
 }
 
-  // DEMOFRONTEND
-  // name: {type: String, required: true},
-  // email: { type: String, required: true, lowercase: true, unique: true },
-  // password: {type: String, required: true},
-  // profile: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
-  // roles: [], type: Stringroles
 function getUserFromToken() {
-
- /*  let user = {
-    name:"Pepe Pistolero",
-    email:"pepe@outlook.com",
-    role: "student",
-  };
-
-  return user; */
-  
-  const token = getToken()
-  return token ? jwt_decode(token).user : null
+ 
+  const token = getToken();
+  if (token) { 
+    const tokenDecoded = jwt_decode(token);
+    return {user: tokenDecoded.user, role: tokenDecoded.role};
+  }
+  return null;
 }
 
 function removeToken() {

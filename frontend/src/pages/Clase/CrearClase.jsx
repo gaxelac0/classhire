@@ -401,7 +401,7 @@ const CrearClaseComponent = () => {
   );
 }
 
-const CrearClase = () => {
+const CrearClase = (props) => {
   return (
     <BackgroundLayout
       component={<CrearClaseComponent/>}

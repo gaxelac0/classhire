@@ -11,6 +11,7 @@ var router = express.Router()
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.get('/', checkAuth, profileCtrl.getProfiles)
+router.get('/:id', checkAuth, profileCtrl.getProfileById)
 router.put('/role', checkAuth, profileCtrl.setRole)
 router.put('/:id/add-photo', checkAuth, profileCtrl.addPhoto)
 

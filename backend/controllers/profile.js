@@ -2,6 +2,7 @@ var Profile = require('../models/profile.model')
 var cloudinary = require('cloudinary').v2;
 
 var profileService = require('../services/profile.service');
+var authService = require('../services/auth.service')
 
 
 exports.getProfiles = async function getProfiles(req, res) {
@@ -17,11 +18,32 @@ exports.getProfiles = async function getProfiles(req, res) {
 	}
 }
 
+exports.getProfileById = async function getProfileById(req, res) {
+
+	query = {}
+	query["_id"] = {"$eq":  req.params.id}
+
+	try {
+		let profiles = await profileService.getProfiles(query, 1, 1);
+		return res.status(200).json({ status: "ok", data: profiles });
+	} catch (e) {
+		return res.status(400).json({ status: "err", message: e.message });
+	}
+}
+
 exports.setRole = async function setRole(req, res) {
 	try {
     req.body.profile = req.user.profile;
 		let profile = await profileService.setRole(req.body);
-		return res.status(200).json({ status: "ok", data: profile });
+
+		const token = authService.createJWT({user: req.user, role: profile.role});
+
+
+
+
+
+
+		return res.status(200).json({ status: "ok", data: profile, token: token });
 	} catch (e) {
 		return res.status(e.statusCode).json({ status: e.name, message: e.message });
 	}

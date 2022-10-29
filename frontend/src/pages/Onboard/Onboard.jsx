@@ -14,7 +14,7 @@ import {
 import { Link as ReachLink } from "@chakra-ui/react";
 
 
-const Onboard = ({ user }) => {
+const Onboard = (props) => {
 
   // opacidad img student
   const [studentImageOpacity, setSIO] = useState(0.4)

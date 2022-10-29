@@ -9,11 +9,11 @@ exports.signup = async function signup(req, res) {
   // Role vacio, luego sera completado en el complete onboard
   req.body.role = constants.RoleEnum[0];
 
-  try { 
-    let token = await authService.signUp(req.body);
+  try {
+    let token = await authService.signUp(req.body);    
 		return res.status(200).json({ status: "ok", token: token });
 	} catch (e) {
-		return res.status(e.statusCode).json({ status: e.name, msg: e.message }) 
+		return res.status(e.statusCode).json({ status: e.name, msg: e.message })  
 	}
 }
 
@@ -23,9 +23,8 @@ exports.login = async function login(req, res) {
     if (!user) return res.status(401).json({ err: 'Incorrect user or password' })
     user.comparePassword(req.body.password, async (err, isMatch) => {
       if (isMatch) {
-        let profile = await Profile.findOne(user.profile);
-        const token = authService.createJWT({user, profile});
-        console.log(token);
+        let profile = await Profile.findOne({_id: user.profile._id});
+        const token = authService.createJWT({user: user, role: profile.role});
         res.json({ token })
       } else {
         res.status(401).json({ err: 'Incorrect user or password' })
@@ -46,8 +45,8 @@ exports.changePassword = async function changePassword(req, res) {
         user.password = req.body.newPw
         user.save()
         .then(async () => {
-          let profile = await Profile.findOne(user.profile);
-          const token = createJWT({user,profile})
+          let profile = await Profile.findOne({_id: user.profile._id});
+          const token = authService.createJWT({user: user, role: profile.role});
           res.json({ token })
         })
       } else {

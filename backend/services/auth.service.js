@@ -18,11 +18,12 @@ exports.signUp = async function (body) {
         throw new BaseError("err", HttpStatusCodes.BAD_REQUEST, true, 'Account already exists');
     }
 
- 
+
     if (!process.env.SECRET) {
         throw new BaseError("err", HttpStatusCodes.INTERNAL_SERVER, true, 'no SECRET in .env file');
     }
 
+    body.role = '';
     let newProfile;
     try {
         newProfile = await Profile.create(body);
@@ -38,7 +39,7 @@ exports.signUp = async function (body) {
         throw new BaseError("err", HttpStatusCodes.INTERNAL_SERVER, true, e.message);
     }
    
-    let token = await createJWT({ user, profile: newProfile });
+    const token = createJWT({user: user, role: ''});
     return token;
 }
 

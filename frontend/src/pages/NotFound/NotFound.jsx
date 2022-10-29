@@ -1,7 +1,7 @@
 import { Box, Heading, Text, Button, HStack, Link, Center } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
-const  NotFound = () => {
+const  NotFound = (props) => {
     
     const navigate = useNavigate()
     return (

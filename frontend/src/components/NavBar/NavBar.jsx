@@ -23,12 +23,16 @@ import ClasshireLogo from "../Logo/ClasshireLogo";
 
 
 
-const NavBar = ({ user, handleLogout }) => {
+const NavBar = (props) => {
 
   const bg = useColorModeValue("white", "gray.800");
   const sidebar = useDisclosure();
 
+  // TODO:En caso de estar loggeado, mostrar la foto del profile (mockear)
   function LoggedMenuItems(props) {
+
+    console.log(props)
+
     return (
       <>
         <HStack
@@ -52,7 +56,7 @@ const NavBar = ({ user, handleLogout }) => {
             </Link>
           </Button>
 
-          <Button colorScheme="teal" rightIcon={<ArrowForwardIcon />} variant="ghost" onClick={handleLogout}>Log Out</Button>
+          <Button colorScheme="teal" rightIcon={<ArrowForwardIcon />} variant="ghost" onClick={props.handleLogout}>Log Out</Button>
         </HStack>
       </>
     )
@@ -105,12 +109,10 @@ const NavBar = ({ user, handleLogout }) => {
   }
 
   function MenuItems(props) {
-    const loggedIn = props.loggedIn;
-    if (loggedIn) {
-      return <LoggedMenuItems />
-    }
-    return <NotLoggedMenuItems />
+    return props.loggedIn ? <LoggedMenuItems handleLogout={props.handleLogout} /> : <NotLoggedMenuItems />
   }
+
+  console.log(props)
 
   return (
     <React.Fragment>
@@ -137,8 +139,13 @@ const NavBar = ({ user, handleLogout }) => {
             </chakra.a>
           </Flex>
           <HStack display="flex" alignItems="center" spacing={1}>
+            {/*   TODO: en el modo mobile solo se ve el logo, agregar botones de sign up y login achicando el logo */}
+
+
+
             <MenuItems
-              loggedIn={user}
+              loggedIn={props.userState}
+              handleLogout={props.handleLogout}
             />
           </HStack>
         </Flex>

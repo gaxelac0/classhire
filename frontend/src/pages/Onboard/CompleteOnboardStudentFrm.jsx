@@ -27,7 +27,7 @@ import {
 import { FaBaby } from "react-icons/fa";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 
-const CompleteOnboardStudentFrmComponent = ({ user, handleLogout }) => {
+const CompleteOnboardStudentFrmComponent = (props) => {
 
   const [estudiosList, setEstudiosList] = useState([{ type: "", description: "", current: ""}])
 

@@ -48,6 +48,7 @@ const NavItem = (props) => {
   };
 
   const SidebarContent = (props) => {
+    // TODO: Agregar opciones de Login, Sign Up
 			return (
         <>
         <Box

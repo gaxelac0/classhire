@@ -39,7 +39,7 @@ const SearchComponent = () => {
   );
 };
 
-const Search = () => {
+const Search = (props) => {
 
   return (
     <>
