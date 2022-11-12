@@ -34,48 +34,48 @@ const CompleteOnboardTeacherFrmComponent = () => {
 
   // Agrega para completar una experiencia mas
   const handleExperienciaAdd = () => {
-    console.log("Before handleAdd: ", experienciasList);
+    //console.log("Before handleAdd: ", experienciasList);
     setExperienciasList([...experienciasList, {type: "", description: "", current: ""}])
-    console.log("After handleAdd: ", experienciasList);
+    //console.log("After handleAdd: ", experienciasList);
   }
 
   const handleExperienciaInputChange = (e, index) => {
-    console.log("***************************************")
-    console.log(e.target)
+    //console.log("***************************************")
+    //console.log(e.target)
     const { value } = e.target;
-    console.log("e.target: ", e.target)
+    //console.log("e.target: ", e.target)
     const list = [...experienciasList];
     list[index]["description"] = value;
-    console.log("Before handleExperienciaInputChange" + experienciasList[index])
+    //console.log("Before handleExperienciaInputChange" + experienciasList[index])
     setExperienciasList(list);
-    console.log("After handleExperienciaInputChange" + experienciasList[index])
-    console.log("***************************************")
+    //console.log("After handleExperienciaInputChange" + experienciasList[index])
+    //console.log("***************************************")
   };
 
   const handleExperienciaSelectChange = (e, index) => {
-    console.log("***************************************")
-    console.log(e.target)
+    //console.log("***************************************")
+    //console.log(e.target)
     const { value } = e.target;
-    console.log("e.target: ", e.target)
+    //console.log("e.target: ", e.target)
     const list = [...experienciasList];
     list[index]["type"] = value;
-    console.log("Before handleExperienciaSelectChange" + experienciasList[index])
+    //console.log("Before handleExperienciaSelectChange" + experienciasList[index])
     setExperienciasList(list);
-    console.log("After handleExperienciaSelectChange" + experienciasList[index])
-    console.log("***************************************")
+    //console.log("After handleExperienciaSelectChange" + experienciasList[index])
+    //console.log("***************************************")
   };
 
   const handleExperienciaCheckboxChange = (e, index) => {
-    console.log("***************************************")
-    console.log(e.target)
+    //console.log("***************************************")
+    //console.log(e.target)
     const { checked } = e.target;
-    console.log("e.target: ", e.target)
+    //console.log("e.target: ", e.target)
     const list = [...experienciasList];
     list[index]["current"] = checked;
-    console.log("Before handleExperienciaCheckboxChange" + experienciasList[index])
+    //console.log("Before handleExperienciaCheckboxChange" + experienciasList[index])
     setExperienciasList(list);
-    console.log("After handleExperienciaCheckboxChange" + experienciasList[index])
-    console.log("***************************************")
+    //console.log("After handleExperienciaCheckboxChange" + experienciasList[index])
+    //console.log("***************************************")
   };
 
   const handleExperienciaRemove = (index) => {

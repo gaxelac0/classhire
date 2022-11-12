@@ -210,7 +210,7 @@ const TablaMaterias = (props) => {
 
 const TablaDatos = (props) => {
 
-  console.log(props);
+  //console.log(props);
 
   return (
     <TableContainer>
@@ -275,9 +275,9 @@ const Profile = (props) => {
         page: clasesData.data.page,
         totalPages: clasesData.data.totalPages
       });
-      console.log("retrieving clases");
-      console.log(clases);
-      console.log(pagination);
+      //console.log("retrieving clases");
+      //console.log(clases);
+      //console.log(pagination);
     }
     fetchClases();
 
@@ -295,7 +295,7 @@ const Profile = (props) => {
         //estudios: [profile.estudios],
         photo: profile.photo
       });
-      console.log("profileDetails: " + profileDetails.photo)
+      //console.log("profileDetails: " + profileDetails.photo)
     }
     fetchProfileDetails();
 

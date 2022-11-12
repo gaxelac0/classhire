@@ -176,7 +176,7 @@ const SignupCard = (props) => {
 	}
   
 	const handleChange = e => {
-	  console.log(e)
+	  //console.log(e)
 	  setFormData({
 		...formData,
 		[e.target.id]: e.target.value,

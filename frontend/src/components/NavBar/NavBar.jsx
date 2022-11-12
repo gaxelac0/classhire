@@ -31,7 +31,7 @@ const NavBar = (props) => {
   // TODO:En caso de estar loggeado, mostrar la foto del profile (mockear)
   function LoggedMenuItems(props) {
 
-    console.log(props)
+    ////console.log(props)
 
     return (
       <>
@@ -112,7 +112,7 @@ const NavBar = (props) => {
     return props.loggedIn ? <LoggedMenuItems handleLogout={props.handleLogout} /> : <NotLoggedMenuItems />
   }
 
-  console.log(props)
+  ////console.log(props)
 
   return (
     <React.Fragment>

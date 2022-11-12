@@ -13,7 +13,7 @@ const Pagination = (props) => {
     const navigate = useNavigate();
 
     var handlePaginate = (button) => {
-        console.log("clicked")
+        ////console.log("clicked")
         navigate('/profile/' + button.currentTarget.attributes.value.value);
     }
 
@@ -27,12 +27,12 @@ const Pagination = (props) => {
         }
 
         if (i === props.pagination.page) {
-            console.log("added button " + i)
+            //console.log("added button " + i)
             buttons.push(
                 <PagButton active>{i}</PagButton>
             );
         } else {
-            console.log("added button " + i)
+            //console.log("added button " + i)
             buttons.push(
                 <PagButton
                 value={i}
@@ -43,7 +43,7 @@ const Pagination = (props) => {
             );
         }
     }
-    console.log(buttons)
+    //console.log(buttons)
 
     return (
         <Flex

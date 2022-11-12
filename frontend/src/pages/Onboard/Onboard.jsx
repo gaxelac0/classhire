@@ -30,10 +30,10 @@ const Onboard = (props) => {
   })
 
   const onClickImg = (id, footer_desc) => {
-    console.log(role.selected)
-    console.log(role.id)
+    //console.log(role.selected)
+    //console.log(role.id)
      if (!role.selected || role.id !== id) {
-      console.log("in")
+      //console.log("in")
        
         setRole({
           "selected": true,
@@ -50,7 +50,7 @@ const Onboard = (props) => {
         }
         
       } else {
-        console.log("out")
+        //console.log("out")
        
         setRole({
           "selected": false,

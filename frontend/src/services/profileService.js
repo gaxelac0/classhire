@@ -16,6 +16,23 @@ async function getProfileDetails(profile_id) {
   return await res.json()
 }
 
+async function setRole(formData, role) {
+
+  let token = tokenService.getToken();
+
+  const res = await fetch(`${BASE_URL}/add-photo`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+    body: {
+      profile_id: token.user.profile,
+      role: role
+    }
+  })
+  return await res.json()
+}
+
 async function addPhoto(photoData, profileId) {
   const res = await fetch(`${BASE_URL}/${profileId}/add-photo`, {
     method: 'PUT',

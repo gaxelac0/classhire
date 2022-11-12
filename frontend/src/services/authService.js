@@ -30,7 +30,7 @@ async function signup(user, photo) {
 
 function getUser() {
   let user = tokenService.getUserFromToken();
-  console.log("🚀 ~ file: authService.js ~ line 33 ~ getUser ~ user", user)
+  //console.log("🚀 ~ file: authService.js ~ line 33 ~ getUser ~ user", user)
   
   return user 
 }
