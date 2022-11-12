@@ -11,6 +11,11 @@ import {
   GridItem,
   SimpleGrid,
   Select,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderMark,
 } from "@chakra-ui/react";
 
 import ClaseCard from "../../components/ClaseCard/ClaseCard";
@@ -23,24 +28,62 @@ import { useState } from "react";
 
 import { clases } from "../../mock/mocks";
 
+import { useParams } from "react-router-dom";
+
+import * as claseService from '../../services/claseService'
+
 
 const SearchComponent = (props) => {
+
+  const labelStyles = {
+    mt: '2',
+    ml: '-2.5',
+    fontSize: 'sm',
+  }
+
+  let { page } = useParams();
+
+  const [clases, setClases] = useState([])
 
   const [materia, setMateria] = useState('')
   const [tipoClase, setTipoClase] = useState('')
   const [frecuencia, setFrecuencia] = useState('')
-  const [rating, setRating] = useState('')
+  const [rating, setRating] = useState(0)
 
- 
+
   const [pagination, setPagination] = useState({
     page: 0,
     totalPages: 0
   })
 
+  const fetchClases = async () => {
+    console.log("ejecuta fetchClases at SearchComponent")
+    const clasesData = await claseService.getClases({ materia: materia, tipo_clase: tipoClase, frecuencia: frecuencia, rating_min: rating }, page, 5);
+    setClases(clasesData.data.docs);
+    setPagination({
+      page: clasesData.data.page,
+      totalPages: clasesData.data.totalPages
+    });
+    //console.log("retrieving clases");
+    //console.log(clases);
+    //console.log(pagination);
+  }
+
   useEffect(() => {
+
+    if (page === undefined) {
+      page = 1;
+    }
+
     console.log("ejecuta useEffect at SearchComponent")
 
+    if (materia !== "" || tipoClase !== "" || frecuencia !== "" || rating !== "") {
+      
+      fetchClases();
+    }
     
+
+
 
     setPagination({ page: 0, totalPages: 0 }) // TODO hardcoded
 
@@ -159,26 +202,25 @@ const SearchComponent = (props) => {
                   fontWeight="md"
                   color="gray.700"
                 >
-                  Calificación
+                  Calif. min.
                 </FormLabel>
-                <Select
-                  id="rating"
-                  name="rating"
-                  placeholder="Rating (1-5)"
-                  mt={1}
-                  focusBorderColor="brand.400"
-                  shadow="sm"
-                  size="sm"
-                  w="full"
-                  rounded="md"
-                  onChange={(e) => setRating(e.target.value)}
-                >
-                  <option id="1">1</option>
-                  <option id="2">2</option>
-                  <option id="3">3</option>
-                  <option id="4">4</option>
-                  <option id="5">5</option>
-                </Select>
+                <Slider defaultValue={0} min={0} max={100} step={20} onChange={(val) => {setRating(val/20);console.log(val/20);}}>
+                  <SliderMark
+                    value={rating}
+                    textAlign='right'
+                    color='teal'
+                    mt='-10'
+                    ml='20'
+                    w='12'
+                  >
+                    {rating}⭐
+                  </SliderMark>
+                  <SliderTrack bg='teal.600'>
+                    <Box position='relative' right={10} />
+                    <SliderFilledTrack bg='teal.500' />
+                  </SliderTrack>
+                  <SliderThumb boxSize={8} />
+                </Slider>
               </FormControl>
             </SimpleGrid>
           </Stack>

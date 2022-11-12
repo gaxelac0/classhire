@@ -47,7 +47,7 @@ const NavBar = (props) => {
           <Link href="/profile">
             <Button colorScheme="teal" variant="ghost">Perfil</Button>
           </Link>
-          <Link href="/search">
+          <Link href="/search?page=1">
             <Button colorScheme="teal" leftIcon={<SearchIcon />} variant="outline">Clases</Button>
           </Link>
           <Button colorScheme="teal" leftIcon={<PlusSquareIcon />} variant="outline">
@@ -72,7 +72,7 @@ const NavBar = (props) => {
           display={{ base: "none", md: "inline-flex" }}
         >
           <Button colorScheme="teal" variant="ghost">
-            <Link href="/search">
+            <Link href="/search?page=1">
               Buscar Clases
             </Link>
           </Button>

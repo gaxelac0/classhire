@@ -19,7 +19,7 @@ async function getClases(query, page, limit) {
     };
     // Try Catch the awaited promise to handle the error 
     try {
-        console.log("Query", query);
+        //console.log("Query", query);
         var Clases = await Clase.paginate(query, options);
         // Return the Clase list that was retured by the mongoose promise
         return Clases;
@@ -41,8 +41,8 @@ async function getClasesByProfileId(body, page, limit) {
         
         let profile = await Profile.findOne({_id: body.profile_id})
 
-        console.log(`getClasesByProfileId  - retrieving clases(${profile.clases.length}) for profileId ${profile_id}`)
-        console.log(profile.clases);
+       // console.log(`getClasesByProfileId  - retrieving clases(${profile.clases.length}) for profileId ${profile_id}`)
+       // console.log(profile.clases);
 
         var result = profile.clases;
         if(profile.clases.length > 0) {

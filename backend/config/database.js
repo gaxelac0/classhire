@@ -9,9 +9,9 @@ mongoose.connect(process.env.DATABASE_URL, {
   useUnifiedTopology: true 
 })
 
-console.log("DATABASE_URL", process.env.DATABASE_URL)
-console.log("MONGO_USER", process.env.MONGO_USER)
-console.log("MONGO_PASSWORD", process.env.MONGO_PASSWORD)
+//console.log("DATABASE_URL", process.env.DATABASE_URL)
+//console.log("MONGO_USER", process.env.MONGO_USER)
+//console.log("MONGO_PASSWORD", process.env.MONGO_PASSWORD)
 
 
 db.on('connected', function () {

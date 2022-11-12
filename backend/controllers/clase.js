@@ -18,8 +18,8 @@ exports.getClases = async function getClases(req, res) {
 		query["_id"] = {"$in": req.body.ids};
 	}
 
-	if (req.body.ratingMin) {
-		query["rating"] = {"$gte": req.body.ratingMin};
+	if (req.body.rating_min) {
+		query["rating"] = {"$gte": req.body.rating_min};
 	}
 	
 	try {

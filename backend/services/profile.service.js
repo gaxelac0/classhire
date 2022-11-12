@@ -17,7 +17,7 @@ async function getProfiles(query, page, limit) {
     }
     // Try Catch the awaited promise to handle the error 
     try {
-        console.log("Query", query)
+        //console.log("Query", query)
         var Profiles = await Profile.paginate(query, options)
         // Return the Clase list that was retured by the mongoose promise
         return Profiles;
