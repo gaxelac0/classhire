@@ -21,8 +21,21 @@ async function getClases(query, page, limit) {
     try {
         //console.log("Query", query);
         var Clases = await Clase.paginate(query, options);
-        // Return the Clase list that was retured by the mongoose promise
-        return Clases;
+
+
+        var clone = JSON.parse(JSON.stringify(Clases));
+
+        for (let i = 0; i < clone.docs.length; i++) {
+
+            let teacherProfileId = clone.docs[i].teacher_profile_id;
+
+            let profile = await Profile.findOne({_id: teacherProfileId})
+            clone.docs[i]["teacher_name"] = profile.firstName + ' ' + profile.lastName;
+            clone.docs[i]["teacher_photo"] = profile.photo;
+
+        }
+        
+        return clone;
 
     } catch (e) {
         // return a Error message describing the reason 

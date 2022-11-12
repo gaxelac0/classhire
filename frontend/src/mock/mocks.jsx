@@ -11,8 +11,8 @@ export const clases = [
         El análisis matemático tiene como fin resolver cálculos complejos a través de la abstracción. \
         Para ello, se vale de herramientas como las funciones.",
         tags: ["Matematica", "Individual"],
-        profName: "Joe Fateree",
-        profImage: "https://s03.s3c.es/imag/_v0/770x420/0/d/f/profesor-pizarra-dreamstime.jpg"
+        teacher_name: "Joe Fateree",
+        teacher_photo: "https://s03.s3c.es/imag/_v0/770x420/0/d/f/profesor-pizarra-dreamstime.jpg"
     },
     {
       id: "1",
@@ -26,8 +26,8 @@ export const clases = [
       El análisis matemático tiene como fin resolver cálculos complejos a través de la abstracción. \
       Para ello, se vale de herramientas como las funciones.",
       tags: ["Matematica", "Individual"],
-      profName: "Joe Fateree",
-      profImage: "https://s03.s3c.es/imag/_v0/770x420/0/d/f/profesor-pizarra-dreamstime.jpg"
+      teacher_name: "Joe Fateree",
+      teacher_photo: "https://s03.s3c.es/imag/_v0/770x420/0/d/f/profesor-pizarra-dreamstime.jpg"
     },
     {
       id: "1",
@@ -41,8 +41,8 @@ export const clases = [
       El análisis matemático tiene como fin resolver cálculos complejos a través de la abstracción. \
       Para ello, se vale de herramientas como las funciones.",
       tags: ["Matematica", "Individual"],
-      profName: "Joe Fateree",
-      profImage: "https://s03.s3c.es/imag/_v0/770x420/0/d/f/profesor-pizarra-dreamstime.jpg"
+      teacher_name: "Joe Fateree",
+      teacher_photo: "https://s03.s3c.es/imag/_v0/770x420/0/d/f/profesor-pizarra-dreamstime.jpg"
     },
     {
       id: "1",
@@ -56,8 +56,8 @@ export const clases = [
       El análisis matemático tiene como fin resolver cálculos complejos a través de la abstracción. \
       Para ello, se vale de herramientas como las funciones.",
       tags: ["Matematica", "Individual"],
-      profName: "Joe Fateree",
-      profImage: "https://s03.s3c.es/imag/_v0/770x420/0/d/f/profesor-pizarra-dreamstime.jpg"
+      teacher_name: "Joe Fateree",
+      teacher_photo: "https://s03.s3c.es/imag/_v0/770x420/0/d/f/profesor-pizarra-dreamstime.jpg"
     },
     {
       id: "1",
@@ -71,8 +71,8 @@ export const clases = [
       El análisis matemático tiene como fin resolver cálculos complejos a través de la abstracción. \
       Para ello, se vale de herramientas como las funciones.",
       tags: ["Matematica", "Individual"],
-      profName: "Joe Fateree",
-      profImage: "https://s03.s3c.es/imag/_v0/770x420/0/d/f/profesor-pizarra-dreamstime.jpg"
+      teacher_name: "Joe Fateree",
+      teacher_photo: "https://s03.s3c.es/imag/_v0/770x420/0/d/f/profesor-pizarra-dreamstime.jpg"
     },
     {
       id: "1",
@@ -85,9 +85,9 @@ export const clases = [
       description: "Aborda temas como las derivadas, las integrales, los límites, las series y diversos tipos de funciones complejas. \
       El análisis matemático tiene como fin resolver cálculos complejos a través de la abstracción. \
       Para ello, se vale de herramientas como las funciones.",
-      tags: ["Matematica", "Individual"],
-      profName: "Joe Fateree",
-      profImage: "https://s03.s3c.es/imag/_v0/770x420/0/d/f/profesor-pizarra-dreamstime.jpg"
+      tags: ["Mteacher_nameatematica", "Individual"],
+      teacher_name: "Joe Fateree",
+      teacher_photo: "https://s03.s3c.es/imag/_v0/770x420/0/d/f/profesor-pizarra-dreamstime.jpg"
     },
   ];
   

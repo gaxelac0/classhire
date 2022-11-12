@@ -21,83 +21,6 @@ db.createCollection('profiles', { capped: false });
 db.createCollection('users', { capped: false });
 db.createCollection('clases', { capped: false });
 
-
-db.clases.insertMany([
-	{
-	    "_id": ObjectId("clase0000001"),
-	    "price": 5,
-	    "title": "Java",
-	    "description": "blabla",
-	    "tags" : ["matematica", "individual"],
-	    "frecuencia": [
-		{
-		    "value":"diaria"
-		}
-	    ]
-	},
-	{
-	    "_id": ObjectId("clase0000002"),
-	    "price": 5,
-	    "title": "analisis matematico",
-	    "description": "blabla",
-	    "tags" : ["matematica", "individual"],
-	    "frecuencia": [
-		{
-		    "value":"diaria"
-		}
-	    ]
-	},
-	{
-	    "_id": ObjectId("clase0000003"),
-	    "price": 5,
-	    "title": "analisis matematico",
-	    "description": "blabla",
-	    "tags" : ["matematica", "individual"],
-	    "frecuencia": [
-		{
-		    "value":"diaria"
-		}
-	    ]
-	},
-	{
-	    "_id": ObjectId("clase0000004"),
-	    "price": 5,
-	    "title": "analisis matematico",
-	    "description": "blabla",
-	    "tags" : ["matematica", "individual"],
-	    "frecuencia": [
-		{
-		    "value":"diaria"
-		}
-	    ]
-	},
-	{
-	    "_id": ObjectId("clase0000005"),
-	    "price": 5,
-	    "title": "analisis matematico",
-	    "description": "blabla",
-	    "tags" : ["matematica", "individual"],
-	    "frecuencia": [
-		{
-		    "value":"diaria"
-		}
-	    ]
-	},
-	{
-	    "_id": ObjectId("clase0000006"),
-	    "price": 5,
-	    "title": "analisis matematico",
-	    "description": "blabla",
-	    "tags" : ["matematica", "individual"],
-	    "frecuencia": [
-		{
-		    "value":"diaria"
-		}
-	    ]
-	}
-]);
-
-
 db.profiles.insertOne({
 	_id: ObjectId("demoteacher0"),
 	firstName: "Joe",
@@ -115,3 +38,97 @@ db.users.insertOne({
 	email: "teacher@outlook.com",
 	password: "$2b$06$T8qZKC8v28SC2SfcVRWLgOgaEwwDy.DXlI2BbnOjpLTm9ApOE67Ru"
 });
+
+
+db.clases.insertMany([
+	{
+	    "_id": ObjectId("clase0000001"),
+	    "price": 5,
+	    "title": "Java",
+	    "description": "Aborda temas como las derivadas, las integrales, los límites, las series y diversos tipos de funciones complejas. \
+        El análisis matemático tiene como fin resolver cálculos complejos a través de la abstracción. \
+        Para ello, se vale de herramientas como las funciones.",
+	    "tags" : ["matematica", "individual"],
+	    "frecuencia": [
+		{
+		    "value":"diaria"
+		}
+	    ],
+		"teacher_profile_id": ObjectId("demoteacher0"),
+	},
+	{
+	    "_id": ObjectId("clase0000002"),
+	    "price": 5,
+	    "title": "analisis matematico",
+	    "description": "Aborda temas como las derivadas, las integrales, los límites, las series y diversos tipos de funciones complejas. \
+        El análisis matemático tiene como fin resolver cálculos complejos a través de la abstracción. \
+        Para ello, se vale de herramientas como las funciones.",
+	    "tags" : ["matematica", "individual"],
+	    "frecuencia": [
+		{
+		    "value":"diaria"
+		}
+	    ],
+		"teacher_profile_id": ObjectId("demoteacher0"),
+	},
+	{
+	    "_id": ObjectId("clase0000003"),
+	    "price": 5,
+	    "title": "analisis matematico",
+	    "description": "Aborda temas como las derivadas, las integrales, los límites, las series y diversos tipos de funciones complejas. \
+        El análisis matemático tiene como fin resolver cálculos complejos a través de la abstracción. \
+        Para ello, se vale de herramientas como las funciones.",
+	    "tags" : ["matematica", "individual"],
+	    "frecuencia": [
+		{
+		    "value":"diaria"
+		}
+	    ],
+		"teacher_profile_id": ObjectId("demoteacher0"),
+	},
+	{
+	    "_id": ObjectId("clase0000004"),
+	    "price": 5,
+	    "title": "analisis matematico",
+	    "description": "Aborda temas como las derivadas, las integrales, los límites, las series y diversos tipos de funciones complejas. \
+        El análisis matemático tiene como fin resolver cálculos complejos a través de la abstracción. \
+        Para ello, se vale de herramientas como las funciones.",
+	    "tags" : ["matematica", "individual"],
+	    "frecuencia": [
+		{
+		    "value":"diaria"
+		}
+	    ],
+		"teacher_profile_id": ObjectId("demoteacher0"),
+	},
+	{
+	    "_id": ObjectId("clase0000005"),
+	    "price": 5,
+	    "title": "analisis matematico",
+	    "description": "Aborda temas como las derivadas, las integrales, los límites, las series y diversos tipos de funciones complejas. \
+        El análisis matemático tiene como fin resolver cálculos complejos a través de la abstracción. \
+        Para ello, se vale de herramientas como las funciones.",
+	    "tags" : ["matematica", "individual"],
+	    "frecuencia": [
+		{
+		    "value":"diaria"
+		}
+	    ],
+		"teacher_profile_id": ObjectId("demoteacher0"),
+	},
+	{
+	    "_id": ObjectId("clase0000006"),
+	    "price": 5,
+	    "title": "analisis matematico",
+	    "description": "Aborda temas como las derivadas, las integrales, los límites, las series y diversos tipos de funciones complejas. \
+        El análisis matemático tiene como fin resolver cálculos complejos a través de la abstracción. \
+        Para ello, se vale de herramientas como las funciones.",
+	    "tags" : ["matematica", "individual"],
+	    "frecuencia": [
+		{
+		    "value":"diaria"
+		}
+	    ],
+		"teacher_profile_id": ObjectId("demoteacher0"),
+	}
+]);

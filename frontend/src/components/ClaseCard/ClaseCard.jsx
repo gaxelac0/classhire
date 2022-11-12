@@ -15,6 +15,7 @@ import {
 
 
 const ClaseCard = (props) => {
+  console.log(props)
 
   return (
     <>
@@ -41,6 +42,7 @@ const ClaseCard = (props) => {
               {props.date}
             </chakra.span>
             <Link
+              ml={"1em"}
               href="/clase"
               px={3}
               py={1}
@@ -94,7 +96,7 @@ const ClaseCard = (props) => {
                   base: "none",
                   sm: "block",
                 }}
-                src={props.profImage}
+                src={`data:image/jpeg;base64,${props.teacher_photo}`}
                 alt="imag"
               />
               <Link
@@ -102,7 +104,7 @@ const ClaseCard = (props) => {
                 fontWeight="700"
                 cursor="pointer"
               >
-                {props.profName}
+                {props.teacher_name}
               </Link>
             </Box>
           </Box>

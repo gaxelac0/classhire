@@ -138,7 +138,7 @@ const TablaMaterias = (props) => {
                           ?
                           <>
                             <Td>{c.title}</Td>
-                            <Td>{c.profName}</Td>
+                            <Td>{c.teacher_name}</Td>
                             <Td>{c.date}</Td>
                           </>
 
@@ -190,7 +190,7 @@ const TablaMaterias = (props) => {
                   </Tbody>
                 </Table>
               </TableContainer>
-              <Pagination pagination={props.pagination} />
+              <Pagination pagination={props.pagination} route={"profile"} />
             </>
           }
 
@@ -265,44 +265,40 @@ const Profile = (props) => {
     totalPages: 0
   })
 
+  const fetchClases = async () => {
+    const clasesData = await claseService.getClasesByUser(props.userState.user.profile, page, 5);
+    setClases(clasesData.data.docs);
+    setPagination({
+      page: clasesData.data.page,
+      totalPages: clasesData.data.totalPages
+    });
+    //console.log("retrieving clases");
+    //console.log(clases);
+    //console.log(pagination);
+  }
+
+  const fetchProfileDetails = async () => {
+    const result = await profileService.getProfileDetails(props.userState.user.profile);
+    let profile = result.data.docs[0];
+    setProfileDetails({
+      name: profile.firstName + ' ' + profile.lastName,
+      fecNacimiento: profile.fecNacimiento,
+      role: profile.role,
+      // TODO: completar en onboarding
+      //estudios: [profile.estudios],
+      photo: profile.photo
+    });
+    //console.log("profileDetails: " + profileDetails.photo)
+  }
+
 
 
   useEffect(() => {
-    const fetchClases = async () => {
-      const clasesData = await claseService.getClasesByUser(props.userState.user.profile, page, 5);
-      setClases(clasesData.data.docs);
-      setPagination({
-        page: clasesData.data.page,
-        totalPages: clasesData.data.totalPages
-      });
-      //console.log("retrieving clases");
-      //console.log(clases);
-      //console.log(pagination);
+    if (page === undefined) {
+      page = 1
     }
     fetchClases();
-
-
-
-
-    const fetchProfileDetails = async () => {
-      const result = await profileService.getProfileDetails(props.userState.user.profile);
-      let profile = result.data.docs[0];
-      setProfileDetails({
-        name: profile.firstName + ' ' + profile.lastName,
-        fecNacimiento: profile.fecNacimiento,
-        role: profile.role,
-        // TODO: completar en onboarding
-        //estudios: [profile.estudios],
-        photo: profile.photo
-      });
-      //console.log("profileDetails: " + profileDetails.photo)
-    }
     fetchProfileDetails();
-
-
-
-
-
   }, [page])
 
   return (

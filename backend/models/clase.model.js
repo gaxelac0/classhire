@@ -23,7 +23,8 @@ var claseSchema = new mongoose.Schema({
     description: {type: String, required: true}, 
     tags: [], type: String,
     frecuencia: [frecuenciaSchema],
-    comments: [commentSchema]
+    comments: [commentSchema],
+    teacher_profile_id: {type: mongoose.Schema.Types.ObjectId, ref: 'Profile'}
 },{
   timestamps: true,
 });

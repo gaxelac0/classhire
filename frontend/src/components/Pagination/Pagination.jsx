@@ -14,7 +14,7 @@ const Pagination = (props) => {
 
     var handlePaginate = (button) => {
         ////console.log("clicked")
-        navigate('/profile/' + button.currentTarget.attributes.value.value);
+        navigate('/' + props.route+ '/' + button.currentTarget.attributes.value.value);
     }
 
 
@@ -26,7 +26,7 @@ const Pagination = (props) => {
             break;
         }
 
-        if (i === props.pagination.page) {
+        if (i == props.pagination.page) {
             //console.log("added button " + i)
             buttons.push(
                 <PagButton active>{i}</PagButton>
@@ -54,13 +54,13 @@ const Pagination = (props) => {
         >
             <Flex>
                 {
-                    props.pagination.page === 1
+                    props.pagination.page == 1
                         ? <PagButton disabled>Previous</PagButton>
                         : <PagButton>Previous</PagButton>
                 }
                 {buttons}
                 {
-                    props.pagination.page === props.pagination.totalPages
+                    props.pagination.page == props.pagination.totalPages
                         ? <PagButton disabled>Next</PagButton>
                         : <PagButton>Next</PagButton>
                 }

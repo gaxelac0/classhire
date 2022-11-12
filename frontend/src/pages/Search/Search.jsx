@@ -16,30 +16,18 @@ import {
   SliderFilledTrack,
   SliderThumb,
   SliderMark,
+  VStack
 } from "@chakra-ui/react";
 
 import ClaseCard from "../../components/ClaseCard/ClaseCard";
-
 import Pagination from "../../components/Pagination/Pagination";
-
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
-
 import { useState } from "react";
-
-import { clases } from "../../mock/mocks";
-
 import { useParams } from "react-router-dom";
-
 import * as claseService from '../../services/claseService'
 
 
 const SearchComponent = (props) => {
-
-  const labelStyles = {
-    mt: '2',
-    ml: '-2.5',
-    fontSize: 'sm',
-  }
 
   let { page } = useParams();
 
@@ -62,7 +50,7 @@ const SearchComponent = (props) => {
     setClases(clasesData.data.docs);
     setPagination({
       page: clasesData.data.page,
-      totalPages: clasesData.data.totalPages
+      totalPages: clasesData.data.pages
     });
     //console.log("retrieving clases");
     //console.log(clases);
@@ -77,17 +65,11 @@ const SearchComponent = (props) => {
 
     console.log("ejecuta useEffect at SearchComponent")
 
-    if (materia !== "" || tipoClase !== "" || frecuencia !== "" || rating !== "") {
-      
+    if (materia !== "" || tipoClase !== "" ||
+      frecuencia !== "" ||  rating !== "") {
       fetchClases();
     }
-    
-
-
-
-    setPagination({ page: 0, totalPages: 0 }) // TODO hardcoded
-
-  }, [materia, tipoClase, frecuencia, rating])
+  }, [page, materia, tipoClase, frecuencia, rating])
 
   return (
     <>
@@ -224,32 +206,9 @@ const SearchComponent = (props) => {
               </FormControl>
             </SimpleGrid>
           </Stack>
-          <Box
-            px={{
-              base: 4,
-              sm: 6,
-            }}
-            py={3}
-            bg="gray.50"
-
-            textAlign="right"
-            maxW="max"
-          >
-            <Button
-              _focus={{
-                shadow: "",
-              }}
-              fontWeight="md"
-              bgGradient='linear(to-r, teal.500, teal.400)'
-              _hover={{
-                bgGradient: 'linear(to-r, teal.600, teal.500)',
-              }}
-            >
-              Save
-            </Button>
-          </Box>
         </chakra.form>
       </Flex>
+      <VStack>
       {clases.map((c) => (
         <>
           <ClaseCard
@@ -257,13 +216,14 @@ const SearchComponent = (props) => {
             date={c.date}
             description={c.description}
             tags={c.tags}
-            profName={c.profName}
-            profImage={c.profImage}
+            teacher_name={c.teacher_name}
+            teacher_photo={c.teacher_photo}
           />
           <Divider h="15px" />
         </>
       ))}
-      <Pagination pagination={pagination} />
+      <Pagination pagination={pagination} route={"search"} />
+      </VStack>
     </>
   );
 };

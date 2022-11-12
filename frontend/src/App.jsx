@@ -53,7 +53,9 @@ const App = () => {
         />
         <Route path="/complete-onboard/profesor" element={<CompleteOnboardTeacherFrm userState={userState} />}
         />
-        <Route path="/search" element={<Search userState={userState} />}
+        <Route path="/search" element={<Navigate to="/search/1"/>}
+        />
+        <Route path="/search/:page" element={<Search userState={userState} />}
         />
         <Route path="/clase" element={<Clase userState={userState} />}
         />
