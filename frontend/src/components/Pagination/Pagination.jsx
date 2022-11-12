@@ -10,11 +10,13 @@ import { useNavigate } from 'react-router-dom'
 
 const Pagination = (props) => {
 
+    let actualPage = +props.pagination.page
+
     const navigate = useNavigate();
 
-    var handlePaginate = (button) => {
+    var handlePaginate = (value) => {
         ////console.log("clicked")
-        navigate('/' + props.route+ '/' + button.currentTarget.attributes.value.value);
+        navigate('/' + props.route+ '/' + value);
     }
 
 
@@ -36,14 +38,13 @@ const Pagination = (props) => {
             buttons.push(
                 <PagButton
                 value={i}
-                onClick={(button) => handlePaginate(button)}
+                onClick={(button) => handlePaginate(button.target.value)}
                 >
                     {i}
                 </PagButton>
             );
         }
     }
-    //console.log(buttons)
 
     return (
         <Flex
@@ -56,13 +57,21 @@ const Pagination = (props) => {
                 {
                     props.pagination.page == 1
                         ? <PagButton disabled>Previous</PagButton>
-                        : <PagButton>Previous</PagButton>
+                        : 
+                        <PagButton
+                        value={i}
+                        onClick={(button) => handlePaginate(actualPage-1)}
+                        > Previous</PagButton>
                 }
                 {buttons}
                 {
                     props.pagination.page == props.pagination.totalPages
                         ? <PagButton disabled>Next</PagButton>
-                        : <PagButton>Next</PagButton>
+                        :
+                        <PagButton
+                        value={i}
+                        onClick={(button) => handlePaginate(actualPage+1)}
+                        > Next</PagButton>
                 }
             </Flex>
         </Flex>

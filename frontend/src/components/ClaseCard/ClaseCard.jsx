@@ -15,7 +15,7 @@ import {
 
 
 const ClaseCard = (props) => {
-  console.log(props)
+  //console.log(props)
 
   return (
     <>

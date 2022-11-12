@@ -1,5 +1,19 @@
 const BASE_URL = `${process.env.REACT_APP_BACK_END_SERVER_URL}/api/clase`
 
+
+async function addClase(body) {
+
+  const res = await fetch(BASE_URL + '/add', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: body,
+  })
+
+  return await res.json()
+}
+
 async function getClases(filters, page, limit) {
 
   const res = await fetch(BASE_URL + '?' + new URLSearchParams({
@@ -40,4 +54,4 @@ async function getClasesByUser(profile_id, page, limit) {
   return await res.json()
 }
 
-export { getClases, getClasesByUser }
+export { addClase, getClases, getClasesByUser }

@@ -1,8 +1,18 @@
 var mongoose = require('mongoose');
 var mongoosePaginate = require('mongoose-paginate');
 
-const FrecuenciaEnum = ["unica", "diaria", "semanal", "mensual"];
+const MateriaEnum = ["ruby", "java", "golang", "cplusplus", "python", "javascript"];
+var materiaSchema = new mongoose.Schema({value: { type: String, enum: MateriaEnum}});
+
+const FrecuenciaEnum = ["once", "diaria", "semanal", "mensual"];
 var frecuenciaSchema = new mongoose.Schema({value: { type: String, enum: FrecuenciaEnum}});
+
+
+const NivelEnum = ["primaria", "secundaria", "terciaria", "universitario", "seminario"];
+var nivelSchema = new mongoose.Schema({value: { type: String, enum: NivelEnum}});
+
+const TipoClaseEnum = ["individual", "grupal", "consulta"];
+var tipoClaseSchema = new mongoose.Schema({value: { type: String, enum: TipoClaseEnum}});
 
 var commentSchema = new mongoose.Schema({
   type: {type: String, required: true}, /* can be positive, negative, neutral */
@@ -12,19 +22,28 @@ var commentSchema = new mongoose.Schema({
 timestamps: true,
 });
 
+
+
 var claseSchema = new mongoose.Schema({
     title: {type: String, required: true},
+    materia: materiaSchema,
+    description: {type: String, required: true}, 
     price: {type: Number, required: true},
+    duration: {type: Number, required: true},
+    nivel: nivelSchema,
+    frecuencia: frecuenciaSchema,
+    tipo_clase: tipoClaseSchema,
+    tags: [], type: String,
+    
+    
+    teacher_profile_id: {type: mongoose.Schema.Types.ObjectId, ref: 'Profile'},
+    comments: [commentSchema],
     rating: {type: Number, default: 0}, 
     reviewCount: {type: Number, default: 0},
     reviewNegative: {type: Number, default: 0},
     reviewPositive: {type: Number, default: 0},
-    date: {type: Date, default: Date.now()},
-    description: {type: String, required: true}, 
-    tags: [], type: String,
-    frecuencia: [frecuenciaSchema],
-    comments: [commentSchema],
-    teacher_profile_id: {type: mongoose.Schema.Types.ObjectId, ref: 'Profile'}
+
+    date: {type: Date, default: Date.now()}
 },{
   timestamps: true,
 });

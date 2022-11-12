@@ -123,9 +123,12 @@ const SearchComponent = (props) => {
                   rounded="md"
                   onChange={(e) => setMateria(e.target.value)} // TODO continue here
                 >
-                  <option id="matematica">Matemática</option>
-                  <option id="quimica">Química</option>
-                  <option id="fisica">Física</option>
+                  <option id="ruby">Ruby</option>
+                  <option id="java">Java</option>
+                  <option id="golang">Go / Golang</option>
+                  <option id="javascript">JavaScript</option>
+                  <option id="cplusplus">C++</option>
+                  <option id="python">Python</option>
                 </Select>
               </FormControl>
 
@@ -173,9 +176,10 @@ const SearchComponent = (props) => {
                   rounded="md"
                   onChange={(e) => setFrecuencia(e.target.value)}
                 >
-                  <option id="unica">Única</option>
-                  <option id="semanal">Semanal</option>
-                  <option id="mensual">Mensual</option>
+                  <option id="once" value={'once'}>Única vez</option>
+                  <option id="diaria" value={'diaria'}>Diaria</option>
+                  <option id="semanal" value={'once'}>Semanal</option>
+                  <option id="mensual" value={'mensual'}>Mensual</option>
                 </Select>
               </FormControl>
               <FormControl as={GridItem} colSpan={[6, 3]}>

@@ -51,3 +51,6 @@ Calculara el porcentaje en base la sumatoria de ellas y sumada a esta nueva.
 	msg: "review agregado exitosamente/no pudo ser agregado"
 }
 ```
+
+# TODO
+- necesitamos cargar mas registros de clases variados para el tipo de materia y distintos values
