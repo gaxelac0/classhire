@@ -22,24 +22,33 @@ const ClaseCard = (props) => {
   return (
     <>
       <Flex
-        width="full"
+        p={5}
+        w="full"
         alignItems="center"
         justifyContent="center"
-        px={8}
       >
         <Box
           mx="auto"
-          px={8}
-          py={4}
           rounded="lg"
           shadow="lg"
+          borderWidth="1px"
+          minW={"272px"}
+          minH={"612px"}
           bg="white"
-          maxW="max"
+          maxW="sm"
+          p={"1em"}
         >
+
+          <Image
+            src={props.image}
+            alt={props.imageAlt}
+            roundedTop="lg"
+          />
           <Box justifyContent="space-between" alignItems="center">
             <chakra.span
               fontSize="sm"
               color="gray.600"
+              
             >
               {props.date}
             </chakra.span>
@@ -76,16 +85,17 @@ const ClaseCard = (props) => {
             <Text fontSize={30} as="b">
               {props.title}
             </Text>
-            <chakra.p
+            <Text
               mt={2}
               color="gray.600"
+              noOfLines={[3,6]}
             >
               {props.description}
-            </chakra.p>
+            </Text>
           </Box>
 
           <Box justifyContent="space-between" alignItems="center" mt={5}>
-            <HStack spacing={2}>
+            <HStack >
               {props.tags.map((t) => (
                 <Tag
                   size="sm"
@@ -100,8 +110,9 @@ const ClaseCard = (props) => {
               ))}
             </HStack>
 
-            <Box alignItems="center">
+            <Box alignItems="center" mt={"1em"}>
               <Image
+                
                 mx={4}
                 w={10}
                 h={10}
@@ -114,13 +125,13 @@ const ClaseCard = (props) => {
                 src={`data:image/jpeg;base64,${props.teacher_photo}`}
                 alt="imag"
               />
-              <Link
+              <Text
                 color="gray.700"
                 fontWeight="700"
                 cursor="pointer"
               >
                 {props.teacher_name}
-              </Link>
+              </Text>
             </Box>
           </Box>
         </Box>

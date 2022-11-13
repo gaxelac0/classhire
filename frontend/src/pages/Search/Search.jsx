@@ -106,8 +106,7 @@ const SearchComponent = (props) => {
         width="full"
         alignItems="center"
         justifyContent="center"
-        px={2}
-        py={2}
+        p={"1em"}
       >
         <chakra.form
           method="POST"
@@ -242,6 +241,7 @@ const SearchComponent = (props) => {
         </chakra.form>
       </Flex>
       <VStack>
+      <SimpleGrid columns={[1, null, 3]} spacing="1em">
         {clases.map((c) => (
           <>
             <ClaseCard
@@ -249,14 +249,17 @@ const SearchComponent = (props) => {
               date={c.date}
               description={c.description}
               tags={c.tags}
+              // TODO needs unhardcoded image
+              image={"http://localhost:3000/img/matematicas.jpg"}
+              imageAlt={"imageAlt"}
               rating={c.rating}
               reviewCount={c.reviewCount}
               teacher_name={c.teacher_name}
               teacher_photo={c.teacher_photo}
             />
-            <Divider h="15px" />
           </>
         ))}
+        </SimpleGrid>
         <Pagination pagination={pagination} route={"search"} />
       </VStack>
     </>

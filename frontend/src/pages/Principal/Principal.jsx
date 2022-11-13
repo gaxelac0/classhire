@@ -15,14 +15,17 @@ import {
   InputLeftElement, 
   Input,
   Image,
+  Select
 } from "@chakra-ui/react";
 import BkgHome from "../../images/HomBackground.jpg"
 import {SearchIcon} from '@chakra-ui/icons'
 import BackgroundLayout from "../../components/Layout/BackgroundLayout"
 
-import MiniClaseCard from "../../components/ClaseCard/MiniClaseCard";
+import ClaseCard from "../../components/ClaseCard/ClaseCard";
 
-import { clases } from "../../mock/mocks";
+import { useState, useEffect } from "react";
+
+import * as claseService from "../../services/claseService"
 
 const Feature = ({ heading, text }) => {
 	return (
@@ -36,6 +39,36 @@ const Feature = ({ heading, text }) => {
   };
 
 const PrincipalComponent = () => {
+
+	const [clases, setClases] = useState([])
+	const [materia, setMateria] = useState('')
+
+	useEffect(() => {
+
+		const fetchClases = async () => {
+		console.log("ejecuta fetchClases at PrincipalComponent")
+	
+		let query = {}
+		if (materia && materia !== '') {
+		  query["materia"] = materia;
+		}
+		
+		const clasesData = await claseService.getClases(query, 1, 8);
+		setClases(clasesData.data.docs);
+	
+		//console.log("retrieving clases");
+		//console.log(clases);
+		//console.log(pagination);
+	  }
+	  console.log("ejecuta useEffect at PrincipalComponent")
+
+	fetchClases();
+  
+	}, [materia])
+
+	
+
+
 	return (
 		<>
 		
@@ -104,26 +137,45 @@ const PrincipalComponent = () => {
 			</Grid>
 
 				<Divider mb="20"></Divider>
-				<InputGroup>
-					<InputLeftElement
-						pointerEvents='none'
-						children={<SearchIcon color='white' />}
-					/>
-					<Input focusBorderColor="#6BB495" type="search" placeholder='Buscar Materia' />
-				</InputGroup>
+                  <Select
+                    id="materia"
+                    name="materia"
+                    value={materia}
+					onChange={(e) => setMateria(e.target.options[e.target.selectedIndex].id)}
+                    placeholder="Selecciona la materia"
+                    mt={1}
+                    focusBorderColor="brand.400"
+                    shadow="sm"
+                    size="sm"
+                    w="full"
+                    rounded="md"
+                  >
+                    <option id='golang' value={'golang'}>Go / Golang</option>
+                    <option id='java' value={'java'}>Java</option>
+                    <option id='ruby' value={'ruby'}>Ruby</option>
+                    <option id='python' value={'python'}>Python</option>
+                    <option id='javascript' value={'javascript'}>JavaScript</option>
+                    <option id='cplusplus' value={'cplusplus'}>C++</option>
+                  </Select>
 
 				<SimpleGrid columns={[2, null, 4]} spacing="1em">
-					{clases.map((c) => (
-						<MiniClaseCard
-							id={c.id}
-							title={c.title} 
-							price={c.price} 
-							rating={c.rating}
-							image={c.image}
-							imageAlt={"imageAlt"}
-							reviewCount={c.reviewCount} 
-						/>
-					))}
+				{clases.map((c) => (
+				<>
+					<ClaseCard
+					title={c.title}
+					date={c.date}
+					description={c.description}
+					tags={c.tags}
+					// TODO needs unhardcoded image
+					image={"http://localhost:3000/img/matematicas.jpg"}
+					imageAlt={"imageAlt"}
+					rating={c.rating}
+					reviewCount={c.reviewCount}
+					teacher_name={c.teacher_name}
+					teacher_photo={c.teacher_photo}
+					/>
+				</>
+				))}
 				</SimpleGrid>
 
 			</SimpleGrid>
