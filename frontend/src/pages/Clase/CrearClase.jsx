@@ -2,18 +2,16 @@ import {
   Box,
   Stack,
   Text,
-  Flex,
   Button,
   Heading,
   SimpleGrid,
   GridItem,
-  chakra,
   FormControl,
   Image,
-  InputGroup, Input, FormLabel, Textarea, FormHelperText, Icon, InputLeftAddon, Avatar, VisuallyHidden, Select, useToast, FormErrorMessage
+  InputGroup, Input, FormLabel, Textarea, FormHelperText,
+  InputLeftAddon,
+  Select, useToast, FormErrorMessage
 } from '@chakra-ui/react';
-
-import { FaUser } from 'react-icons/fa';
 
 import BackgroundLayout from "../../components/Layout/BackgroundLayout"
 
@@ -48,14 +46,12 @@ const CrearClaseComponent = (props) => {
   const isErrorPrice= formData.price === ''
   const isErrorDuration = formData.duration === ''
   const isErrorNivel = formData.nivel === ''
-  const isErrorTags = formData.tags === ''
   const isErrorFrecuencia = formData.frecuencia === ''
   const isErrorTipoClase = formData.tipo_clase === ''
 
 
   const handleChange = e => {
     //console.log(e)
-
     let value = (e.target.value === undefined || e.target.value === '') ? '' : e.target.value;
     setFormData({
       ...formData,

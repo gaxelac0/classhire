@@ -4,7 +4,6 @@ import {
   Box,
   Divider,
   Stack,
-  Button,
   Flex,
   FormLabel,
   FormControl,
@@ -46,7 +45,9 @@ const SearchComponent = (props) => {
     totalPages: 0
   })
 
-  const fetchClases = async () => {
+  useEffect(() => {
+
+    const fetchClases = async () => {
     console.log("ejecuta fetchClases at SearchComponent")
 
     let query = {}
@@ -67,7 +68,6 @@ const SearchComponent = (props) => {
     }
 
 
-
     const clasesData = await claseService.getClases(query, page, 5);
     setClases(clasesData.data.docs);
 
@@ -76,7 +76,7 @@ const SearchComponent = (props) => {
         page: 1,
         totalPages: clasesData.data.pages
       })
-      navigate("/search/" + "1")
+      navigate("/search/1")
     } else {
 
       setPagination({
@@ -89,12 +89,6 @@ const SearchComponent = (props) => {
     //console.log(pagination);
   }
 
-  useEffect(() => {
-
-    if (page === undefined) {
-      page = 1;
-    }
-
     console.log("ejecuta useEffect at SearchComponent")
 
     if (materia !== "" || tipoClase !== "" ||
@@ -104,6 +98,8 @@ const SearchComponent = (props) => {
 
   }, [page, materia, tipoClase, frecuencia, rating])
 
+  // TODO agregar seccion de Ordenamiento al lado de Filtros
+  // TODO heading Filtros / Heading Sorting
   return (
     <>
       <Flex

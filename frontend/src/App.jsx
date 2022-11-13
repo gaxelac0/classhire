@@ -57,7 +57,9 @@ const App = () => {
         />
         <Route path="/search/:page" element={<Search userState={userState} />}
         />
-        <Route path="/clase" element={<Clase userState={userState} />}
+        <Route path="/clase" element={<Navigate to="/search"/>}
+        />
+        <Route path="/clase/:id" element={<Clase userState={userState} />}
         />
         <Route path="/clase/add" element={<CrearClase userState={userState} />}
         />
