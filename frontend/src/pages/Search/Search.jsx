@@ -23,11 +23,13 @@ import ClaseCard from "../../components/ClaseCard/ClaseCard";
 import Pagination from "../../components/Pagination/Pagination";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as claseService from '../../services/claseService'
 
 
 const SearchComponent = (props) => {
+
+  let navigate = useNavigate()
 
   let { page } = useParams();
 
@@ -68,10 +70,20 @@ const SearchComponent = (props) => {
 
     const clasesData = await claseService.getClases(query, page, 5);
     setClases(clasesData.data.docs);
-    setPagination({
-      page: clasesData.data.page,
-      totalPages: clasesData.data.pages
-    });
+
+    if (clasesData.data.page > clasesData.data.pages) {
+      setPagination({
+        page: 1,
+        totalPages: clasesData.data.pages
+      })
+      navigate("/search/" + "1")
+    } else {
+
+      setPagination({
+        page: clasesData.data.page,
+        totalPages: clasesData.data.pages
+      })
+    }
     //console.log("retrieving clases");
     //console.log(clases);
     //console.log(pagination);
@@ -86,9 +98,10 @@ const SearchComponent = (props) => {
     console.log("ejecuta useEffect at SearchComponent")
 
     if (materia !== "" || tipoClase !== "" ||
-      frecuencia !== "" ||  rating !== "") {
+      frecuencia !== "" || rating !== "") {
       fetchClases();
     }
+
   }, [page, materia, tipoClase, frecuencia, rating])
 
   return (
@@ -210,7 +223,7 @@ const SearchComponent = (props) => {
                 >
                   Calif. min.
                 </FormLabel>
-                <Slider defaultValue={0} min={0} max={100} step={20} onChange={(val) => {setRating(val/20);console.log(val/20);}}>
+                <Slider defaultValue={0} min={0} max={100} step={20} onChange={(val) => { setRating(val / 20); console.log(val / 20); }}>
                   <SliderMark
                     value={rating}
                     textAlign='right'
@@ -233,22 +246,22 @@ const SearchComponent = (props) => {
         </chakra.form>
       </Flex>
       <VStack>
-      {clases.map((c) => (
-        <>
-          <ClaseCard
-            title={c.title}
-            date={c.date}
-            description={c.description}
-            tags={c.tags}
-            rating={c.rating}
-            reviewCount={c.reviewCount}
-            teacher_name={c.teacher_name}
-            teacher_photo={c.teacher_photo}
-          />
-          <Divider h="15px" />
-        </>
-      ))}
-      <Pagination pagination={pagination} route={"search"} />
+        {clases.map((c) => (
+          <>
+            <ClaseCard
+              title={c.title}
+              date={c.date}
+              description={c.description}
+              tags={c.tags}
+              rating={c.rating}
+              reviewCount={c.reviewCount}
+              teacher_name={c.teacher_name}
+              teacher_photo={c.teacher_photo}
+            />
+            <Divider h="15px" />
+          </>
+        ))}
+        <Pagination pagination={pagination} route={"search"} />
       </VStack>
     </>
   );

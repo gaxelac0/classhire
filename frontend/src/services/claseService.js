@@ -1,3 +1,4 @@
+import * as tokenService from "./tokenService"
 const BASE_URL = `${process.env.REACT_APP_BACK_END_SERVER_URL}/api/clase`
 
 
@@ -7,8 +8,9 @@ async function addClase(body) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${tokenService.getToken()}`,
     },
-    body: body,
+    body: JSON.stringify(body)
   })
 
   return await res.json()
@@ -23,6 +25,7 @@ async function getClases(filters, page, limit) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+     
     },
     body: JSON.stringify(filters),
   })

@@ -15,7 +15,7 @@ router.post('/byprofile', claseCtrl.getClasesByProfileId)
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.post('/add',
-    body('frecuencia').exists().notEmpty().isIn(FrecuenciaEnum), // TODO: check this validation
+    //body('frecuencia').exists().notEmpty().isIn(FrecuenciaEnum), // TODO: check this validation
     checkAuth,
     claseCtrl.addClase)
 

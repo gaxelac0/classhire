@@ -10,7 +10,7 @@ import {
   chakra,
   FormControl,
   Image,
-  InputGroup, Input, FormLabel, Textarea, FormHelperText, Icon, InputLeftAddon, Avatar, VisuallyHidden, Select, useToast
+  InputGroup, Input, FormLabel, Textarea, FormHelperText, Icon, InputLeftAddon, Avatar, VisuallyHidden, Select, useToast, FormErrorMessage
 } from '@chakra-ui/react';
 
 import { FaUser } from 'react-icons/fa';
@@ -29,31 +29,47 @@ const CrearClaseComponent = (props) => {
   const navigate = useNavigate()
   const [message, setMessage] = useState([''])
   const [formData, setFormData] = useState({
-    title: '',
-    materia: '',
-    description: '',
-    price: 0,
-    duration: 0,
-    nivel: '',
-    tags: '',
-    frecuencia: '',
-    tipo_clase: '',
-    portada: '',
+    title: undefined,
+    materia: undefined,
+    description: undefined,
+    price: undefined,
+    duration: undefined,
+    nivel: undefined,
+    tags: undefined,
+    frecuencia: undefined,
+    tipo_clase: undefined,
+    portada: undefined,
   })
 
+
+  const isErrorTitle = formData.title === ''
+  const isErrorMateria = formData.materia === ''
+  const isErrorDescription = formData.description === ''
+  const isErrorPrice= formData.price === ''
+  const isErrorDuration = formData.duration === ''
+  const isErrorNivel = formData.nivel === ''
+  const isErrorTags = formData.tags === ''
+  const isErrorFrecuencia = formData.frecuencia === ''
+  const isErrorTipoClase = formData.tipo_clase === ''
+
+
   const handleChange = e => {
-    console.log(e)
+    //console.log(e)
+
+    let value = (e.target.value === undefined || e.target.value === '') ? '' : e.target.value;
     setFormData({
       ...formData,
-      [e.target.id]: e.target.value,
+      [e.target.id]: value,
     })
   }
 
   const handleSubmit = async evt => {
     evt.preventDefault()
     try {
-      let clase = await claseService.addClase(formData)
-      navigate('/clase/' + clase._id)
+      console.log("formData: " + formData)
+      let res = await claseService.addClase(formData)
+      console.log("addClase res:" + res)
+      navigate('/clase/' + res.data._id)
     } catch (err) {
       updateMessage(err.message)
     }
@@ -131,7 +147,7 @@ const CrearClaseComponent = (props) => {
                   sm: 6,
                 }}
               >
-                <FormControl as={GridItem} colSpan={[6, 3]}>
+                <FormControl as={GridItem} colSpan={[6, 3]} isInvalid={isErrorTitle} isRequired>
                   <FormLabel
                     htmlFor="title"
                     fontSize="sm"
@@ -153,9 +169,12 @@ const CrearClaseComponent = (props) => {
                     w="full"
                     rounded="md"
                   />
+                  {isErrorTitle &&
+                    <FormErrorMessage>El titulo es requirido.</FormErrorMessage> 
+                  }
                 </FormControl>
 
-                <FormControl as={GridItem} colSpan={[6, 3]}>
+                <FormControl as={GridItem} colSpan={[6, 3]} isInvalid={isErrorMateria} isRequired>
                   <FormLabel
                     fontSize="sm"
                     fontWeight="md"
@@ -183,10 +202,13 @@ const CrearClaseComponent = (props) => {
                     <option id='javascript' value={'javascript'}>JavaScript</option>
                     <option id='cplusplus' value={'cplusplus'}>C++</option>
                   </Select>
+                  {isErrorMateria &&
+                    <FormErrorMessage>La materia es requerida.</FormErrorMessage> 
+                  }
                 </FormControl>
 
                 <div>
-                  <FormControl mt={1}>
+                  <FormControl mt={1} isInvalid={isErrorDescription} isRequired>
                     <FormLabel
                       fontSize="sm"
                       fontWeight="md"
@@ -210,10 +232,13 @@ const CrearClaseComponent = (props) => {
                     <FormHelperText>
                       Detalla una descripcion acerca de la clase, contenidos minimos, etc.
                     </FormHelperText>
+                    {isErrorDescription &&
+                    <FormErrorMessage>La descripcion de la clase es requerida.</FormErrorMessage> 
+                    }
                   </FormControl>
                 </div>
 
-                <FormControl as={GridItem} colSpan={[6, 3]}>
+                <FormControl as={GridItem} colSpan={[6, 3]} isInvalid={isErrorPrice} isRequired>
                   <FormLabel
                     htmlFor="precio"
                     fontSize="sm"
@@ -244,11 +269,13 @@ const CrearClaseComponent = (props) => {
                       rounded="md"
                     />
                   </InputGroup>
+                  {isErrorPrice &&
+                    <FormErrorMessage>El precio de la clase es requerido.</FormErrorMessage> 
+                  }
                 </FormControl>
 
-                <FormControl as={GridItem} colSpan={[6, 3]}>
+                <FormControl as={GridItem} colSpan={[6, 3]} isInvalid={isErrorDuration} isRequired>
                   <FormLabel
-                    htmlFor="precio"
                     fontSize="sm"
                     fontWeight="md"
                     color="teal.700"
@@ -278,11 +305,12 @@ const CrearClaseComponent = (props) => {
                       rounded="md"
                     />
                   </InputGroup>
-
-
+                  {isErrorDuration &&
+                    <FormErrorMessage>El ingreso de la duracion de la clase es obligatorio</FormErrorMessage> 
+                  }
                 </FormControl>
 
-                <FormControl as={GridItem} colSpan={[6, 3]}>
+                <FormControl as={GridItem} colSpan={[6, 3]} isInvalid={isErrorNivel} isRequired>
                   <FormLabel
                     htmlFor="nivel"
                     fontSize="sm"
@@ -310,9 +338,12 @@ const CrearClaseComponent = (props) => {
                     <option id='universitario' value={'universitario'} >Universitario</option>
                     <option id='seminario' value={'seminario'}>Seminario</option>
                   </Select>
+                  {isErrorDuration &&
+                    <FormErrorMessage>El nivel de la clase es requerido</FormErrorMessage> 
+                  }
                 </FormControl>
 
-                <FormControl as={GridItem} colSpan={[3, 2]}>
+                <FormControl as={GridItem} colSpan={[3, 2]}  isInvalid={isErrorFrecuencia} isRequired>
                   <FormLabel
                     fontSize="sm"
                     fontWeight="md"
@@ -338,9 +369,12 @@ const CrearClaseComponent = (props) => {
                     <option id='semanal' value={'semanal'}>Semanal</option>
                     <option id='mensual' value={'mensual'}>Mensual</option>
                   </Select>
+                  {isErrorFrecuencia &&
+                    <FormErrorMessage>la frecuencia de la clase es requerida</FormErrorMessage> 
+                  }
                 </FormControl>
 
-                <FormControl as={GridItem} colSpan={[3, 2]}>
+                <FormControl as={GridItem} colSpan={[3, 2]} isInvalid={isErrorTipoClase} isRequired>
                   <FormLabel
                     fontSize="sm"
                     fontWeight="md"
@@ -364,6 +398,9 @@ const CrearClaseComponent = (props) => {
                     <option id='grupal' value={'grupal'}>Grupal</option>
                     <option id='consulta' value={'consulta'}>Consulta</option>
                   </Select>
+                  {isErrorTipoClase &&
+                    <FormErrorMessage>El tipo de clase es requerido</FormErrorMessage> 
+                  }
                 </FormControl>
 
                 <FormControl as={GridItem} colSpan={[3, 2]}>
