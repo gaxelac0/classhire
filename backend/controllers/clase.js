@@ -62,6 +62,7 @@ exports.getClasesByProfileId = async function getClasesByProfileId(req, res) {
 exports.addClase = async function addClase(req, res) {
 	const body = req.body;
 	body.user = req.user;
+
 	try {
 		let clase = await claseService.addClase(body);
 		return res.status(200).json({ status: "ok", message: "Clase dada de alta exitosamente", data: clase });

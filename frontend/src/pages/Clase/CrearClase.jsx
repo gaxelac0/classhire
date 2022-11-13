@@ -32,8 +32,8 @@ const CrearClaseComponent = (props) => {
     title: '',
     materia: '',
     description: '',
-    precio: '',
-    duracion: '',
+    price: 0,
+    duration: 0,
     nivel: '',
     tags: '',
     frecuencia: '',
@@ -52,8 +52,8 @@ const CrearClaseComponent = (props) => {
   const handleSubmit = async evt => {
     evt.preventDefault()
     try {
-      await claseService.addClase(formData)
-      navigate('/success')
+      let clase = await claseService.addClase(formData)
+      navigate('/clase/' + clase._id)
     } catch (err) {
       updateMessage(err.message)
     }
@@ -176,14 +176,12 @@ const CrearClaseComponent = (props) => {
                     w="full"
                     rounded="md"
                   >
-                    <option id='matematicas' value={'matematicas'}>Matematicas</option>
+                    <option id='golang' value={'golang'}>Go / Golang</option>
                     <option id='java' value={'java'}>Java</option>
-                    <option id='java' value={'quimica'}>Quimica</option>
-                    <option id='fisica' value={'fisica'}>Fisica</option>
-                    <option id='algebra' value={'algebra'}>Algebra</option>
-                    <option id='analisis' value={'analisis'}>Analisis Matematico</option>
-                    <option id='seminario' value={'seminario'}>Seminario</option>
-                    <option id='api' value={'api'}>Aplicaciones Interactivas</option>
+                    <option id='ruby' value={'ruby'}>Ruby</option>
+                    <option id='python' value={'python'}>Python</option>
+                    <option id='javascript' value={'javascript'}>JavaScript</option>
+                    <option id='cplusplus' value={'cplusplus'}>C++</option>
                   </Select>
                 </FormControl>
 
@@ -268,8 +266,8 @@ const CrearClaseComponent = (props) => {
                     </InputLeftAddon>
                     <Input
                       type="number"
-                      id="duracion"
-                      value={formData.duracion}
+                      id="duration"
+                      value={formData.duration}
                       onChange={handleChange}
                       placeholder="Cantidad de horas incluidas en el precio"
                       mt={1}
@@ -306,11 +304,11 @@ const CrearClaseComponent = (props) => {
                     w="full"
                     rounded="md"
                   >
-                    <option>Primaria</option>
-                    <option>Secundaria</option>
-                    <option>Terciario</option>
-                    <option>Universitario</option>
-                    <option>Seminario</option>
+                    <option id='primaria' value={'primaria'}>Primaria</option>
+                    <option id='secundaria' value={'secundaria'}>Secundaria</option>
+                    <option id='terciaria' value={'terciaria'}>Terciario</option>
+                    <option id='universitario' value={'universitario'} >Universitario</option>
+                    <option id='seminario' value={'seminario'}>Seminario</option>
                   </Select>
                 </FormControl>
 
@@ -399,11 +397,7 @@ const CrearClaseComponent = (props) => {
                     />
                   </InputGroup>
                   <FormHelperText>Etiquetas que identifican tu clase. Pon todas las que quieras separadas con coma!</FormHelperText>
-
-
-
                 </FormControl>
-
               </Stack>
               <Box
                 px={{

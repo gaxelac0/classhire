@@ -29,12 +29,12 @@ async function getClases(query, page, limit) {
 
             let teacherProfileId = clone.docs[i].teacher_profile_id;
 
-            let profile = await Profile.findOne({_id: teacherProfileId})
+            let profile = await Profile.findOne({ _id: teacherProfileId })
             clone.docs[i]["teacher_name"] = profile.firstName + ' ' + profile.lastName;
             clone.docs[i]["teacher_photo"] = profile.photo;
 
         }
-        
+
         return clone;
 
     } catch (e) {
@@ -51,19 +51,19 @@ async function getClasesByProfileId(body, page, limit) {
     let profile_id = body.profile_id;
 
     try {
-        
-        let profile = await Profile.findOne({_id: body.profile_id})
 
-       // console.log(`getClasesByProfileId  - retrieving clases(${profile.clases.length}) for profileId ${profile_id}`)
-       // console.log(profile.clases);
+        let profile = await Profile.findOne({ _id: body.profile_id })
+
+        // console.log(`getClasesByProfileId  - retrieving clases(${profile.clases.length}) for profileId ${profile_id}`)
+        // console.log(profile.clases);
 
         var result = profile.clases;
-        if(profile.clases.length > 0) {
-            var result = await getClases({ids: profile.clases}, page, limit);
-            return {docs: result.docs, page: result.page, totalPages: result.pages};
+        if (profile.clases.length > 0) {
+            var result = await getClases({ ids: profile.clases }, page, limit);
+            return { docs: result.docs, page: result.page, totalPages: result.pages };
         }
 
-        return {page: 0, totalPages: 0};
+        return { page: 0, totalPages: 0 };
 
     } catch (e) {
         // return a Error message describing the reason 
@@ -75,50 +75,66 @@ exports.getClasesByProfileId = getClasesByProfileId;
 
 exports.addReview = async function (body) {
 
-    var result = await getClases({ _id: body.clase_id }, 1, 1);
 
-    if (result.total == 0) {
-        throw new NotFoundError("err", HttpStatusCodes.NOT_FOUND, `Clase id(${body.clase_id}) no encontrada.`);
+    try {
+
+        var clase = await Clase.findOne({_id: body.clase_id})
+        if (!clase) {
+            throw new NotFoundError("err", HttpStatusCodes.NOT_FOUND, true, 'La clase no existe');
+        }
+        // TODO: validar que el usuario haciendo la review tenga contratada la clase
+        // TODO: validar que no sea el autor el que la postea
+
+        clase.comments.push({ type: body.type, comment: body.comment, profile_author_id: body.user.profile });
+        clase.reviewCount = clase.reviewCount + 1;
+
+        let cantNeg = clase.reviewNegative;
+        let cantPos = clase.reviewPositive;
+        if (body.type === "positive") {
+            cantPos = cantPos + 1;
+        } else {
+            cantNeg = cantNeg + 1;
+        }
+        clase.reviewPositive = cantPos;
+        clase.reviewNegative = cantNeg;
+
+        let percentage = (100 * cantPos) / clase.reviewCount;
+
+        clase.rating = percentage / 20;
+
+        await clase.save();
     }
-
-    // TODO: validar que el usuario haciendo la review tenga contratada la clase
-
-    let clase = result.docs[0];
-    clase.comments.push({ type: body.type, comment: body.comment, profile_author_id: body.user.profile });
-    clase.reviewCount = clase.reviewCount + 1;
-
-    let cantNeg = clase.reviewNegative;
-    let cantPos = clase.reviewPositive;
-    if (body.type === "positive") {
-        cantPos = cantPos + 1;
-    } else {
-        cantNeg = cantNeg + 1;
+    catch (e) {
+        // return a Error message describing the reason 
+        console.log("error services", e);
+        throw new BaseError("err", HttpStatusCodes.INTERNAL_SERVER, true, e.message);
     }
-    clase.reviewPositive = cantPos;
-    clase.reviewNegative = cantNeg;
-
-    let percentage = (100 * cantPos) / clase.reviewCount;
-
-    clase.rating = percentage / 20;
-
-    await clase.save();
 }
 
+
 exports.addClase = async function (body) {
-    let newClase = await Clase.create(body);
-    let user = await User.findOne(body.user);
-    let profile = await Profile.findOne(user.profile)
+   
 
-    if (profile.role !== constants.RoleEnum[2]) {
-        throw new BaseError("err", HttpStatusCodes.UNAUTHORIZED, true, 'Unauthorized: solo el rol teacher puede crear clases.');
-    }
 
-    try { 
+    try {
+
+        let user = await User.findOne(body.user);
+        let profile = await Profile.findOne(user.profile)
+
+        if (profile.role !== constants.RoleEnum[2]) {
+            throw new BaseError("err", HttpStatusCodes.UNAUTHORIZED, true, 'Unauthorized: solo el rol teacher puede crear clases.');
+        }
+
+        body.teacher_profile_id = profile._id;
+
+
+        const newClaseSchema = getNewClaseSchema(body);
+
+        let newClase = await Clase.create(newClaseSchema);
         profile.clases.push(newClase);
         await profile.save();
         return newClase;
     } catch (e) {
-        Clase.findByIdAndDelete(newClase._id)
         throw new BaseError("err", HttpStatusCodes.INTERNAL_SERVER, true, e.message);
     }
 }
@@ -151,4 +167,22 @@ exports.deleteClase = async function (body) {
     } catch (e) {
         throw new BaseError("err", HttpStatusCodes.INTERNAL_SERVER, true, e.message);
     }
+}
+
+const getNewClaseSchema = (body) => {
+    let newClassObject = {}
+
+        for(var key in body){
+
+            if (['materia', 'tipo_clase', 'frecuencia', 'nivel'].includes(key)) {
+                newClassObject[key+".value"] = body[key];
+            } else {
+                newClassObject[key] = body[key];
+            }
+
+
+
+           // console.log(key +  ' ;;;;;;;;;;;;;;;;;; ' + body[key])
+        }
+        return newClassObject;
 }
