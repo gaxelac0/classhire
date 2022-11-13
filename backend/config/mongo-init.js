@@ -45,7 +45,9 @@ db.clases.insertMany([
 	    "_id": ObjectId("clase0000001"),
 		
 	    "title": "Ruby",
-		"materia": "ruby",
+		"materia": {
+		    "value": "ruby"
+		},
 	    "description": "Ruby es un lenguaje de programación interpretado, reflexivo y orientado a objetos, \
 		 creado por el programador japonés Yukihiro Matz Matsumoto, quien comenzó a trabajar en Ruby en 1993, \
 		 y lo presentó públicamente en 1995. ",
@@ -65,12 +67,15 @@ db.clases.insertMany([
 		"teacher_profile_id": ObjectId("demoteacher0"),
 		"comments": [],
 		"rating": 4,
+		"reviewCount": 5,
 	},
 	{
 	    "_id": ObjectId("clase0000002"),
 		
 	    "title": "Java",
-		"materia": "java",
+		"materia": {
+		    "value": "java"
+		},
 	    "description": "Programacion orientada a Objectos en Java. \
 		Java es un lenguaje de programación y una plataforma informática que fue comercializada por primera vez \
 		en 1995 por Sun Microsystems.​​.",
@@ -90,12 +95,15 @@ db.clases.insertMany([
 		"teacher_profile_id": ObjectId("demoteacher0"),
 		"comments": [],
 		"rating": 2,
+		"reviewCount": 5,
 	},
 	{
 	    "_id": ObjectId("clase0000003"),
 		
 	    "title": "Golang",
-		"materia": "golang",
+		"materia": {
+		    "value": "golang"
+		},
 	    "description": "Go es un lenguaje de programación concurrente y compilado con tipado estático inspirado \
 		en la sintaxis de C, pero con seguridad de memoria y recolección de basura. Ha sido desarrollado por Google9​  \
 		y sus diseñadores iniciales fueron Robert Griesemer, Rob Pike y Ken Thompson.10​ Actualmente está disponible en \
@@ -120,12 +128,15 @@ db.clases.insertMany([
 		"teacher_profile_id": ObjectId("demoteacher0"),
 		"comments": [],
 		"rating": 5,
+		"reviewCount": 5,
 	},
 	{
 	    "_id": ObjectId("clase0000004"),
 		
 	    "title": "C++",
-		"materia": "cplusplus",
+		"materia": {
+		    "value": "cplusplus"
+		},
 	    "description": "Programacion orientada a Objectos en Java. \
 		Java es un lenguaje de programación y una plataforma informática que fue comercializada por primera vez \
 		en 1995 por Sun Microsystems.​​.",
@@ -145,12 +156,15 @@ db.clases.insertMany([
 		"teacher_profile_id": ObjectId("demoteacher0"),
 		"comments": [],
 		"rating": 5,
+		"reviewCount": 5,
 	},
 	{
 	    "_id": ObjectId("clase0000005"),
 		
 	    "title": "Python",
-		"materia": "python",
+		"materia": {
+		    "value": "python"
+		},
 	    "description": "Programacion orientada a Objectos en Java. \
 		Java es un lenguaje de programación y una plataforma informática que fue comercializada por primera vez \
 		en 1995 por Sun Microsystems.​​.",
@@ -170,12 +184,15 @@ db.clases.insertMany([
 		"teacher_profile_id": ObjectId("demoteacher0"),
 		"comments": [],
 		"rating": 5,
+		"reviewCount": 5,
 	},
 	{
 	    "_id": ObjectId("clase0000006"),
 		
 	    "title": "JavaScript",
-		"materia": "javascript",
+		"materia": {
+		    "value": "javascript"
+		},
 	    "description": "Programacion orientada a Objectos en Java. \
 		Java es un lenguaje de programación y una plataforma informática que fue comercializada por primera vez \
 		en 1995 por Sun Microsystems.​​.",
@@ -195,12 +212,15 @@ db.clases.insertMany([
 		"teacher_profile_id": ObjectId("demoteacher0"),
 		"comments": [],
 		"rating": 4,
+		"reviewCount": 5,
 	},
 	{
 	    "_id": ObjectId("clase0000007"),
 		
 	    "title": "Ruby On Rails",
-		"materia": "javascript",
+		"materia": {
+		    "value": "javascript"
+		},
 	    "description": "Ruby",
 		"price": 2,
 		"duration": 1,
@@ -218,12 +238,15 @@ db.clases.insertMany([
 		"teacher_profile_id": ObjectId("demoteacher0"),
 		"comments": [],
 		"rating": 3,
+		"reviewCount": 5,
 	},
 	{
 	    "_id": ObjectId("clase0000008"),
 		
 	    "title": "JavaScript",
-		"materia": "javascript",
+		"materia": {
+		    "value": "javascript"
+		},
 	    "description": "C++ es un lenguaje de programación diseñado en 1979 por Bjarne Stroustrup. \
 		La intención de su creación fue extender al lenguaje de programación C y añadir mecanismos que permiten la \		 manipulación de objetos. En ese sentido, desde el punto de vista de los lenguajes orientados a objetos, C++ es un \ lenguaje híbrido. ",
 		"price": 15,
@@ -242,12 +265,15 @@ db.clases.insertMany([
 		"teacher_profile_id": ObjectId("demoteacher0"),
 		"comments": [],
 		"rating": 2,
+		"reviewCount": 3,
 	},
 	{
 	    "_id": ObjectId("clase0000009"),
 		
 	    "title": "Python y Pandas",
-		"materia": "python",
+		"materia": {
+		    "value": "python"
+		},
 	    "description": "Python es un lenguaje de alto nivel de programación interpretado cuya filosofía hace hincapié \
 		en la legibilidad de su código, se utiliza para desarrollar aplicaciones de todo tipo, ejemplos: Instagram, Netflix \
 		Spotify, Panda3D, entre otros.​",
@@ -267,12 +293,15 @@ db.clases.insertMany([
 		"teacher_profile_id": ObjectId("demoteacher0"),
 		"comments": [],
 		"rating": 5,
+		"reviewCount": 25,
 	},
 	{
 	    "_id": ObjectId("clase0000010"),
 		
 	    "title": "Golang y las go rutinas",
-		"materia": "golang",
+		"materia": {
+		    "value": "golang"
+		},
 	    "description": "Go es un lenguaje de programación concurrente y compilado con tipado estático inspirado \
 		en la sintaxis de C, pero con seguridad de memoria y recolección de basura. Ha sido desarrollado por Google9​  \
 		y sus diseñadores iniciales fueron Robert Griesemer, Rob Pike y Ken Thompson.10​ Actualmente está disponible en \
@@ -297,12 +326,15 @@ db.clases.insertMany([
 		"teacher_profile_id": ObjectId("demoteacher0"),
 		"comments": [],
 		"rating": 5,
+		"reviewCount": 500,
 	},
 	{
 	    "_id": ObjectId("clase0000011"),
 		
 	    "title": "JavaScript",
-		"materia": "javascript",
+		"materia": {
+		    "value": "javascript"
+		},
 	    "description": "JavaScript es un lenguaje de programación interpretado, dialecto del estándar ECMAScript. \
 		Se define como orientado a objetos, ​ basado en prototipos, imperativo, débilmente tipado y dinámico.",
 		"price": 5,
@@ -321,12 +353,15 @@ db.clases.insertMany([
 		"teacher_profile_id": ObjectId("demoteacher0"),
 		"comments": [],
 		"rating": 1,
+		"reviewCount": 5,
 	},
 	{
 	    "_id": ObjectId("clase0000012"),
 		
 	    "title": "JavaScript",
-		"materia": "javascript",
+		"materia": {
+		    "value": "javascript"
+		},
 	    "description": "Programacion orientada a Objectos en Java. \
 		Java es un lenguaje de programación y una plataforma informática que fue comercializada por primera vez \
 		en 1995 por Sun Microsystems.​​.",
@@ -346,12 +381,15 @@ db.clases.insertMany([
 		"teacher_profile_id": ObjectId("demoteacher0"),
 		"comments": [],
 		"rating": 0,
+		"reviewCount": 0,
 	},
 	{
 	    "_id": ObjectId("clase0000013"),
 		
 	    "title": "JavaScript",
-		"materia": "javascript",
+		"materia": {
+		    "value": "javascript"
+		},
 	    "description": "Programacion orientada a Objectos en Java. \
 		Java es un lenguaje de programación y una plataforma informática que fue comercializada por primera vez \
 		en 1995 por Sun Microsystems.​​.",
@@ -371,12 +409,15 @@ db.clases.insertMany([
 		"teacher_profile_id": ObjectId("demoteacher0"),
 		"comments": [],
 		"rating": 1,
+		"reviewCount": 25,
 	},
 	{
 	    "_id": ObjectId("clase0000014"),
 		
 	    "title": "JavaScript",
-		"materia": "javascript",
+		"materia": {
+		    "value": "javascript"
+		},
 	    "description": "Programacion orientada a Objectos en Java. \
 		Java es un lenguaje de programación y una plataforma informática que fue comercializada por primera vez \
 		en 1995 por Sun Microsystems.​​.",
@@ -396,13 +437,16 @@ db.clases.insertMany([
 		"teacher_profile_id": ObjectId("demoteacher0"),
 		"comments": [],
 		"rating": 2,
+		"reviewCount": 15,
 	},
 	
 	{
 	    "_id": ObjectId("clase0000015"),
 		
 	    "title": "JavaScript",
-		"materia": "javascript",
+		"materia": {
+		    "value": "javascript"
+		},
 	    "description": "Programacion orientada a Objectos en Java. \
 		Java es un lenguaje de programación y una plataforma informática que fue comercializada por primera vez \
 		en 1995 por Sun Microsystems.​​.",
@@ -422,5 +466,6 @@ db.clases.insertMany([
 		"teacher_profile_id": ObjectId("demoteacher0"),
 		"comments": [],
 		"rating": 3,
+		"reviewCount": 5,
 	},
 ]);

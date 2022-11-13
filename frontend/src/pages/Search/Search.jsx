@@ -46,7 +46,27 @@ const SearchComponent = (props) => {
 
   const fetchClases = async () => {
     console.log("ejecuta fetchClases at SearchComponent")
-    const clasesData = await claseService.getClases({ materia: materia, tipo_clase: tipoClase, frecuencia: frecuencia, rating_min: rating }, page, 5);
+
+    let query = {}
+    if (materia && materia !== '') {
+      query["materia"] = materia;
+    }
+
+    if (tipoClase && tipoClase !== '') {
+      query["tipo_clase"] = tipoClase;
+    }
+
+    if (frecuencia && frecuencia !== '') {
+      query["frecuencia"] = frecuencia;
+    }
+
+    if (rating && rating !== '') {
+      query["rating_min"] = rating;
+    }
+
+
+
+    const clasesData = await claseService.getClases(query, page, 5);
     setClases(clasesData.data.docs);
     setPagination({
       page: clasesData.data.page,
@@ -121,7 +141,7 @@ const SearchComponent = (props) => {
                   size="sm"
                   w="full"
                   rounded="md"
-                  onChange={(e) => setMateria(e.target.value)} // TODO continue here
+                  onChange={(e) => setMateria(e.target.options[e.target.selectedIndex].id)}
                 >
                   <option id="ruby">Ruby</option>
                   <option id="java">Java</option>
@@ -150,7 +170,7 @@ const SearchComponent = (props) => {
                   size="sm"
                   w="full"
                   rounded="md"
-                  onChange={(e) => setTipoClase(e.target.value)}
+                  onChange={(e) => setTipoClase(e.target.options[e.target.selectedIndex].id)}
                 >
                   <option id="individual">Individual</option>
                   <option id="grupal">Grupal</option>
@@ -174,7 +194,7 @@ const SearchComponent = (props) => {
                   size="sm"
                   w="full"
                   rounded="md"
-                  onChange={(e) => setFrecuencia(e.target.value)}
+                  onChange={(e) => setFrecuencia(e.target.options[e.target.selectedIndex].id)}
                 >
                   <option id="once" value={'once'}>Única vez</option>
                   <option id="diaria" value={'diaria'}>Diaria</option>
@@ -220,6 +240,8 @@ const SearchComponent = (props) => {
             date={c.date}
             description={c.description}
             tags={c.tags}
+            rating={c.rating}
+            reviewCount={c.reviewCount}
             teacher_name={c.teacher_name}
             teacher_photo={c.teacher_photo}
           />

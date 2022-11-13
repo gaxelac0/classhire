@@ -12,6 +12,8 @@ import {
   TagCloseButton
 } from "@chakra-ui/react";
 
+import { StarIcon } from "@chakra-ui/icons";
+
 
 
 const ClaseCard = (props) => {
@@ -55,6 +57,19 @@ const ClaseCard = (props) => {
             >
               Entrar
             </Link>
+          </Box>
+          <Box display="flex" mt="2" alignItems="center">
+            {Array(5)
+              .fill("")
+              .map((_, i) => (
+                <StarIcon
+                  key={i}
+                  color={i < props.rating ? "teal.500" : "gray.300"}
+                />
+              ))}
+            <Box as="span" ml="2" color="gray.600" fontSize="sm">
+              {props.reviewCount} reviews
+            </Box>
           </Box>
 
           <Box mt={2}>

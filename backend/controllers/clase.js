@@ -21,6 +21,22 @@ exports.getClases = async function getClases(req, res) {
 	if (req.body.rating_min) {
 		query["rating"] = {"$gte": req.body.rating_min};
 	}
+
+	if (req.body.materia) {
+		query["materia.value"] = req.body.materia;
+	}
+
+	if (req.body.tipo_clase) {
+		query["tipo_clase.value"] = req.body.tipo_clase;
+	}
+
+	if (req.body.frecuencia) {
+		query["frecuencia.value"] = req.body.frecuencia;
+	}
+
+	if (req.body.nivel) {
+		query["nivel.value"] = req.body.nivel;
+	}
 	
 	try {
 		let clases = await claseService.getClases(query, page, limit);
