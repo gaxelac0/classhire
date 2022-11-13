@@ -28,6 +28,19 @@ const NavBar = (props) => {
   const bg = useColorModeValue("white", "gray.800");
   const sidebar = useDisclosure();
 
+
+  const [width, setWidth] = React.useState(window.innerWidth);
+  const breakpoint = 812;
+  React.useEffect(() => {
+    const handleResizeWindow = () => setWidth(window.innerWidth);
+    // subscribe to window resize event "onComponentDidMount"
+    window.addEventListener("resize", handleResizeWindow);
+    return () => {
+      // unsubscribe "onComponentDestroy"
+      window.removeEventListener("resize", handleResizeWindow);
+    };
+  }, []);
+
   // TODO:En caso de estar loggeado, mostrar la foto del profile (mockear)
   function LoggedMenuItems(props) {
 
@@ -39,18 +52,17 @@ const NavBar = (props) => {
           spacing={1}
           mr={1}
           color="brand.500"
-          display={{ base: "none", md: "inline-flex" }}
         >
-          <Link href="/">
+          <Link href="/" display={{ base: "none", md: "inline-flex" }}>
             <Button colorScheme="teal" variant="ghost">Inicio</Button>
           </Link>
-          <Link href="/profile">
+          <Link href="/profile" display={{ base: "inline-flex", md: "inline-flex" }}>
             <Button colorScheme="teal" variant="ghost">Perfil</Button>
           </Link>
-          <Link href="/search">
+          <Link href="/search" display={{ base: "none", md: "inline-flex" }}>
             <Button colorScheme="teal" leftIcon={<SearchIcon />} variant="outline">Clases</Button>
           </Link>
-          <Button colorScheme="teal" leftIcon={<PlusSquareIcon />} variant="outline">
+          <Button colorScheme="teal" leftIcon={<PlusSquareIcon />} variant="outline" display={{ base: "none", md: "inline-flex" }}>
             <Link href="/clase/add">
               Publicar Clase
             </Link>
@@ -69,33 +81,21 @@ const NavBar = (props) => {
           spacing={1}
           mr={1}
           color="brand.500"
-          display={{ base: "none", md: "inline-flex" }}
+          display={"inline-flex"}
         >
-          <Button colorScheme="teal" variant="ghost">
+          <Button colorScheme="teal" variant="ghost" display={{ base: "none", md: "inline-flex" }}>
             <Link href="/search">
               Buscar Clases
             </Link>
           </Button>
-
-
-          {/* Entiendo que hay opcion de PERFIL si no inicio sesion */}
-
-          {/* <Button colorScheme="teal" variant="ghost">
-        <Link href="/profiles">
-        Perfil
-        </Link>
-      </Button> */}
-
-          {/* <Button colorScheme="teal" variant="outline">Log In</Button> */}
-
-          <Button colorScheme="teal" variant="outline">
+          <Button colorScheme="teal" variant="outline" display={{ base: "inline-flex", md: "inline-flex" }}>
             <Link href="/login">
               Log In
             </Link>
           </Button>
 
           {/* El Registro lo mando a la pagina de landing donde elige que tipo de registro es */}
-          <Button colorScheme="teal" rightIcon={<ArrowForwardIcon />} variant="solid">
+          <Button colorScheme="teal" rightIcon={<ArrowForwardIcon />} variant="solid" display={{ base: "inline-flex", md: "inline-flex" }}>
             <Link href="/signup">
               Registrate
             </Link>
@@ -131,15 +131,22 @@ const NavBar = (props) => {
           onClick={sidebar.onOpen}
           icon={<FiMenu />}
         />
-        <Flex alignItems="center" justifyContent="space-between" mx="auto">
-          <Flex>
-            <chakra.a href="/" title="Classhire Home Page" display="flex" alignItems="center">
-              <ClasshireLogo w="300px" h="100px" />
-              <VisuallyHidden>Classhire</VisuallyHidden>
-            </chakra.a>
-          </Flex>
-          <HStack display="flex" alignItems="center" spacing={1}>
-            {/*   TODO: en el modo mobile solo se ve el logo, agregar botones de sign up y login achicando el logo */}
+        <Flex justifyContent="space-between" mx="auto">
+          <HStack spacing={1}>
+
+
+            {(width > breakpoint) ?
+              <chakra.a href="/" title="Classhire Home Page" alignItems={"center"}>
+                <ClasshireLogo w="300px" h="100px" />
+              </chakra.a>
+              :
+              <chakra.a href="/" title="Classhire Home Page" alignItems={"left"}>
+                <ClasshireLogo w="150px" h="50px" />
+              </chakra.a>
+            }
+
+
+
 
 
 

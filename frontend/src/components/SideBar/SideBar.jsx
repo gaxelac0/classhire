@@ -5,12 +5,16 @@ import {
   Icon,
   Image,
   Link,
+  Text
 } from "@chakra-ui/react";
 import { FaClipboardCheck, FaRss } from "react-icons/fa";
 import { AiFillGift } from "react-icons/ai";
 import { BsGearFill } from "react-icons/bs";
 import { HiCode, HiCollection } from "react-icons/hi";
 import { MdHome } from "react-icons/md";
+
+import ClasshireLogo from "../Logo/ClasshireLogo";
+import { AddIcon } from "@chakra-ui/icons";
 
 const NavItem = (props) => {
     const { icon, children, ...rest } = props;
@@ -72,6 +76,9 @@ const NavItem = (props) => {
               fontSize="sm"
               aria-label="Main Navigation"
             >
+              <ClasshireLogo>
+
+              </ClasshireLogo>
               <NavItem icon={MdHome}>
                 <Link href="/"> Home
                 </Link>
@@ -81,14 +88,28 @@ const NavItem = (props) => {
                 </Link>
               </NavItem>
               <NavItem icon={HiCollection}>
-                <Link href="/search"> Clases
+                <Link href="/search"> Buscar Clases
+                </Link>
+              </NavItem>
+              <NavItem icon={AddIcon}>
+                <Link href="/search"> Publicar Clase
                 </Link>
               </NavItem>
               <NavItem icon={FaClipboardCheck}>
-                <Link href="#"> Profesores
-                </Link>
+                <Text fontSize='sm'>Busca Profesores
+                <Text color="red.700" as="sup" fontSize='xs'>soon</Text>
+                </Text>
               </NavItem>
             </Flex>
+            <Text
+            
+            position={"absolute"}
+            bottom={"0"}
+            color="white"
+            >
+              v1.0.0
+            </Text>
+            
           </Box></>
 			)
 		};
