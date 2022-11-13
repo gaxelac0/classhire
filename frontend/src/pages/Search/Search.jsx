@@ -106,11 +106,6 @@ const SearchComponent = (props) => {
         display="flex"
         justifyContent="Center"
       >
-
-        <SimpleGrid
-          columns={{ sm: 1, md: 1 }}
-          spacing='8'
-        >
           <VStack>
             <chakra.form
               method="POST"
@@ -262,7 +257,7 @@ const SearchComponent = (props) => {
             </SimpleGrid>
             <Pagination pagination={pagination} route={"search"} />
           </VStack>
-        </SimpleGrid>
+
 
 
       </Box>

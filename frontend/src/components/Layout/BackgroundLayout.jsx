@@ -4,6 +4,7 @@ import {
   Flex,
   Button,
   Center,
+  SimpleGrid
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { ArrowBackIcon } from '@chakra-ui/icons'
@@ -16,7 +17,8 @@ const BackgroundLayout = (props) => {
 
   return (
     <>
-    <Flex
+
+<Flex
       as="body"
       bg="teal"
       justifyContent={"center"}
@@ -25,6 +27,10 @@ const BackgroundLayout = (props) => {
       alignItems="center"
       px={8}
     >
+                  <SimpleGrid
+          columns={{ sm: 1, md: 1 }}
+          spacing='8'
+        >
         <Box
           transition=".3s ease"
         >
@@ -47,7 +53,13 @@ const BackgroundLayout = (props) => {
               {props.component}
             </Box>
       </Box>
+      </SimpleGrid>
       </Flex>
+
+
+
+        
+    
       
       
     </>

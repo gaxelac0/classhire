@@ -104,7 +104,7 @@ const TablaMaterias = (props) => {
             <>
               <TableContainer>
                 <Table variant='simple'>
-                  <TableCaption>Ultimas {props.clases.length} clases {props.userState.role === "student" ? "contratadas" : "publicadas"}</TableCaption>
+                  <TableCaption>Ultimas {props.clases.length} clase(s) {props.userState.role === "student" ? "contratada(s)" : "publicada(s))"}</TableCaption>
                   {/* TODO: remover estos captions eran de prueba nomas */}
                   <Thead>
                     <Tr>
@@ -147,6 +147,7 @@ const TablaMaterias = (props) => {
                           <>
                             <Td>{c.title}</Td>
                             <Td>{c.date}</Td>
+                            
                           </>
 
 
