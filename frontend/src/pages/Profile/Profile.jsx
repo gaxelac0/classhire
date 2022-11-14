@@ -1,6 +1,5 @@
 import {
   Box,
-  Center,
   Button,
   Table,
   Thead,
@@ -26,8 +25,6 @@ import { PhoneIcon, DeleteIcon } from "@chakra-ui/icons";
 import Pagination from "../../components/Pagination/Pagination";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 
-import { clases } from "../../mock/mocks";
-
 import { FaComment } from "react-icons/fa";
 
 import { useState, useEffect } from "react";
@@ -36,9 +33,7 @@ import * as profileService from "../../services/profileService";
 
 import { Heading } from "@chakra-ui/react";
 
-import { useParams } from "react-router-dom";
-
-import { VStack } from "@chakra-ui/react";
+import { Link, useParams } from "react-router-dom";
 
 const FittedTab = (props) => {
   return (
@@ -99,21 +94,21 @@ const FittedTab = (props) => {
 const TablaMaterias = (props) => {
   return (
     <TableContainer>
-      <Table variant="simple">
+      <Table variant="unstyled" >
         {/* TODO: remover estos captions eran de prueba nomas */}
         <Thead>
           <Tr>
             {props.userState.role === "student" ? (
               <>
                 <Th>Titulo</Th>
-                <Th>Profesor</Th>
-                <Th>Fecha</Th>
+                <Th display={{ sm: "none", md: "inline-block" }}>Profesor</Th>
+                <Th display={{ sm: "none", md: "inline-block" }}>Fecha</Th>
                 <Th>Acciones</Th>
               </>
             ) : (
               <>
                 <Th>Titulo</Th>
-                <Th display={{ sm: "none", md: "inline-flex" }}>Fecha</Th>
+                <Th display={{ sm: "none", md: "flex" }}>Fecha</Th>
                 <Th>Acciones</Th>
               </>
             )}
@@ -124,31 +119,35 @@ const TablaMaterias = (props) => {
             <Tr key={idx}>
               {props.userState.role === "student" ? (
                 <>
-                  <Td>{c.title}</Td>
-                  <Td>{c.teacher_name}</Td>
-                  <Td>{c.date}</Td>
-                </>
-              ) : (
-                <>
-                  <Td>{c.title}</Td>
-                  <Td display={{ sm: "none", md: "inline-flex" }}>{c.date}</Td>
-                  <Td>AccionesTd</Td>
-                </>
-              )}
-              {props.userState.role === "student" ? (
-                <>
+                  <Td>
+                    <Link to={"/clase/" + c._id} >
+                      <HStack>
+                      <Text>
+                        {c.title}
+                      </Text>
+                        <Image
+                        alt="Ir a la Clase"
+                          src={
+                            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg=="
+                          }
+                        ></Image>
+                      </HStack>
+                    </Link>
+                  </Td>
+                  <Td display={{ sm: "none", md: "inline-block" }}>{c.teacher_name}</Td>
+                  <Td display={{ sm: "none", md: "inline-block" }}>{c.date}</Td>
                   <Td>
                     <HStack>
                       <IconButton
                         colorScheme="teal"
                         aria-label="Call Segun"
-                        size="lg"
+                        size="xs"
                         icon={<DeleteIcon />}
                       />
                       <IconButton
                         colorScheme="teal"
                         aria-label="Call Segun"
-                        size="lg"
+                        size="xs"
                         icon={<FaComment />}
                       />
                     </HStack>
@@ -157,9 +156,41 @@ const TablaMaterias = (props) => {
               ) : (
                 <>
                   <Td>
+                    <Link to={"/clase/" + c._id} altText="Ir a la Clase">
+                      <HStack>
+                        <Text
+                        mt="1"
+                        fontWeight="semibold"
+                        as="h4"
+                        lineHeight="tight"
+                        noOfLines={1}
+                        >
+                        {c.title}
+                      </Text>
+                        <Image
+                          boxSize={"10px"}
+                          src={
+                            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg=="
+                          }
+                        />
+                      </HStack>
+                    </Link>
+                  </Td>
+                  <Td display={{ sm: "none", md: "flex" }}>{c.date}</Td>
+                  <Td>
                     <HStack>
-                      {c.date}
-                      {c.date}
+                      <IconButton
+                        colorScheme="teal"
+                        aria-label="Call Segun"
+                        size="xs"
+                        icon={<DeleteIcon />}
+                      />
+                      <IconButton
+                        colorScheme="teal"
+                        aria-label="Call Segun"
+                        size="xs"
+                        icon={<FaComment />}
+                      />
                     </HStack>
                   </Td>
                 </>

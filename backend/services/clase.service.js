@@ -126,7 +126,7 @@ exports.addReview = async function (body) {
 exports.addClase = async function (body) {
   try {
     let user = await User.findOne(body.user);
-    let profile = await Profile.findOne(user.profile);
+    let profile = await Profile.findOne({_id: user.profile._id});
 
     if (profile.role !== constants.RoleEnum[2]) {
       throw new BaseError(
@@ -142,7 +142,7 @@ exports.addClase = async function (body) {
     const newClaseSchema = getNewClaseSchema(body);
 
     let newClase = await Clase.create(newClaseSchema);
-    profile.clases.push(newClase);
+    profile.clases.push(newClase._id);
     await profile.save();
     return newClase;
   } catch (e) {
