@@ -31,12 +31,13 @@ const Pagination = (props) => {
         if (i == props.pagination.page) {
             //console.log("added button " + i)
             buttons.push(
-                <PagButton active>{i}</PagButton>
+                <PagButton key={"pagButtonActive"} active>{i}</PagButton>
             );
         } else {
             //console.log("added button " + i)
             buttons.push(
                 <PagButton
+                key={"pagButton_"+i} 
                 value={i}
                 onClick={(button) => handlePaginate(button.target.value)}
                 >
@@ -56,9 +57,10 @@ const Pagination = (props) => {
             <Flex>
                 {
                     props.pagination.page == 1
-                        ? <PagButton disabled>Previous</PagButton>
+                        ? <PagButton key={"pagButtonPrevious"}  disabled>Previous</PagButton>
                         : 
                         <PagButton
+                        key={"pagButtonPrevious"} 
                         value={i}
                         onClick={(button) => handlePaginate(actualPage-1)}
                         > Previous</PagButton>
@@ -66,9 +68,10 @@ const Pagination = (props) => {
                 {buttons}
                 {
                     props.pagination.page == props.pagination.totalPages
-                        ? <PagButton disabled>Next</PagButton>
+                        ? <PagButton key={"pagButtonNext"}  disabled>Next</PagButton>
                         :
                         <PagButton
+                        key={"pagButtonNext"} 
                         value={i}
                         onClick={(button) => handlePaginate(actualPage+1)}
                         > Next</PagButton>

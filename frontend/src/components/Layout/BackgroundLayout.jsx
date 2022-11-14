@@ -18,22 +18,22 @@ const BackgroundLayout = (props) => {
   return (
     <>
 
-<Flex
-      as="body"
-      bg="teal"
-      justifyContent={"center"}
-      width="full"
-      height="full"
-      alignItems="center"
-      px={8}
-    >
-                  <SimpleGrid
+      <Flex
+        as="body"
+        bg="teal"
+        justifyContent={"center"}
+        width="full"
+        height="full"
+        alignItems="center"
+        px={8}
+      >
+        <SimpleGrid
           columns={{ sm: 1, md: 1 }}
           spacing='8'
         >
-        <Box
-          transition=".3s ease"
-        >
+          <Box
+            transition=".3s ease"
+          >
             <Box
               mx="auto"
               px={8}
@@ -47,21 +47,14 @@ const BackgroundLayout = (props) => {
             >
               {/*history bar*/}
               <Button mb="3"
-                onClick={() => navigate(-1)}><ArrowBackIcon/>
+                onClick={() => navigate(-1)}><ArrowBackIcon />
               </Button>
               {/*Componente a mostrar*/}
               {props.component}
             </Box>
-      </Box>
-      </SimpleGrid>
+          </Box>
+        </SimpleGrid>
       </Flex>
-
-
-
-        
-    
-      
-      
     </>
   );
 };

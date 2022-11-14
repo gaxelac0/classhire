@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var mongoosePaginate = require('mongoose-paginate');
+var moment = require('moment')
 
 const MateriaEnum = ["ruby", "java", "golang", "cplusplus", "python", "javascript"];
 var materiaSchema = new mongoose.Schema({value: { type: String, enum: MateriaEnum}});
@@ -22,8 +23,6 @@ var commentSchema = new mongoose.Schema({
 timestamps: true,
 });
 
-
-
 var claseSchema = new mongoose.Schema({
     title: {type: String, required: true},
     materia: materiaSchema,
@@ -43,7 +42,7 @@ var claseSchema = new mongoose.Schema({
     reviewNegative: {type: Number, default: 0},
     reviewPositive: {type: Number, default: 0},
 
-    date: {type: Date, default: Date.now()}
+    date: {type: String, default: moment().format('DD/MM/YYYY')}
 },{
   timestamps: true,
 });

@@ -237,9 +237,9 @@ const SearchComponent = (props) => {
               </Stack>
             </chakra.form>
             <SimpleGrid columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing="1em">
-              {clases.map((c) => (
-                <>
+              {clases.map((c, idx) => (
                   <ClaseCard
+                    key={idx}
                     title={c.title}
                     date={c.date}
                     description={c.description}
@@ -252,7 +252,6 @@ const SearchComponent = (props) => {
                     teacher_name={c.teacher_name}
                     teacher_photo={c.teacher_photo}
                   />
-                </>
               ))}
             </SimpleGrid>
             <Pagination pagination={pagination} route={"search"} />

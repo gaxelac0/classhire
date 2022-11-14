@@ -37,9 +37,9 @@ import { useState, useEffect } from 'react'
 import * as claseService from '../../services/claseService'
 import * as profileService from '../../services/profileService'
 
-import { useSearchParams } from 'react-router-dom'
-
-import { useFocusEffect } from '@chakra-ui/react'
+import {
+  Heading,
+} from '@chakra-ui/react'
 
 import { useParams } from 'react-router-dom'
 
@@ -50,39 +50,39 @@ const FittedTab = (props) => {
 
   return (
     <Tabs variant='soft-rounded' colorScheme="teal">
-      {/* Elemmentos del perfil */}
       <TabList mb='1em'>
         <Tab>Materias</Tab>
         <Tab>Datos Personales</Tab>
-        {/* <Tab>Otra Cosa</Tab> */}
       </TabList>
-      {/* Contenido de los elementos */}
       <TabPanels>
-        {/* Materias */}
+
         <TabPanel>
-          <TablaMaterias userState={props.userState} clases={props.clases} pagination={props.pagination} />
+            <Box>
+              {props.pagination.totalPages === 0
+                /*  TODO: "Agrega o contrata tu primera clase!!" *con boton de Agregar clase para profesor y el boton de search para estudiantes* */
+                ? <><Text>Todavia no publicaste nada</Text></>
+                :
+                <>
+                  <Heading as="h2" mb={"1em"}>Clases {props.userState.role === "student" ? "Contratadas" : "Publicadas"}</Heading>
+                  <TablaMaterias userState={props.userState} clases={props.clases} pagination={props.pagination} />
+                  <Pagination pagination={props.pagination} route={"profile"} />
+                </>
+              }
+            </Box>
+            <Text color="red">Name: {props.userState.user.firstName + ' ' + props.userState.user.lastName}</Text>
+            <Text color="red">page: {props.pagination.page}</Text>
+            <Text color="red">totalPages: {props.pagination.totalPages}</Text>
         </TabPanel>
-        {/* Datos Personales */}
         <TabPanel>
-          <Center mb='3em'>
-
-            <HStack>
-              <Image
-                borderRadius='full'
-                boxSize='200px'
-                src={`data:image/jpeg;base64,${props.photo}`}
-                alt={props.userState.user.firstName}
-              />
-              <TablaDatos userState={props.userState.user} />
-            </HStack>
-
-
-          </Center>
+          <Image
+            borderRadius='full'
+            boxSize={"200px"}
+            src={`data:image/jpeg;base64,${props.photo}`}
+            alt={props.userState.user.firstName}
+            mb="1em"
+          />
+          <TablaDatos userState={props.userState.user} />
         </TabPanel>
-        {/* Otra Cosa */}
-        {/* <TabPanel>
-          <p>No me acuerdo que contenido iba acá</p>
-        </TabPanel> */}
       </TabPanels>
     </Tabs>
   )
@@ -91,121 +91,92 @@ const FittedTab = (props) => {
 const TablaMaterias = (props) => {
 
   return (
-    <Center>
+    <TableContainer>
+      <Table variant='simple'>
+
+        {/* TODO: remover estos captions eran de prueba nomas */}
+        <Thead>
+          <Tr>
+            {props.userState.role === "student"
+              ?
+
+              <>
+                <Th>Titulo</Th>
+                <Th>Profesor</Th>
+                <Th>Fecha</Th>
+                <Th>Acciones</Th>
+              </>
+
+              :
+
+              <>
+                <Th>Titulo</Th>
+                <Th display={{ sm: "none", md: "inline-flex" }}>Fecha</Th>
+                <Th>Acciones</Th>
+              </>
+
+            }
+          </Tr>
+        </Thead>
+        <Tbody>
+
+          {props.clases.map((c, idx) => (
+            <Tr key={idx}>
+
+              {props.userState.role === "student"
+                ?
+                <>
+                  <Td>{c.title}</Td>
+                  <Td>{c.teacher_name}</Td>
+                  <Td>{c.date}</Td>
+                </>
+
+                :
+
+                <>
+                  <Td>{c.title}</Td>
+                  <Td display={{ sm: "none", md: "inline-flex" }}>{c.date}</Td>
+                  <Td>AccionesTd</Td>
+                </>
 
 
-      <VStack>
-        <Box overflowX="auto">
-          {props.pagination.totalPages === 0
-            /*  TODO: "Agrega o contrata tu primera clase!!" *con boton de Agregar clase para profesor y el boton de search para estudiantes* */
-            ? <><Text>Todavia no publicaste nada</Text></>
+              }
+              {props.userState.role === "student"
+                ?
+                <>
+                  <Td>
+                    <HStack>
+                      <IconButton
+                        colorScheme='teal'
+                        aria-label='Call Segun'
+                        size='lg'
+                        icon={<DeleteIcon />}
+                      />
+                      <IconButton
+                        colorScheme='teal'
+                        aria-label='Call Segun'
+                        size='lg'
+                        icon={<FaComment />}
+                      />
+                    </HStack>
+                  </Td>
+                </>
+                :
+                <>
+                  <Td>
+                    <HStack>
+                      {c.date}
+                      {c.date}
+                    </HStack>
+                  </Td>
+                </>
+              }
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
+    </TableContainer>
 
-            :
-            <>
-              <TableContainer>
-                <Table variant='simple'>
-                  <TableCaption>Ultimas {props.clases.length} clase(s) {props.userState.role === "student" ? "contratada(s)" : "publicada(s))"}</TableCaption>
-                  {/* TODO: remover estos captions eran de prueba nomas */}
-                  <Thead>
-                    <Tr>
-                      {props.userState.role === "student"
-                        ?
-
-                        <>
-                          <Th>Titulo</Th>
-                          <Th>Profesor</Th>
-                          <Th>Fecha</Th>
-                          <Th>Acciones</Th>
-                        </>
-
-                        :
-
-                        <>
-                          <Th>Titulo</Th>
-                          <Th>Fecha</Th>
-                          <Th>Acciones</Th>
-                        </>
-
-                      }
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-
-                    {props.clases.map((c) => (
-                      <Tr>
-
-                        {props.userState.role === "student"
-                          ?
-                          <>
-                            <Td>{c.title}</Td>
-                            <Td>{c.teacher_name}</Td>
-                            <Td>{c.date}</Td>
-                          </>
-
-                          :
-
-                          <>
-                            <Td>{c.title}</Td>
-                            <Td>{c.date}</Td>
-                            
-                          </>
-
-
-                        }
-                        {props.userState.role === "student"
-                          ?
-                          <>
-                            <Td>
-                              <HStack>
-                                <IconButton
-                                  colorScheme='teal'
-                                  aria-label='Call Segun'
-                                  size='lg'
-                                  icon={<DeleteIcon />}
-                                />
-                                <IconButton
-                                  colorScheme='teal'
-                                  aria-label='Call Segun'
-                                  size='lg'
-                                  icon={<FaComment />}
-                                />
-                              </HStack>
-                            </Td>
-                          </>
-                          :
-                          <>
-                            <Td>
-                              <HStack>
-                                {c.date}
-                                {c.date}
-                              </HStack>
-                            </Td>
-                          </>
-                        }
-                      </Tr>
-                    ))}
-
-
-
-
-                  </Tbody>
-                </Table>
-              </TableContainer>
-              <Pagination pagination={props.pagination} route={"profile"} />
-            </>
-          }
-
-
-
-
-        </Box>
-        <Text color="red">Name: {props.userState.user.firstName + ' ' + props.userState.user.lastName}</Text>
-        <Text color="red">page: {props.pagination.page}</Text>
-        <Text color="red">totalPages: {props.pagination.totalPages}</Text>
-      </VStack>
-
-
-    </Center>
   )
 }
 
@@ -235,10 +206,10 @@ const TablaDatos = (props) => {
             {props.userState && props.userState.experiencias
               ?
               <>
-                {props.userState.experiencias.map((c) => (
-                 <Td>TODO: needs fix</Td>
+                {props.userState.experiencias.map((c, idx) => (
+                  <Td key={idx}>TODO: needs fix</Td>
                 ))}
-                
+
               </>
               :
               <>
@@ -267,6 +238,7 @@ const Profile = (props) => {
   })
 
   const fetchClases = async () => {
+    console.log('executing fetchClases at Profile')
     const clasesData = await claseService.getClasesByUser(props.userState.user.profile, page, 5);
     setClases(clasesData.data.docs);
     setPagination({
@@ -279,6 +251,7 @@ const Profile = (props) => {
   }
 
   const fetchProfileDetails = async () => {
+    console.log('executing fetchProfileDetails at Profile')
     const result = await profileService.getProfileDetails(props.userState.user.profile);
     let profile = result.data.docs[0];
     setProfileDetails({
@@ -293,13 +266,12 @@ const Profile = (props) => {
   }
 
 
+  useEffect(() => {
+    fetchProfileDetails();
+  }, [])
 
   useEffect(() => {
-    if (page === undefined) {
-      page = 1
-    }
     fetchClases();
-    fetchProfileDetails();
   }, [page])
 
   return (
