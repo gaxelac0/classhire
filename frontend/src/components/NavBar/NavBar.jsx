@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 import {
   chakra,
@@ -13,7 +13,7 @@ import {
   DrawerContent,
   DrawerOverlay,
   Link,
-  Image
+  Image,
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 import { ArrowForwardIcon, SearchIcon, PlusSquareIcon } from "@chakra-ui/icons";
@@ -21,13 +21,9 @@ import { ArrowForwardIcon, SearchIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import SidebarContent from "../../components/SideBar/SideBar";
 import ClasshireLogo from "../Logo/ClasshireLogo";
 
-
-
 const NavBar = (props) => {
-
   const bg = useColorModeValue("white", "gray.800");
   const sidebar = useDisclosure();
-
 
   const [width, setWidth] = React.useState(window.innerWidth);
   const breakpoint = 812;
@@ -43,73 +39,95 @@ const NavBar = (props) => {
 
   // TODO:En caso de estar loggeado, mostrar la foto del profile (mockear)
   function LoggedMenuItems(props) {
-
     ////console.log(props)
 
     return (
       <>
-        <HStack
-          spacing={1}
-          mr={1}
-          color="brand.500"
-        >
+        <HStack spacing={1} mr={1} color="brand.500">
           <Link href="/" display={{ base: "none", md: "inline-flex" }}>
-            <Button colorScheme="teal" variant="ghost">Inicio</Button>
+            <Button colorScheme="teal" variant="ghost">
+              Inicio
+            </Button>
           </Link>
-          <Link href="/profile" display={{ base: "inline-flex", md: "inline-flex" }}>
-            <Button colorScheme="teal" variant="ghost">Perfil</Button>
+          <Link
+            href="/profile"
+            display={{ base: "inline-flex", md: "inline-flex" }}
+          >
+            <Button colorScheme="teal" variant="ghost">
+              Perfil
+            </Button>
           </Link>
           <Link href="/search" display={{ base: "none", md: "inline-flex" }}>
-            <Button colorScheme="teal" leftIcon={<SearchIcon />} variant="outline">Clases</Button>
+            <Button
+              colorScheme="teal"
+              leftIcon={<SearchIcon />}
+              variant="outline"
+            >
+              Clases
+            </Button>
           </Link>
-          <Button colorScheme="teal" leftIcon={<PlusSquareIcon />} variant="outline" display={{ base: "none", md: "inline-flex" }}>
-            <Link href="/clase/add">
-              Publicar Clase
-            </Link>
+          <Button
+            colorScheme="teal"
+            leftIcon={<PlusSquareIcon />}
+            variant="outline"
+            display={{ base: "none", md: "inline-flex" }}
+          >
+            <Link href="/clase/add">Publicar Clase</Link>
           </Button>
 
-          <Button colorScheme="teal" rightIcon={<ArrowForwardIcon />} variant="ghost" onClick={props.handleLogout}>Log Out</Button>
+          <Button
+            colorScheme="teal"
+            rightIcon={<ArrowForwardIcon />}
+            variant="ghost"
+            onClick={props.handleLogout}
+          >
+            Log Out
+          </Button>
         </HStack>
       </>
-    )
+    );
   }
 
   function NotLoggedMenuItems(props) {
     return (
       <>
-        <HStack
-          spacing={1}
-          mr={1}
-          color="brand.500"
-          display={"inline-flex"}
-        >
-          <Button colorScheme="teal" variant="ghost" display={{ base: "none", md: "inline-flex" }}>
-            <Link href="/search">
-              Buscar Clases
-            </Link>
+        <HStack spacing={1} mr={1} color="brand.500" display={"inline-flex"}>
+          <Button
+            colorScheme="teal"
+            variant="ghost"
+            display={{ base: "none", md: "inline-flex" }}
+          >
+            <Link href="/search">Buscar Clases</Link>
           </Button>
-          <Button colorScheme="teal" variant="outline" display={{ base: "inline-flex", md: "inline-flex" }}>
-            <Link href="/login">
-              Log In
-            </Link>
+          <Button
+            colorScheme="teal"
+            variant="outline"
+            display={{ base: "inline-flex", md: "inline-flex" }}
+          >
+            <Link href="/login">Log In</Link>
           </Button>
 
           {/* El Registro lo mando a la pagina de landing donde elige que tipo de registro es */}
-          <Button colorScheme="teal" rightIcon={<ArrowForwardIcon />} variant="solid" display={{ base: "inline-flex", md: "inline-flex" }}>
-            <Link href="/signup">
-              Registrate
-            </Link>
+          <Button
+            colorScheme="teal"
+            rightIcon={<ArrowForwardIcon />}
+            variant="solid"
+            display={{ base: "inline-flex", md: "inline-flex" }}
+          >
+            <Link href="/signup">Registrate</Link>
           </Button>
           {/* <Button colorScheme="teal" rightIcon={<ArrowForwardIcon />} variant="solid">Registrate</Button> */}
-
-
         </HStack>
       </>
-    )
+    );
   }
 
   function MenuItems(props) {
-    return props.loggedIn ? <LoggedMenuItems handleLogout={props.handleLogout} /> : <NotLoggedMenuItems />
+    return props.loggedIn ? (
+      <LoggedMenuItems handleLogout={props.handleLogout} />
+    ) : (
+      <NotLoggedMenuItems />
+    );
   }
 
   ////console.log(props)
@@ -133,22 +151,23 @@ const NavBar = (props) => {
         />
         <Flex justifyContent="space-between" mx="auto">
           <HStack spacing={1}>
-
-
-            {(width > breakpoint) ?
-              <chakra.a href="/" title="Classhire Home Page" alignItems={"center"}>
+            {width > breakpoint ? (
+              <chakra.a
+                href="/"
+                title="Classhire Home Page"
+                alignItems={"center"}
+              >
                 <ClasshireLogo w="300px" h="100px" />
               </chakra.a>
-              :
-              <chakra.a href="/" title="Classhire Home Page" alignItems={"left"}>
+            ) : (
+              <chakra.a
+                href="/"
+                title="Classhire Home Page"
+                alignItems={"left"}
+              >
                 <ClasshireLogo w="150px" h="50px" />
               </chakra.a>
-            }
-
-
-
-
-
+            )}
 
             <MenuItems
               loggedIn={props.userState}
@@ -170,7 +189,7 @@ const NavBar = (props) => {
         </Drawer>
       </chakra.body>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;

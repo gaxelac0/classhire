@@ -3,16 +3,8 @@ import { Badge, Box, Flex, Image, Text } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 
 const MiniClaseCard = (props) => {
-
-
-
   return (
-    <Flex
-      p={5}
-      w="full"
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Flex p={5} w="full" alignItems="center" justifyContent="center">
       <Box
         bg="white"
         _dark={{ bg: "gray.800" }}
@@ -21,11 +13,7 @@ const MiniClaseCard = (props) => {
         rounded="lg"
         shadow="lg"
       >
-        <Image
-          src={props.image}
-          alt={props.imageAlt}
-          roundedTop="lg"
-        />
+        <Image src={props.image} alt={props.imageAlt} roundedTop="lg" />
 
         <Box p="6">
           <Box display="flex" alignItems="baseline">
@@ -40,7 +28,7 @@ const MiniClaseCard = (props) => {
               textTransform="uppercase"
               ml="2"
             >
-              new new new &bull; 
+              new new new &bull;
             </Box>
           </Box>
 
@@ -80,4 +68,4 @@ const MiniClaseCard = (props) => {
   );
 };
 
-export default MiniClaseCard
+export default MiniClaseCard;

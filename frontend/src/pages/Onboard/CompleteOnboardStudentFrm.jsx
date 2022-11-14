@@ -21,31 +21,33 @@ import {
   Select,
   Link,
 } from "@chakra-ui/react";
-import {
-  AddIcon, DeleteIcon,
-} from '@chakra-ui/icons'
+import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaBaby } from "react-icons/fa";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 
-import * as profileService from "../../services/profileService"
+import * as profileService from "../../services/profileService";
 
 import { useNavigate } from "react-router-dom";
 
 const CompleteOnboardStudentFrmComponent = (props) => {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-
-  const [estudiosList, setEstudiosList] = useState([{ type: "", description: "", completed: false }])
+  const [estudiosList, setEstudiosList] = useState([
+    { type: "", description: "", completed: false },
+  ]);
 
   const [formData, setFormData] = useState({
     fecNacimiento: new Date(),
-    experiencias: []
-  })
+    experiencias: [],
+  });
 
   // Agrega para completar un estudio mas
   const handleEstudioAdd = () => {
-    setEstudiosList([...estudiosList, { type: "", description: "", completed: false }])
-  }
+    setEstudiosList([
+      ...estudiosList,
+      { type: "", description: "", completed: false },
+    ]);
+  };
 
   const handleEstudioInputChange = (e, index) => {
     const { value } = e.target;
@@ -54,7 +56,6 @@ const CompleteOnboardStudentFrmComponent = (props) => {
     setEstudiosList(list);
 
     const l = [...formData];
-    
   };
 
   const handleEstudioSelectChange = (e, index) => {
@@ -77,35 +78,36 @@ const CompleteOnboardStudentFrmComponent = (props) => {
     setEstudiosList(list);
   };
 
-  const handleChange = e => {
-    props.updateMessage('')
+  const handleChange = (e) => {
+    props.updateMessage("");
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
-  const handleChangeSelect = e => {
-    props.updateMessage('')
+  const handleChangeSelect = (e) => {
+    props.updateMessage("");
     setFormData({
       ...formData,
-      [e.target.name]: [e.target.name].push({type: "", descr: "", completed: false}), /*  TODO: complete this */
-    })
-  }
+      [e.target.name]: [e.target.name].push({
+        type: "",
+        descr: "",
+        completed: false,
+      }) /*  TODO: complete this */,
+    });
+  };
 
-
-  const handleSubmit = async e => {
-
-    
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       // TODO: completar onboard
       //await profileService.setRole(formData, 'student')
-      navigate('/profile')
+      navigate("/profile");
     } catch (err) {
-      props.updateMessage(err.message)
+      props.updateMessage(err.message);
     }
-  }
+  };
 
   return (
     <Container maxW="full" mt={0} centerContent overflow="hidden">
@@ -115,7 +117,8 @@ const CompleteOnboardStudentFrmComponent = (props) => {
           color="teal"
           borderRadius="lg"
           m={{ sm: 4, md: 16, lg: 10 }}
-          p={{ sm: 5, md: 5, lg: 16 }}>
+          p={{ sm: 5, md: 5, lg: 16 }}
+        >
           <Box p={4}>
             <Wrap spacing={{ base: 20, sm: 3, md: 5, lg: 20 }}>
               <WrapItem>
@@ -125,7 +128,8 @@ const CompleteOnboardStudentFrmComponent = (props) => {
                   </Box>
                   <Heading>Estudiantes</Heading>
                   <Text mt={{ sm: 3, md: 3, lg: 5 }} color="gray.500">
-                    Necesitamos que completes este pequeno formulario antes de proceder
+                    Necesitamos que completes este pequeno formulario antes de
+                    proceder
                   </Text>
                 </Box>
               </WrapItem>
@@ -133,13 +137,7 @@ const CompleteOnboardStudentFrmComponent = (props) => {
                 <Box bg="white" borderRadius="lg">
                   <Box m={8} color="#0B0E3F">
                     <VStack spacing={5}>
-
-
                       <form onSubmit={handleSubmit}>
-
-
-
-
                         <FormControl id="student">
                           <FormLabel>Fecha de Nacimiento</FormLabel>
                           <InputGroup borderColor="#E0E1E7">
@@ -147,27 +145,37 @@ const CompleteOnboardStudentFrmComponent = (props) => {
                               pointerEvents="none"
                               children={<FaBaby color="gray.800" />}
                             />
-                            <Input id="fecNacimiento" type="date" size="md" onChange={handleChange} />
+                            <Input
+                              id="fecNacimiento"
+                              type="date"
+                              size="md"
+                              onChange={handleChange}
+                            />
                           </InputGroup>
                         </FormControl>
                         <FormControl id="student">
-
                           <FormLabel>Estudios Realizados (max. 4)</FormLabel>
                           <InputGroup borderColor="#E0E1E7">
                             <VStack>
                               {estudiosList.map((singleEstudio, index) => (
                                 <Box key={index}>
-
                                   <HStack>
-
                                     <Select
                                       placeholder="Ingresa nivel de estudio"
-                                      onChange={(e) => handleEstudioSelectChange(e, index)}
+                                      onChange={(e) =>
+                                        handleEstudioSelectChange(e, index)
+                                      }
                                     >
                                       <option value="primaria">Primaria</option>
-                                      <option value="secundario">Secundario</option>
-                                      <option value="terciario">Terciario</option>
-                                      <option value="universitario">Universitario</option>
+                                      <option value="secundario">
+                                        Secundario
+                                      </option>
+                                      <option value="terciario">
+                                        Terciario
+                                      </option>
+                                      <option value="universitario">
+                                        Universitario
+                                      </option>
                                     </Select>
 
                                     <Input
@@ -175,21 +183,36 @@ const CompleteOnboardStudentFrmComponent = (props) => {
                                       type="text"
                                       placeholder="descripcion"
                                       value={singleEstudio.description}
-                                      onChange={(e) => handleEstudioInputChange(e, index)}
+                                      onChange={(e) =>
+                                        handleEstudioInputChange(e, index)
+                                      }
                                     />
                                     <Checkbox
                                       id={"estudioCheckbox_" + index}
                                       placeholder="Terminado?"
                                       value={singleEstudio.current}
-                                      onChange={(e) => handleEstudioCheckboxChange(e, index)}
+                                      onChange={(e) =>
+                                        handleEstudioCheckboxChange(e, index)
+                                      }
                                     />
                                     <VStack>
                                       {estudiosList.length !== 1 && (
-                                        <IconButton size="xs" icon={<DeleteIcon />} onClick={() => handleEstudioRemove(index)} />
+                                        <IconButton
+                                          size="xs"
+                                          icon={<DeleteIcon />}
+                                          onClick={() =>
+                                            handleEstudioRemove(index)
+                                          }
+                                        />
                                       )}
-                                      {estudiosList.length - 1 === index && estudiosList.length < 4 && (
-                                        <IconButton size="xs" icon={<AddIcon />} onClick={handleEstudioAdd} />
-                                      )}
+                                      {estudiosList.length - 1 === index &&
+                                        estudiosList.length < 4 && (
+                                          <IconButton
+                                            size="xs"
+                                            icon={<AddIcon />}
+                                            onClick={handleEstudioAdd}
+                                          />
+                                        )}
                                     </VStack>
                                   </HStack>
                                 </Box>
@@ -212,14 +235,12 @@ const CompleteOnboardStudentFrmComponent = (props) => {
                               variant="solid"
                               bg="teal"
                               color="white"
-                              _hover={{}}>
-
-                              Enviar</Button>
+                              _hover={{}}
+                            >
+                              Enviar
+                            </Button>
                           </Link>
                         </FormControl>
-
-
-
                       </form>
                     </VStack>
                   </Box>
@@ -233,13 +254,10 @@ const CompleteOnboardStudentFrmComponent = (props) => {
   );
 };
 
-
 const CompleteOnboardStudentFrm = () => {
   return (
-    <BackgroundLayout
-      component={<CompleteOnboardStudentFrmComponent />}
-    />
+    <BackgroundLayout component={<CompleteOnboardStudentFrmComponent />} />
   );
-}
+};
 
-export default CompleteOnboardStudentFrm
+export default CompleteOnboardStudentFrm;

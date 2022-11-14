@@ -19,128 +19,125 @@ import {
   FormLabel,
   ModalBody,
   ModalCloseButton,
-  ModalHeader, 
+  ModalHeader,
   ModalContent,
   Modal,
   ModalOverlay,
-  useDisclosure
-} from '@chakra-ui/react';
-import { MdCall } from 'react-icons/md';
+  useDisclosure,
+} from "@chakra-ui/react";
+import { MdCall } from "react-icons/md";
 
-import { useRef, React } from 'react';
+import { useRef, React } from "react";
 
-import BackgroundLayout from "../../components/Layout/BackgroundLayout"
-
-
-
+import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 
 let teacher = {
-  name:"Mario Hernandez",
-  description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti non necessitatibus voluptatem soluta asperiores laboriosam ratione illum, sunt odit fugit quis dolorum dolore nobis recusandae facere, sint doloribus eius obcaecati!"
-}
+  name: "Mario Hernandez",
+  description:
+    "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti non necessitatibus voluptatem soluta asperiores laboriosam ratione illum, sunt odit fugit quis dolorum dolore nobis recusandae facere, sint doloribus eius obcaecati!",
+};
 
-const ClaseComponent = ({teacher, title }) => {
+const ClaseComponent = ({ teacher, title }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-
-  const { isOpen, onOpen, onClose } = useDisclosure()
-
-  const initialRef = useRef(null)
-  const finalRef = useRef(null)
-
-
-
+  const initialRef = useRef(null);
+  const finalRef = useRef(null);
 
   return (
-    <Container maxW={'7xl'}>
+    <Container maxW={"7xl"}>
       <SimpleGrid
         columns={{ base: 1, lg: 2 }}
         spacing={{ base: 8, md: 10 }}
-        py={{ base: 18, md: 24 }}>
+        py={{ base: 18, md: 24 }}
+      >
         <Flex>
-          
-        <Flex>
-          <VStack spacing={{ base: 4, sm: 6 }}>
-            <Image
-              rounded={'md'}
-              alt={'product image'}
-              src='/img/matematicas.jpg'
-              fit={'cover'}
-              align={'center'}
-              w={'100%'}
-              h={{ base: '150%', sm: '200px', lg: '250px' }}
-            />
-            <StackDivider
-              borderColor={useColorModeValue('gray.200', 'gray.600')}
-            />
-            <Text
-              fontSize={{ base: '16px', lg: '18px' }}
-              color={useColorModeValue('yellow.500', 'yellow.300')}
-              fontWeight={'500'}
-              textTransform={'uppercase'}
-              mb={'4'}>
-              Sobre el Profe
-            </Text>
-            <Image
-              rounded={'md'}
-              alt={'teacher photo'}
-              src='/img/teacher-icon.png'
-              fit={'cover'}
-              align={'center'}
-              w={'100%'}
-              h={{ base: '50%', sm: '100px', lg: '125px' }}
-            />
-            <Heading as='h3'>
-              {teacher.name}
-            </Heading>
-            <StackDivider
-              borderColor={useColorModeValue('gray.200', 'gray.600')}
-            />
-            <Text
-              fontSize={{ base: '12px', lg: '16px' }}
-              color={useColorModeValue('yellow.500', 'yellow.300')}
-              fontWeight={'250'}
-              mb={'4'}>
-              {teacher.description}
-            </Text>
-          </VStack>
-        </Flex>
-        <StackDivider
-          borderColor={useColorModeValue('gray.200', 'gray.600')}
-        />
+          <Flex>
+            <VStack spacing={{ base: 4, sm: 6 }}>
+              <Image
+                rounded={"md"}
+                alt={"product image"}
+                src="/img/matematicas.jpg"
+                fit={"cover"}
+                align={"center"}
+                w={"100%"}
+                h={{ base: "150%", sm: "200px", lg: "250px" }}
+              />
+              <StackDivider
+                borderColor={useColorModeValue("gray.200", "gray.600")}
+              />
+              <Text
+                fontSize={{ base: "16px", lg: "18px" }}
+                color={useColorModeValue("yellow.500", "yellow.300")}
+                fontWeight={"500"}
+                textTransform={"uppercase"}
+                mb={"4"}
+              >
+                Sobre el Profe
+              </Text>
+              <Image
+                rounded={"md"}
+                alt={"teacher photo"}
+                src="/img/teacher-icon.png"
+                fit={"cover"}
+                align={"center"}
+                w={"100%"}
+                h={{ base: "50%", sm: "100px", lg: "125px" }}
+              />
+              <Heading as="h3">{teacher.name}</Heading>
+              <StackDivider
+                borderColor={useColorModeValue("gray.200", "gray.600")}
+              />
+              <Text
+                fontSize={{ base: "12px", lg: "16px" }}
+                color={useColorModeValue("yellow.500", "yellow.300")}
+                fontWeight={"250"}
+                mb={"4"}
+              >
+                {teacher.description}
+              </Text>
+            </VStack>
+          </Flex>
+          <StackDivider
+            borderColor={useColorModeValue("gray.200", "gray.600")}
+          />
         </Flex>
         <Stack spacing={{ base: 6, md: 10 }}>
-          <Box as={'header'}>
+          <Box as={"header"}>
             <Heading
               lineHeight={1.1}
               fontWeight={600}
-              fontSize={{ base: '2xl', sm: '4xl', lg: '5xl' }}>
+              fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
+            >
               {title}
             </Heading>
             <Text
-              color={useColorModeValue('gray.900', 'gray.400')}
+              color={useColorModeValue("gray.900", "gray.400")}
               fontWeight={300}
-              fontSize={'2xl'}>
+              fontSize={"2xl"}
+            >
               $350.00 USD
             </Text>
           </Box>
 
           <Stack
             spacing={{ base: 4, sm: 6 }}
-            direction={'column'}
+            direction={"column"}
             divider={
               <StackDivider
-                borderColor={useColorModeValue('gray.200', 'gray.600')}
+                borderColor={useColorModeValue("gray.200", "gray.600")}
               />
-            }>
+            }
+          >
             <VStack spacing={{ base: 4, sm: 6 }}>
               <Text
-                color={useColorModeValue('gray.500', 'gray.400')}
-                fontSize={'2xl'}
-                fontWeight={'300'}>
+                color={useColorModeValue("gray.500", "gray.400")}
+                fontSize={"2xl"}
+                fontWeight={"300"}
+              >
                 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                 diam nonumy eirmod tempor invidunt ut labore
               </Text>
-              <Text fontSize={'lg'}>
+              <Text fontSize={"lg"}>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
                 aliquid amet at delectus doloribus dolorum expedita hic, ipsum
                 maxime modi nam officiis porro, quae, quisquam quos
@@ -149,19 +146,19 @@ const ClaseComponent = ({teacher, title }) => {
             </VStack>
             <Box>
               <Text
-                fontSize={{ base: '16px', lg: '18px' }}
-                color={useColorModeValue('yellow.500', 'yellow.300')}
-                fontWeight={'500'}
-                textTransform={'uppercase'}
-                mb={'4'}>
+                fontSize={{ base: "16px", lg: "18px" }}
+                color={useColorModeValue("yellow.500", "yellow.300")}
+                fontWeight={"500"}
+                textTransform={"uppercase"}
+                mb={"4"}
+              >
                 Niveles
               </Text>
 
               <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
                 <List spacing={2}>
                   <ListItem>Inicial</ListItem>
-                  <ListItem>Primaria</ListItem>{' '}
-                  <ListItem>Secundaria</ListItem>
+                  <ListItem>Primaria</ListItem> <ListItem>Secundaria</ListItem>
                 </List>
                 <List spacing={2}>
                   <ListItem>Universitario</ListItem>
@@ -172,37 +169,38 @@ const ClaseComponent = ({teacher, title }) => {
             </Box>
             <Box>
               <Text
-                fontSize={{ base: '16px', lg: '18px' }}
-                color={useColorModeValue('yellow.500', 'yellow.300')}
-                fontWeight={'500'}
-                textTransform={'uppercase'}
-                mb={'4'}>
+                fontSize={{ base: "16px", lg: "18px" }}
+                color={useColorModeValue("yellow.500", "yellow.300")}
+                fontWeight={"500"}
+                textTransform={"uppercase"}
+                mb={"4"}
+              >
                 Sobre este curso
               </Text>
 
               <List spacing={2}>
                 <ListItem>
-                  <Text as={'span'} fontWeight={'bold'}>
+                  <Text as={"span"} fontWeight={"bold"}>
                     Lugar:
-                  </Text>{' '}
+                  </Text>{" "}
                   Google Meets
                 </ListItem>
                 <ListItem>
-                  <Text as={'span'} fontWeight={'bold'}>
+                  <Text as={"span"} fontWeight={"bold"}>
                     Cronograma:
-                  </Text>{' '}
+                  </Text>{" "}
                   Flexible
                 </ListItem>
                 <ListItem>
-                  <Text as={'span'} fontWeight={'bold'}>
+                  <Text as={"span"} fontWeight={"bold"}>
                     Clases Incluidas:
-                  </Text>{' '}
+                  </Text>{" "}
                   6
                 </ListItem>
                 <ListItem>
-                  <Text as={'span'} fontWeight={'bold'}>
+                  <Text as={"span"} fontWeight={"bold"}>
                     Idioma:
-                  </Text>{' '}
+                  </Text>{" "}
                   Espanol
                 </ListItem>
               </List>
@@ -210,28 +208,28 @@ const ClaseComponent = ({teacher, title }) => {
           </Stack>
 
           <Button
-            rounded={'none'}
-            w={'full'}
+            rounded={"none"}
+            w={"full"}
             mt={8}
-            size={'lg'}
-            py={'7'}
+            size={"lg"}
+            py={"7"}
             onClick={onOpen}
-            bg={useColorModeValue('gray.900', 'gray.50')}
-            color={useColorModeValue('white', 'gray.900')}
-            textTransform={'uppercase'}
+            bg={useColorModeValue("gray.900", "gray.50")}
+            color={useColorModeValue("white", "gray.900")}
+            textTransform={"uppercase"}
             _hover={{
-              transform: 'translateY(2px)',
-              boxShadow: 'lg',
-            }}>
+              transform: "translateY(2px)",
+              boxShadow: "lg",
+            }}
+          >
             Contratar
           </Button>
 
-          <Stack direction="row" alignItems="center" justifyContent={'center'}>
+          <Stack direction="row" alignItems="center" justifyContent={"center"}>
             <MdCall />
             <Text>Contacto garantizado en menos de 48 horas</Text>
           </Stack>
         </Stack>
-
       </SimpleGrid>
 
       <Modal
@@ -247,42 +245,43 @@ const ClaseComponent = ({teacher, title }) => {
           <ModalBody pb={6}>
             <FormControl>
               <FormLabel>Telefono</FormLabel>
-              <Input ref={initialRef} placeholder='Telefono' />
+              <Input ref={initialRef} placeholder="Telefono" />
             </FormControl>
 
             <FormControl mt={4}>
               <FormLabel>Horario</FormLabel>
-              <Input placeholder='Horario' />
+              <Input placeholder="Horario" />
             </FormControl>
 
             <FormControl mt={4}>
               <FormLabel>Descripcion de contratacion</FormLabel>
-              <Input placeholder='Descripcion al profesor del interes por la clase' />
+              <Input placeholder="Descripcion al profesor del interes por la clase" />
             </FormControl>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='teal' mr={3}>
+            <Button colorScheme="teal" mr={3}>
               Contratar
             </Button>
             <Button onClick={onClose}>Cancelar</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
-
-
     </Container>
-    
   );
-}
+};
 
 const Clase = (props) => {
   return (
     <BackgroundLayout
-      component={<ClaseComponent title={'Clase Individual de Matematicas'} teacher={teacher} />}
-    >
-    </BackgroundLayout>
+      component={
+        <ClaseComponent
+          title={"Clase Individual de Matematicas"}
+          teacher={teacher}
+        />
+      }
+    ></BackgroundLayout>
   );
-}
+};
 
 export default Clase;

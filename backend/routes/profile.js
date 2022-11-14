@@ -1,18 +1,18 @@
-const express = require('express');
-const profileCtrl = require('../controllers/profile.js');
-const decodeUserFromToken = require('../middleware/auth.js').decodeUserFromToken;
-const checkAuth = require('../middleware/auth.js').checkAuth;
+const express = require("express");
+const profileCtrl = require("../controllers/profile.js");
+const decodeUserFromToken =
+  require("../middleware/auth.js").decodeUserFromToken;
+const checkAuth = require("../middleware/auth.js").checkAuth;
 
-var router = express.Router()
+var router = express.Router();
 
 /*---------- Public Routes ----------*/
 
-
 /*---------- Protected Routes ----------*/
-router.use(decodeUserFromToken)
-router.get('/', checkAuth, profileCtrl.getProfiles)
-router.get('/:id', checkAuth, profileCtrl.getProfileById)
-router.put('/role', checkAuth, profileCtrl.setRole)
-router.put('/:id/add-photo', checkAuth, profileCtrl.addPhoto)
+router.use(decodeUserFromToken);
+router.get("/", checkAuth, profileCtrl.getProfiles);
+router.get("/:id", checkAuth, profileCtrl.getProfileById);
+router.put("/role", checkAuth, profileCtrl.setRole);
+router.put("/:id/add-photo", checkAuth, profileCtrl.addPhoto);
 
 module.exports = router;

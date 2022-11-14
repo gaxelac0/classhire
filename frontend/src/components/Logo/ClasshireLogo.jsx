@@ -1,17 +1,11 @@
-import { Box, Image } from "@chakra-ui/react"
+import { Box, Image } from "@chakra-ui/react";
 
 const ClasshireLogo = (props) => {
-    return(
-        <Box
-        alignItems={props.alignItems}
-        >
-            <Image src="/img/classhire-logo.png"
-            w={props.w}
-            h={props.h}
-            />
-        </Box>
-    );
+  return (
+    <Box alignItems={props.alignItems}>
+      <Image src="/img/classhire-logo.png" w={props.w} h={props.h} />
+    </Box>
+  );
+};
 
-}
-
-export default ClasshireLogo
+export default ClasshireLogo;

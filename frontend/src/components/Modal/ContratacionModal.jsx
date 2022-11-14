@@ -1,7 +1,5 @@
-
-
-
-const ContratacionModal = () => {    <>
+const ContratacionModal = () => {
+  <>
     <Button onClick={onOpen}>Open Modal</Button>
 
     <Modal
@@ -17,24 +15,24 @@ const ContratacionModal = () => {    <>
         <ModalBody pb={6}>
           <FormControl>
             <FormLabel>First name</FormLabel>
-            <Input ref={initialRef} placeholder='First name' />
+            <Input ref={initialRef} placeholder="First name" />
           </FormControl>
 
           <FormControl mt={4}>
             <FormLabel>Last name</FormLabel>
-            <Input placeholder='Last name' />
+            <Input placeholder="Last name" />
           </FormControl>
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme='blue' mr={3}>
+          <Button colorScheme="blue" mr={3}>
             Save
           </Button>
           <Button onClick={onClose}>Cancel</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
-  </>
-}
+  </>;
+};
 
-export default ContratacionModal
+export default ContratacionModal;
