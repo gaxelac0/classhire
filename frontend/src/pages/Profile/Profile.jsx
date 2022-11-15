@@ -122,7 +122,9 @@ const TablaMaterias = (props) => {
                   <Td>
                     <Link to={"/clase/" + c._id} >
                       <HStack>
-                      <Text>
+                      <Text
+                      fontWeight="semibold"
+                      >
                         {c.title}
                       </Text>
                         <Image
@@ -159,11 +161,7 @@ const TablaMaterias = (props) => {
                     <Link to={"/clase/" + c._id} altText="Ir a la Clase">
                       <HStack>
                         <Text
-                        mt="1"
                         fontWeight="semibold"
-                        as="h4"
-                        lineHeight="tight"
-                        noOfLines={1}
                         >
                         {c.title}
                       </Text>

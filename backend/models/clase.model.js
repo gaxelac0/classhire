@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var mongoosePaginate = require("mongoose-paginate");
 var moment = require("moment");
+const Contratacion = require("./contratacion.model");
 
 const MateriaEnum = [
   "ruby",
@@ -71,6 +72,8 @@ var claseSchema = new mongoose.Schema(
     reviewCount: { type: Number, default: 0 },
     reviewNegative: { type: Number, default: 0 },
     reviewPositive: { type: Number, default: 0 },
+
+    // contrataciones: [Contratacion],
 
     date: { type: String, default: moment().format("DD/MM/YYYY") },
   },

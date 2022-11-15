@@ -33,4 +33,11 @@ router.post(
   claseCtrl.addReview
 );
 
+router.post(
+  "/contratar",
+  checkAuth,
+  body("clase_id").exists().notEmpty(),
+  claseCtrl.contratar
+);
+
 module.exports = router;

@@ -6,6 +6,7 @@ const NotFoundError = require("../utils/error/NotFoundError.js");
 const HttpStatusCodes = require("../utils/HttpStatusCodes");
 var constants = require("../utils/constants");
 var mongoose = require("mongoose");
+const Contratacion = require("../models/contratacion.model");
 
 // Saving the context of this module inside the _the variable
 _this = this;
@@ -190,6 +191,46 @@ exports.deleteClase = async function (body) {
     //profile.clases.pop(clase);
     //await profile.save();
   } catch (e) {
+    throw new BaseError(
+      "err",
+      HttpStatusCodes.INTERNAL_SERVER,
+      true,
+      e.message
+    );
+  }
+};
+
+exports.contratar = async function (body) {
+  try {
+    var clase = await Clase.findOne({ _id: body.clase_id });
+    if (!clase) {
+      throw new NotFoundError(
+        "err",
+        HttpStatusCodes.NOT_FOUND,
+        true,
+        "La clase no existe"
+      );
+    }
+    
+    let user = await User.findOne(body.user);
+    let profile = await Profile.findOne({_id: user.profile._id});
+
+    if (profile.role !== constants.RoleEnum[1]) {
+      throw new BaseError(
+        "err",
+        HttpStatusCodes.UNAUTHORIZED,
+        true,
+        "Unauthorized: solo el rol student puede contratar una clase."
+      );
+    }
+    profile.clases.push(clase._id);
+    
+    await profile.save();
+    return Contratacion.create({clase_id: clase._id, profile_id: profile._id})
+    
+  } catch (e) {
+    // return a Error message describing the reason
+    console.log("error services", e);
     throw new BaseError(
       "err",
       HttpStatusCodes.INTERNAL_SERVER,

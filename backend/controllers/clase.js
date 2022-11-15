@@ -104,3 +104,16 @@ exports.addReview = async function addReview(req, res) {
     return res.status(e.statusCode).json({ status: e.name, msg: e.message });
   }
 };
+
+exports.contratar = async function contratar(req, res) {
+  try {
+    const body = req.body;
+    body.user = req.user;
+    let contratacion = await claseService.contratar(body);
+    return res
+      .status(200)
+      .json({ status: "ok", msg: "Contratacion solicitada. El profesor aceptara o rechazara la contratacion en base a sus terminos.", data: contratacion });
+  } catch (e) {
+    return res.status(e.statusCode).json({ status: e.name, msg: e.message });
+  }
+};
