@@ -50,14 +50,17 @@ async function getClasesByProfileId(body, page, limit) {
   let profile_id = body.profile_id;
 
   try {
-    let profile = await Profile.findOne({ _id: body.profile_id });
+    let profile = await Profile.findOne({ _id: body.profile_id }).lean()
+    .exec();
 
     // console.log(`getClasesByProfileId  - retrieving clases(${profile.clases.length}) for profileId ${profile_id}`)
     // console.log(profile.clases);
 
     var result = profile.clases;
     if (profile.clases.length > 0) {
-      var result = await getClases({ ids: profile.clases }, page, limit);
+      query = {};
+      query["_id"] = { $in: profile.clases};
+      var result = await getClases(query, page, limit);
       return { docs: result.docs, page: result.page, totalPages: result.pages };
     }
 
