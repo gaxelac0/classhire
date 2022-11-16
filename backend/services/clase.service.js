@@ -223,8 +223,20 @@ exports.contratar = async function (body) {
         "Unauthorized: solo el rol student puede contratar una clase."
       );
     }
+
+
+    if (clase.teacher_profile_id.equals(profile._id)) {
+      throw new BaseError(
+        "err",
+        HttpStatusCodes.UNAUTHORIZED,
+        true,
+        "Unauthorized: el profesor de la materia no puede contratarla."
+      );
+    }
+
+
     profile.clases.push(clase._id);
-    
+
     await profile.save();
     return Contratacion.create({clase_id: clase._id, profile_id: profile._id})
     

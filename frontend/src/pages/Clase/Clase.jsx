@@ -27,9 +27,12 @@ import {
 } from "@chakra-ui/react";
 import { MdCall } from "react-icons/md";
 
-import { useRef, React } from "react";
+import { useState, useRef, React, useEffect } from "react";
 
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
+import { useParams, useNavigate } from "react-router-dom";
+
+import * as claseService from "../../services/claseService"
 
 let teacher = {
   name: "Mario Hernandez",
@@ -38,10 +41,55 @@ let teacher = {
 };
 
 const ClaseComponent = ({ teacher, title }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  let { id } = useParams();
+
+  let navigate = useNavigate();
 
   const initialRef = useRef(null);
   const finalRef = useRef(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [clases, setClases] = useState([]);
+
+
+  useEffect(() => {
+    const fetchClaseInformation = async () => {
+      console.log("ejecuta fetchClaseInformation at ClaseComponent");
+                
+      let query = {};
+      query["ids"] = [id];
+      
+      const clasesData = await claseService.getClases(query, 1, 1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+      if (clasesData.docs.length != 1) {
+        navigate("/404")
+        return
+      }
+      setClases(clasesData.data.docs);
+
+
+
+
+      //console.log("retrieving clases");
+      //console.log(clases);
+      //console.log(pagination);
+    };
+    console.log("ejecuta useEffect at ClaseComponent");
+
+    fetchClaseInformation();
+  }, [id]);
 
   return (
     <Container maxW={"7xl"}>
