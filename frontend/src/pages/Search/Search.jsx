@@ -235,17 +235,7 @@ const SearchComponent = (props) => {
             {clases.map((c, idx) => (
               <ClaseCard
                 key={idx}
-                title={c.title}
-                date={c.date}
-                description={c.description}
-                tags={c.tags}
-                // TODO needs unhardcoded image
-                image={"http://localhost:3000/img/matematicas.jpg"}
-                imageAlt={"imageAlt"}
-                rating={c.rating}
-                reviewCount={c.reviewCount}
-                teacher_name={c.teacher_name}
-                teacher_photo={c.teacher_photo}
+                clase={c}
               />
             ))}
           </SimpleGrid>

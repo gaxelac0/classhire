@@ -289,7 +289,7 @@ const Profile = (props) => {
 
   const fetchProfileDetails = async () => {
     console.log("executing fetchProfileDetails at Profile");
-    const result = await profileService.getProfileDetails(
+    const result = await profileService.getProfileById(
       props.userState.user.profile
     );
     let profile = result.data.docs[0];

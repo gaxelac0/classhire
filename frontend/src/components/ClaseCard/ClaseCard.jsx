@@ -31,14 +31,14 @@ const ClaseCard = (props) => {
           maxW="sm"
           p={"1em"}
         >
-          <Image src={props.image} alt={props.imageAlt} roundedTop="lg" />
+          <Image src={"http://localhost:3000/img/matematicas.jpg"} alt={"props.clase.imageAlt"} roundedTop="lg" />
           <Box justifyContent="space-between" alignItems="center">
             <chakra.span fontSize="sm" color="gray.600">
-              {props.date}
+              {props.clase.date}
             </chakra.span>
             <Link
               ml={"1em"}
-              href="/clase"
+              href={"/clase/"+props.clase._id}
               px={3}
               py={1}
               fontWeight="700"
@@ -57,26 +57,26 @@ const ClaseCard = (props) => {
               .map((_, i) => (
                 <StarIcon
                   key={i}
-                  color={i < props.rating ? "teal.500" : "gray.300"}
+                  color={i < props.clase.rating ? "teal.500" : "gray.300"}
                 />
               ))}
             <Box as="span" ml="2" color="gray.600" fontSize="sm">
-              {props.reviewCount} reviews
+              {props.clase.reviewCount} reviews
             </Box>
           </Box>
 
           <Box mt={2}>
             <Text fontSize={30} as="b">
-              {props.title}
+              {props.clase.title}
             </Text>
             <Text mt={2} color="gray.600" noOfLines={[3, 6]}>
-              {props.description}
+              {props.clase.description}
             </Text>
           </Box>
 
           <Box justifyContent="space-between" alignItems="center" mt={5}>
             <HStack>
-              {props.tags.map((t) => (
+              {props.clase.tags.map((t) => (
                 <Tag
                   size="sm"
                   key={t}
@@ -101,11 +101,11 @@ const ClaseCard = (props) => {
                   base: "none",
                   sm: "block",
                 }}
-                src={`data:image/jpeg;base64,${props.teacher_photo}`}
+                src={`data:image/jpeg;base64,${props.clase.teacher_photo}`}
                 alt="imag"
               />
               <Text color="gray.700" fontWeight="700" cursor="pointer">
-                {props.teacher_name}
+                {props.clase.teacher_name}
               </Text>
             </Box>
           </Box>

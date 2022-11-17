@@ -32,55 +32,85 @@ import { useState, useRef, React, useEffect } from "react";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 import { useParams, useNavigate } from "react-router-dom";
 
-import * as claseService from "../../services/claseService"
+import { useToast } from "@chakra-ui/react";
 
-let teacher = {
-  name: "Mario Hernandez",
-  description:
-    "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti non necessitatibus voluptatem soluta asperiores laboriosam ratione illum, sunt odit fugit quis dolorum dolore nobis recusandae facere, sint doloribus eius obcaecati!",
-};
+import * as claseService from "../../services/claseService";
 
-const ClaseComponent = ({ teacher, title }) => {
+import * as profileService from "../../services/profileService";
 
+
+const ClaseComponent = () => {
   let { id } = useParams();
 
   let navigate = useNavigate();
 
+  let toast = useToast()
+
   const initialRef = useRef(null);
   const finalRef = useRef(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [clases, setClases] = useState([]);
+  const [clase, setClase] = useState({});
+  const [teacher, setTeacher] = useState({});
 
+  const [formData, setFormData] = useState({
+    clase_id: "",
+    telefono: "",
+    horario: "",
+    descr_contratacion: "",
+  });
+
+  const handleChange = (e) => {
+    //console.log(e)
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    try {
+      await claseService.contratar(formData);
+      navigate("/profile/1");
+    } catch (err) {
+      updateMessage(err.message);
+    }
+  };
+
+  const [message, setMessage] = useState([""]);
+  const updateMessage = (msg) => {
+    setMessage(msg);
+    if (msg && (msg !== "" || msg[0] !== "")) {
+      toast({
+        title: "Error!",
+        description: msg,
+        status: "error",
+        position: "top-right",
+        duration: 6000,
+        isClosable: true,
+      });
+    }
+  };
 
   useEffect(() => {
     const fetchClaseInformation = async () => {
       console.log("ejecuta fetchClaseInformation at ClaseComponent");
-                
+
       let query = {};
       query["ids"] = [id];
-      
+
       const clasesData = await claseService.getClases(query, 1, 1);
-
-
-
-
-
-
-
-
-
-
-
-
-
-      if (clasesData.docs.length != 1) {
-        navigate("/404")
-        return
+      if (clasesData.data.docs.length != 1) {
+        navigate("/404");
+        return;
       }
-      setClases(clasesData.data.docs);
+      setClase(clasesData.data.docs[0]);
 
-
-
+      const teacherData = await profileService.getProfileById(
+        clasesData.data.docs[0].teacher_profile_id
+      );
+      if (teacherData.data.docs.length != 1) {
+        navigate("/404");
+        return;
+      }
+      setTeacher(teacherData.data.docs[0]);
 
       //console.log("retrieving clases");
       //console.log(clases);
@@ -120,18 +150,18 @@ const ClaseComponent = ({ teacher, title }) => {
                 textTransform={"uppercase"}
                 mb={"4"}
               >
-                Sobre el Profe
+                Sobre el profe
               </Text>
               <Image
                 rounded={"md"}
                 alt={"teacher photo"}
-                src="/img/teacher-icon.png"
+                src={`data:image/jpeg;base64,${teacher.photo}`}
                 fit={"cover"}
                 align={"center"}
                 w={"100%"}
                 h={{ base: "50%", sm: "100px", lg: "125px" }}
               />
-              <Heading as="h3">{teacher.name}</Heading>
+              <Heading as="h3">{teacher.firstName}</Heading>
               <StackDivider
                 borderColor={useColorModeValue("gray.200", "gray.600")}
               />
@@ -141,7 +171,7 @@ const ClaseComponent = ({ teacher, title }) => {
                 fontWeight={"250"}
                 mb={"4"}
               >
-                {teacher.description}
+                {teacher && teacher.description}
               </Text>
             </VStack>
           </Flex>
@@ -156,14 +186,14 @@ const ClaseComponent = ({ teacher, title }) => {
               fontWeight={600}
               fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
             >
-              {title}
+              {clase.title}
             </Heading>
             <Text
               color={useColorModeValue("gray.900", "gray.400")}
               fontWeight={300}
               fontSize={"2xl"}
             >
-              $350.00 USD
+              ${clase.price} ARS p/clase
             </Text>
           </Box>
 
@@ -177,20 +207,7 @@ const ClaseComponent = ({ teacher, title }) => {
             }
           >
             <VStack spacing={{ base: 4, sm: 6 }}>
-              <Text
-                color={useColorModeValue("gray.500", "gray.400")}
-                fontSize={"2xl"}
-                fontWeight={"300"}
-              >
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut labore
-              </Text>
-              <Text fontSize={"lg"}>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
-                aliquid amet at delectus doloribus dolorum expedita hic, ipsum
-                maxime modi nam officiis porro, quae, quisquam quos
-                reprehenderit velit? Natus, totam.
-              </Text>
+              <Text fontSize={"lg"}>{clase.description}</Text>
             </VStack>
             <Box>
               <Text
@@ -203,17 +220,7 @@ const ClaseComponent = ({ teacher, title }) => {
                 Niveles
               </Text>
 
-              <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
-                <List spacing={2}>
-                  <ListItem>Inicial</ListItem>
-                  <ListItem>Primaria</ListItem> <ListItem>Secundaria</ListItem>
-                </List>
-                <List spacing={2}>
-                  <ListItem>Universitario</ListItem>
-                  <ListItem>Tesis</ListItem>
-                  <ListItem>Proyectos Finales</ListItem>
-                </List>
-              </SimpleGrid>
+              <Text>{clase && clase.nivel && clase.nivel.value}</Text>
             </Box>
             <Box>
               <Text
@@ -291,26 +298,41 @@ const ClaseComponent = ({ teacher, title }) => {
           <ModalHeader>Contratando la clase</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <FormControl>
-              <FormLabel>Telefono</FormLabel>
-              <Input ref={initialRef} placeholder="Telefono" />
-            </FormControl>
+            <form onSubmit={handleSubmit}>
+              <FormControl id="telefono">
+                <FormLabel>Telefono</FormLabel>
+                <Input
+                  ref={initialRef}
+                  placeholder="Telefono"
+                  value={formData.telefono}
+                  onChange={handleChange}
+                />
+              </FormControl>
 
-            <FormControl mt={4}>
-              <FormLabel>Horario</FormLabel>
-              <Input placeholder="Horario" />
-            </FormControl>
+              <FormControl mt={4} id="horario">
+                <FormLabel>Horario</FormLabel>
+                <Input
+                  placeholder="Horario"
+                  value={formData.horario}
+                  onChange={handleChange}
+                />
+              </FormControl>
 
-            <FormControl mt={4}>
-              <FormLabel>Descripcion de contratacion</FormLabel>
-              <Input placeholder="Descripcion al profesor del interes por la clase" />
-            </FormControl>
+              <FormControl mt={4} id="descr_contratacion">
+                <FormLabel>Descripcion de contratacion</FormLabel>
+                <Input
+                  placeholder="Descripcion al profesor del interes por la clase"
+                  value={formData.descr_contratacion}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <Button type="submit" colorScheme="teal" mr={3}>
+                Contratar
+              </Button>
+            </form>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="teal" mr={3}>
-              Contratar
-            </Button>
             <Button onClick={onClose}>Cancelar</Button>
           </ModalFooter>
         </ModalContent>
@@ -320,16 +342,7 @@ const ClaseComponent = ({ teacher, title }) => {
 };
 
 const Clase = (props) => {
-  return (
-    <BackgroundLayout
-      component={
-        <ClaseComponent
-          title={"Clase Individual de Matematicas"}
-          teacher={teacher}
-        />
-      }
-    ></BackgroundLayout>
-  );
+  return <BackgroundLayout component={<ClaseComponent />}></BackgroundLayout>;
 };
 
 export default Clase;

@@ -9,10 +9,8 @@ async function getProfile() {
   return await res.json()
 }
 
-async function getProfileDetails(profile_id) {
-  const res = await fetch(BASE_URL + '/' + profile_id, {
-    headers: { 'Authorization': `Bearer ${tokenService.getToken()}` },
-  })
+async function getProfileById(profile_id) {
+  const res = await fetch(BASE_URL + '/' + profile_id, { })
   return await res.json()
 }
 
@@ -44,4 +42,4 @@ async function addPhoto(photoData, profileId) {
   return await res.json()
 }
 
-export { getProfile, getProfileDetails, addPhoto }
+export { getProfile, getProfileById, addPhoto }

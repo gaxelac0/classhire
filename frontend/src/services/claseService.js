@@ -30,8 +30,6 @@ async function getClases(filters, page, limit) {
     body: JSON.stringify(filters),
   })
 
-
-
   return await res.json()
 }
 
@@ -57,4 +55,18 @@ async function getClasesByUser(profile_id, page, limit) {
   return await res.json()
 }
 
-export { addClase, getClases, getClasesByUser }
+async function contratar(body) {
+
+  const res = await fetch(BASE_URL + "/contratar", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${tokenService.getToken()}`,
+    },
+    body: JSON.stringify(body),
+  })
+
+  return await res.json()
+}
+
+export { addClase, getClases, getClasesByUser, contratar }
