@@ -7,8 +7,8 @@ var RoleEnum = require("../utils/constants").RoleEnum;
 // TODO: validar type(nivel) en controller / servicio
 var experienciaSchema = new mongoose.Schema(
   {
-    type: { type: String, required: true },
-    descr: { type: String, required: true },
+    nivel: { type: String, required: true },
+    descr: { type: String, required: false, default: ""},
     completed: { type: Boolean, required: true },
   },
   {
@@ -20,7 +20,7 @@ var profileSchema = new mongoose.Schema(
   {
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    fecNacimiento: { type: Date, required: false },
+    fecha_nacimiento: { type: String, required: false },
     titulo: { type: String, required: false },
     experiencias: [experienciaSchema],
     photo: { type: String, required: false } /* base 64 */,

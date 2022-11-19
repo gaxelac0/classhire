@@ -1,45 +1,55 @@
-import * as tokenService from '../services/tokenService'
+import * as tokenService from "../services/tokenService";
 
-const BASE_URL = `${process.env.REACT_APP_BACK_END_SERVER_URL}/api/profile`
+const BASE_URL = `${process.env.REACT_APP_BACK_END_SERVER_URL}/api/profile`;
 
 async function getProfile() {
   const res = await fetch(BASE_URL, {
-    headers: { 'Authorization': `Bearer ${tokenService.getToken()}` },
-  })
-  return await res.json()
+    headers: { Authorization: `Bearer ${tokenService.getToken()}` },
+  });
+  return await res.json();
 }
 
 async function getProfileById(profile_id) {
-  const res = await fetch(BASE_URL + '/' + profile_id, { })
-  return await res.json()
+  const res = await fetch(BASE_URL + "/" + profile_id, {});
+  return await res.json();
 }
 
-async function setRole(formData, role) {
+async function patchProfile(fields) {
+  try {
+    let token = tokenService.getToken();
+    const res = await fetch(`${BASE_URL}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(fields),
+    });
 
-  let token = tokenService.getToken();
-
-  const res = await fetch(`${BASE_URL}/add-photo`, {
-    method: 'PUT',
-    headers: {
-      'Authorization': `Bearer ${token}`
-    },
-    body: {
-      profile_id: token.user.profile,
-      role: role
+    const json = await res.json();
+    if (json.data.token) {
+      tokenService.removeToken();
+      tokenService.setToken(json.data.token);
     }
-  })
-  return await res.json()
+    if (json.err) {
+      throw new Error(json.err);
+    }
+
+    return json;
+  } catch (err) {
+    throw err;
+  }
 }
 
 async function addPhoto(photoData, profileId) {
   const res = await fetch(`${BASE_URL}/${profileId}/add-photo`, {
-    method: 'PUT',
+    method: "PUT",
     headers: {
-      'Authorization': `Bearer ${tokenService.getToken()}`
+      Authorization: `Bearer ${tokenService.getToken()}`,
     },
-    body: photoData
-  })
-  return await res.json()
+    body: photoData,
+  });
+  return await res.json();
 }
 
-export { getProfile, getProfileById, addPhoto }
+export { getProfile, patchProfile, getProfileById, addPhoto };

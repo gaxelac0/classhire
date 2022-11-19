@@ -14,6 +14,7 @@ import {
   DrawerOverlay,
   Link,
   Image,
+  Text,
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 import { ArrowForwardIcon, SearchIcon, PlusSquareIcon } from "@chakra-ui/icons";
@@ -83,6 +84,7 @@ const NavBar = (props) => {
           >
             Log Out
           </Button>
+          {props.userState && props.userState.role && <Text color="red">{"Rol: " + props.userState.role}</Text>} 
         </HStack>
       </>
     );
@@ -124,7 +126,7 @@ const NavBar = (props) => {
 
   function MenuItems(props) {
     return props.loggedIn ? (
-      <LoggedMenuItems handleLogout={props.handleLogout} />
+      <LoggedMenuItems userState={props.userState} handleLogout={props.handleLogout} />
     ) : (
       <NotLoggedMenuItems />
     );
@@ -170,6 +172,7 @@ const NavBar = (props) => {
             )}
 
             <MenuItems
+              userState={props.userState}
               loggedIn={props.userState}
               handleLogout={props.handleLogout}
             />

@@ -5,6 +5,10 @@ const BaseError = require("../utils/error/BaseError");
 const NotFoundError = require("../utils/error/NotFoundError.js");
 const HttpStatusCodes = require("../utils/HttpStatusCodes");
 
+const moment = require("moment");
+
+const authService = require("./auth.service")
+
 // Saving the context of this module inside the _the variable
 _this = this;
 
@@ -33,11 +37,44 @@ async function getProfiles(query, page, limit) {
 }
 exports.getProfiles = getProfiles;
 
-async function setRole(body) {
+async function patchProfile(body) {
   try {
-    let profile = await Profile.findOne({ _id: body.profile });
-    profile.role = body.role;
-    return await profile.save();
+    let profile = await Profile.findOne({ _id: body.user.profile });
+
+    if (!profile) {
+      throw new BaseError(
+        "err",
+        HttpStatusCodes.NOT_FOUND,
+        true,
+        "Profile not found"
+      );
+    }
+
+    let objCount = 0;
+
+    if (body.role && body.role != "") {
+      objCount = objCount+1;
+      profile.role = body.role;
+    }
+
+    if (body.experiencias && body.experiencias.length > 0) {
+      objCount = objCount+1;
+      profile.experiencias = body.experiencias;
+    }
+
+    if (body.fecha_nacimiento && body.fecha_nacimiento != "") {
+      objCount = objCount+1;
+      profile.fecha_nacimiento = moment(body.fecha_nacimiento).format("DD/MM/YYYY") ;
+    }
+
+    if (objCount === 0) {
+      return null
+    }
+
+    let patchedProfile = await profile.save();
+    const token = authService.createJWT({ user: body.user, role: patchedProfile.role });
+    return {patchedProfile, token};
+
   } catch (e) {
     throw new BaseError(
       "err",
@@ -47,4 +84,4 @@ async function setRole(body) {
     );
   }
 }
-exports.setRole = setRole;
+exports.patchProfile = patchProfile;

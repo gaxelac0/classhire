@@ -28,14 +28,12 @@ exports.getProfileById = async function getProfileById(req, res) {
   }
 };
 
-exports.setRole = async function setRole(req, res) {
+exports.patchProfile = async function patchProfile(req, res) {
   try {
-    req.body.profile = req.user.profile;
-    let profile = await profileService.setRole(req.body);
-
-    const token = authService.createJWT({ user: req.user, role: profile.role });
-
-    return res.status(200).json({ status: "ok", data: profile, token: token });
+    req.body.user = req.user;
+    let data = await profileService.patchProfile(req.body);
+    if (!data) return res.status(304).json({status:"ok", msg: "Not Modified"}) 
+    return res.status(200).json({ status: "ok", data: data});
   } catch (e) {
     return res
       .status(e.statusCode)

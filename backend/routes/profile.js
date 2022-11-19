@@ -12,7 +12,7 @@ router.get("/:id", profileCtrl.getProfileById);
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken);
 router.get("/", checkAuth, profileCtrl.getProfiles);
-router.put("/role", checkAuth, profileCtrl.setRole);
+router.patch("/", checkAuth, profileCtrl.patchProfile);
 router.put("/:id/add-photo", checkAuth, profileCtrl.addPhoto);
 
 module.exports = router;

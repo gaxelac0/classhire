@@ -13,6 +13,7 @@ import {
   WrapItem,
   FormControl,
   FormLabel,
+  FormErrorMessage,
   Input,
   InputGroup,
   InputLeftElement,
@@ -25,89 +26,100 @@ import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaBaby } from "react-icons/fa";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 
+import { useToast } from "@chakra-ui/react";
+
 import * as profileService from "../../services/profileService";
 
 import { useNavigate } from "react-router-dom";
 
 const CompleteOnboardStudentFrmComponent = (props) => {
   const navigate = useNavigate();
+  const toast = useToast();
 
   const [estudiosList, setEstudiosList] = useState([
-    { type: "", description: "", completed: false },
+    { nivel: "", completed: false },
   ]);
 
   const [formData, setFormData] = useState({
-    fecNacimiento: new Date(),
+    role: "student",
+    fecha_nacimiento: new Date().toDateString(),
     experiencias: [],
   });
 
   // Agrega para completar un estudio mas
   const handleEstudioAdd = () => {
-    setEstudiosList([
-      ...estudiosList,
-      { type: "", description: "", completed: false },
-    ]);
-  };
-
-  const handleEstudioInputChange = (e, index) => {
-    const { value } = e.target;
-    const list = [...estudiosList];
-    list[index]["description"] = value;
-    setEstudiosList(list);
-
-    const l = [...formData];
+    setEstudiosList([...estudiosList, { nivel: "", completed: false }]);
   };
 
   const handleEstudioSelectChange = (e, index) => {
     const { value } = e.target;
     const list = [...estudiosList];
-    list[index]["type"] = value;
+    list[index]["nivel"] = value;
     setEstudiosList(list);
+    setFormData({
+      ...formData,
+      ["experiencias"]: list
+    });
   };
 
   const handleEstudioCheckboxChange = (e, index) => {
     const { checked } = e.target;
     const list = [...estudiosList];
-    list[index]["current"] = checked;
+    list[index]["completed"] = checked;
     setEstudiosList(list);
+    setFormData({
+      ...formData,
+      ["experiencias"]: list
+    });
   };
 
   const handleEstudioRemove = (index) => {
     const list = [...estudiosList];
     list.splice(index, 1);
     setEstudiosList(list);
+    setFormData({
+      ...formData,
+      ["experiencias"]: list
+    });
   };
 
   const handleChange = (e) => {
-    props.updateMessage("");
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleChangeSelect = (e) => {
-    props.updateMessage("");
-    setFormData({
-      ...formData,
-      [e.target.name]: [e.target.name].push({
-        type: "",
-        descr: "",
-        completed: false,
-      }) /*  TODO: complete this */,
-    });
+
+  const [message, setMessage] = useState([""]);
+  const updateMessage = (msg) => {
+    setMessage(msg);
+    if (msg && (msg !== "" || msg[0] !== "")) {
+      toast({
+        title: "Error!",
+        description: msg,
+        status: "error",
+        position: "top-right",
+        duration: 6000,
+        isClosable: true,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // TODO: completar onboard
-      //await profileService.setRole(formData, 'student')
-      navigate("/profile");
+      let result = await profileService.patchProfile(formData);
+      if (result.status === "ok") {
+        props.userState.role = result.data.patchedProfile.role;
+      }
+      navigate("/profile/1");
     } catch (err) {
-      props.updateMessage(err.message);
+      updateMessage(err.message);
     }
   };
+
+  const isErrorFechaNacimiento = formData.fecha_nacimiento === "";
 
   return (
     <Container maxW="full" mt={0} centerContent overflow="hidden">
@@ -136,9 +148,9 @@ const CompleteOnboardStudentFrmComponent = (props) => {
               <WrapItem>
                 <Box bg="white" borderRadius="lg">
                   <Box m={8} color="#0B0E3F">
-                    <VStack spacing={5}>
-                      <form onSubmit={handleSubmit}>
-                        <FormControl id="student">
+                    <form onSubmit={handleSubmit}>
+                      <VStack spacing={5}>
+                        <FormControl id="fecha_nacimiento" isInvalid={isErrorFechaNacimiento} isRequired>
                           <FormLabel>Fecha de Nacimiento</FormLabel>
                           <InputGroup borderColor="#E0E1E7">
                             <InputLeftElement
@@ -146,58 +158,76 @@ const CompleteOnboardStudentFrmComponent = (props) => {
                               children={<FaBaby color="gray.800" />}
                             />
                             <Input
-                              id="fecNacimiento"
+                              name="fecha_nacimiento"
+                              id="fecha_nacimiento"
                               type="date"
                               size="md"
                               onChange={handleChange}
                             />
                           </InputGroup>
+                          {isErrorFechaNacimiento && (
+                            <FormErrorMessage>
+                              La fecha de nacimiento es requerida.
+                            </FormErrorMessage>
+                          )}
                         </FormControl>
-                        <FormControl id="student">
+                        <FormControl id="experiencias">
                           <FormLabel>Estudios Realizados (max. 4)</FormLabel>
                           <InputGroup borderColor="#E0E1E7">
                             <VStack>
                               {estudiosList.map((singleEstudio, index) => (
-                                <Box key={index}>
+                                <Box
+                                  key={index}
+                                  alignItems="center"
+                                  borderWidth="1px"
+                                  borderRadius="lg"
+                                  borderColor={"teal.300"}
+                                  p={"1em"}
+                                >
                                   <HStack>
-                                    <Select
-                                      placeholder="Ingresa nivel de estudio"
-                                      onChange={(e) =>
-                                        handleEstudioSelectChange(e, index)
-                                      }
-                                    >
-                                      <option value="primaria">Primaria</option>
-                                      <option value="secundario">
-                                        Secundario
-                                      </option>
-                                      <option value="terciario">
-                                        Terciario
-                                      </option>
-                                      <option value="universitario">
-                                        Universitario
-                                      </option>
-                                    </Select>
+                                    <VStack>
+                                      <Text fontSize={"xs"}>Nivel</Text>
+                                      <Select
+                                        mt={"1em"}
+                                        placeholder="Ingresa nivel de estudio"
+                                        onChange={(e) =>
+                                          handleEstudioSelectChange(e, index)
+                                        }
+                                      >
+                                        <option id="primaria" value="primaria">
+                                          Primaria
+                                        </option>
+                                        <option
+                                          id="secundaria"
+                                          value="secundaria"
+                                        >
+                                          Secundaria
+                                        </option>
+                                        <option value="terciario">
+                                          Terciario
+                                        </option>
+                                        <option value="universitario">
+                                          Universitario
+                                        </option>
+                                      </Select>
+                                    </VStack>
 
-                                    <Input
-                                      id={"estudioDesc_" + index}
-                                      type="text"
-                                      placeholder="descripcion"
-                                      value={singleEstudio.description}
-                                      onChange={(e) =>
-                                        handleEstudioInputChange(e, index)
-                                      }
-                                    />
-                                    <Checkbox
-                                      id={"estudioCheckbox_" + index}
-                                      placeholder="Terminado?"
-                                      value={singleEstudio.current}
-                                      onChange={(e) =>
-                                        handleEstudioCheckboxChange(e, index)
-                                      }
-                                    />
+                                    <VStack>
+                                      <Text fontSize={"xs"}>Completado</Text>
+                                      <Checkbox
+                                        id={"estudioCheckbox_" + index}
+                                        placeholder="Terminado?"
+                                        value={singleEstudio.completed}
+                                        onChange={(e) =>
+                                          handleEstudioCheckboxChange(e, index)
+                                        }
+                                      />
+                                    </VStack>
+
                                     <VStack>
                                       {estudiosList.length !== 1 && (
                                         <IconButton
+                                          mt={"1em"}
                                           size="xs"
                                           icon={<DeleteIcon />}
                                           onClick={() =>
@@ -208,6 +238,7 @@ const CompleteOnboardStudentFrmComponent = (props) => {
                                       {estudiosList.length - 1 === index &&
                                         estudiosList.length < 4 && (
                                           <IconButton
+                                            mt={"1em"}
                                             size="xs"
                                             icon={<AddIcon />}
                                             onClick={handleEstudioAdd}
@@ -218,20 +249,25 @@ const CompleteOnboardStudentFrmComponent = (props) => {
                                 </Box>
                               ))}
                               {/* <div className="output">
-                            <h2>Output</h2>
-                            {estudiosList &&
-                              estudiosList.map((obj, index) => (
-                                <ul key={index}>
-                                  {obj && <li>{obj.type+":"+obj.description+":"+obj.current}</li>}
-                                </ul>
-                              ))}
-                          </div> */}
+                                <h2>Output</h2>
+                                {estudiosList &&
+                                  estudiosList.map((obj, index) => (
+                                    <ul key={index}>
+                                      {obj && (
+                                        <li>
+                                          {obj.nivel + ">>" + obj.completed}
+                                        </li>
+                                      )}
+                                    </ul>
+                                  ))}
+                              </div> */}
                             </VStack>
                           </InputGroup>
                         </FormControl>
                         <FormControl id="student" float="right">
                           <Link href="/profile">
                             <Button
+                              type="submit"
                               variant="solid"
                               bg="teal"
                               color="white"
@@ -241,8 +277,8 @@ const CompleteOnboardStudentFrmComponent = (props) => {
                             </Button>
                           </Link>
                         </FormControl>
-                      </form>
-                    </VStack>
+                      </VStack>
+                    </form>
                   </Box>
                 </Box>
               </WrapItem>
@@ -254,9 +290,9 @@ const CompleteOnboardStudentFrmComponent = (props) => {
   );
 };
 
-const CompleteOnboardStudentFrm = () => {
+const CompleteOnboardStudentFrm = (props) => {
   return (
-    <BackgroundLayout component={<CompleteOnboardStudentFrmComponent />} />
+    <BackgroundLayout component={<CompleteOnboardStudentFrmComponent userState={props.userState} />} />
   );
 };
 

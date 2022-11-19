@@ -28,18 +28,11 @@ import { useToast } from "@chakra-ui/react";
 const SignupCard = (props) => {
   const [showPassword, setShowPassword] = useState(false);
 
+  const navigate = useNavigate();
+  
   const toast = useToast();
 
-  const navigate = useNavigate();
   const [message, setMessage] = useState([""]);
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-  });
-  //const [photoData, setPhotoData] = useState({})
-
   const updateMessage = (msg) => {
     setMessage(msg);
     if (msg && (msg !== "" || msg[0] !== "")) {
@@ -53,6 +46,16 @@ const SignupCard = (props) => {
       });
     }
   };
+
+
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+  //const [photoData, setPhotoData] = useState({})
 
   const handleChange = (e) => {
     //console.log(e)
