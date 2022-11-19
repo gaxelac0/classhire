@@ -18,9 +18,19 @@ import {
   Text,
   HStack,
   IconButton,
+  VStack,
+  Center,
+  Icon,
 } from "@chakra-ui/react";
 
 import { PhoneIcon, DeleteIcon } from "@chakra-ui/icons";
+
+import {
+  MdChangeCircle,
+  MdEmail,
+  MdUpdate,
+  MdUploadFile,
+} from "react-icons/md";
 
 import Pagination from "../../components/Pagination/Pagination";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
@@ -39,8 +49,8 @@ const FittedTab = (props) => {
   return (
     <Tabs variant="soft-rounded" colorScheme="teal">
       <TabList mb="1em">
-        <Tab>Materias</Tab>
-        <Tab>Datos Personales</Tab>
+        <Tab>MATERIAS</Tab>
+        <Tab>DATOS PERSONALES</Tab>
       </TabList>
       <TabPanels>
         <TabPanel>
@@ -48,7 +58,11 @@ const FittedTab = (props) => {
             {props.pagination.totalPages === 0 ? (
               /*  TODO: "Agrega o contrata tu primera clase!!" *con boton de Agregar clase para profesor y el boton de search para estudiantes* */
               <>
-                <Text>Todavia no publicaste nada</Text>
+                {props.userState && props.userState.role === "student" ? (
+                  <Text>Todavia no contrataste ninguna clase</Text>
+                ) : (
+                  <Text>Todavia no publicaste ninguna clase</Text>
+                )}
               </>
             ) : (
               <>
@@ -77,14 +91,27 @@ const FittedTab = (props) => {
           <Text color="red">totalPages: {props.pagination.totalPages}</Text>
         </TabPanel>
         <TabPanel>
-          <Image
-            borderRadius="full"
-            boxSize={"200px"}
-            src={`data:image/jpeg;base64,${props.photo}`}
-            alt={props.userState.user.firstName}
-            mb="1em"
-          />
-          <TablaDatos userState={props.userState.user} />
+          <VStack>
+            <Image
+              opacity={0.5}
+              _hover={{
+                opacity: 1,
+              }}
+              borderRadius="full"
+              boxSize={"200px"}
+              src={`data:image/jpeg;base64,${props.profile.photo}`}
+              alt={props.userState.user.firstName}
+              mt="1em"
+              mb={"-10"}
+            ></Image>
+            <Icon
+              as={MdUploadFile}
+              boxSize="8"
+              alignSelf="left"
+              color="teal.500"
+            />
+            <TablaDatos userState={props.userState} profile={props.profile} />
+          </VStack>
         </TabPanel>
       </TabPanels>
     </Tabs>
@@ -94,7 +121,7 @@ const FittedTab = (props) => {
 const TablaMaterias = (props) => {
   return (
     <TableContainer>
-      <Table variant="unstyled" >
+      <Table variant="unstyled">
         {/* TODO: remover estos captions eran de prueba nomas */}
         <Thead>
           <Tr>
@@ -120,15 +147,11 @@ const TablaMaterias = (props) => {
               {props.userState.role === "student" ? (
                 <>
                   <Td>
-                    <Link to={"/clase/" + c._id} >
+                    <Link to={"/clase/" + c._id}>
                       <HStack>
-                      <Text
-                      fontWeight="semibold"
-                      >
-                        {c.title}
-                      </Text>
+                        <Text fontWeight="semibold">{c.title}</Text>
                         <Image
-                        alt="Ir a la Clase"
+                          alt="Ir a la Clase"
                           src={
                             "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg=="
                           }
@@ -136,7 +159,9 @@ const TablaMaterias = (props) => {
                       </HStack>
                     </Link>
                   </Td>
-                  <Td display={{ sm: "none", md: "inline-block" }}>{c.teacher_name}</Td>
+                  <Td display={{ sm: "none", md: "inline-block" }}>
+                    {c.teacher_name}
+                  </Td>
                   <Td display={{ sm: "none", md: "inline-block" }}>{c.date}</Td>
                   <Td>
                     <HStack>
@@ -160,11 +185,7 @@ const TablaMaterias = (props) => {
                   <Td>
                     <Link to={"/clase/" + c._id} altText="Ir a la Clase">
                       <HStack>
-                        <Text
-                        fontWeight="semibold"
-                        >
-                        {c.title}
-                      </Text>
+                        <Text fontWeight="semibold">{c.title}</Text>
                         <Image
                           boxSize={"10px"}
                           src={
@@ -215,42 +236,80 @@ const TablaDatos = (props) => {
         <Tbody>
           <Tr>
             <Td>
-              <Text as="b" color="#797878">
+              <Text as="b" color="#797878" textTransform={"uppercase"}>
                 Nombre y Apellido:
               </Text>
             </Td>
             <Td>
-              {props.userState.firstName + " " + props.userState.lastName}
+              {props.userState.user.firstName +
+                " " +
+                props.userState.user.lastName}
             </Td>
           </Tr>
+          {props && props.userState && props.userState.role === "teacher" && (
+            <Tr>
+              <Td>
+                <Text as="b" color="#797878" textTransform={"uppercase"}>
+                  Titulo:
+                </Text>
+              </Td>
+              <Td>
+                {props.profile && props.profile.titulo && props.profile.titulo}
+              </Td>
+            </Tr>
+          )}
+          {props && props.userState && props.userState.role === "student" && (
+            <Tr>
+              <Td>
+                <Text as="b" color="#797878" textTransform={"uppercase"}>
+                  Fecha de Nacimiento:
+                </Text>
+              </Td>
+              <Td>
+                {props.profile &&
+                  props.profile.fecha_nacimiento &&
+                  props.profile.fecha_nacimiento}
+              </Td>
+            </Tr>
+          )}
           <Tr>
             <Td>
-              <Text as="b" color="#797878">
-                Fecha de Nacimiento:
-              </Text>
-            </Td>
-            <Td>
-              {props.userState && props.userState.fecNacimiento
-                ? props.userState.fecNacimiento
-                : "TODO: needs fix"}
-            </Td>
-          </Tr>
-          <Tr>
-            <Td>
-              <Text as="b" color="#797878">
+              <Text as="b" color="#797878" textTransform={"uppercase"}>
                 Estudios:
               </Text>
             </Td>
 
-            {props.userState && props.userState.experiencias ? (
+            {props.profile &&
+            props.profile.experiencias &&
+            props.profile.experiencias.length > 0 ? (
               <>
-                {props.userState.experiencias.map((c, idx) => (
-                  <Td key={idx}>TODO: needs fix</Td>
-                ))}
+                <Td>
+                  <Center>
+                    <VStack>
+                      {props.profile.experiencias.map((c, idx) => (
+                        <VStack>
+                          <Box mt="1em">
+                            <Text key={idx} textTransform={"uppercase"}>
+                              {"- " +
+                                c.nivel +
+                                ": " +
+                                (c.completed && c.completed === true
+                                  ? "completada"
+                                  : "no completada")}
+                            </Text>
+                            <Text key={idx} textTransform={"uppercase"}>
+                              {"Descripcion: " + c.descr}
+                            </Text>
+                          </Box>
+                        </VStack>
+                      ))}
+                    </VStack>
+                  </Center>
+                </Td>
               </>
             ) : (
               <>
-                <Td>TODO: needs fix</Td>
+                <Td>No se registraron experiencias.</Td>
               </>
             )}
           </Tr>
@@ -264,7 +323,7 @@ const Profile = (props) => {
   let { page } = useParams();
 
   const [clases, setClases] = useState([]);
-  const [profileDetails, setProfileDetails] = useState([]);
+  const [profile, setProfile] = useState([]);
   const [pagination, setPagination] = useState({
     page: 0,
     totalPages: 0,
@@ -287,25 +346,18 @@ const Profile = (props) => {
     //console.log(pagination);
   };
 
-  const fetchProfileDetails = async () => {
-    console.log("executing fetchProfileDetails at Profile");
+  const fetchProfile = async () => {
+    console.log("executing fetchProfile at Profile");
     const result = await profileService.getProfileById(
       props.userState.user.profile
     );
     let profile = result.data.docs[0];
-    setProfileDetails({
-      name: profile.firstName + " " + profile.lastName,
-      fecNacimiento: profile.fecNacimiento,
-      role: profile.role,
-      // TODO: completar en onboarding
-      //estudios: [profile.estudios],
-      photo: profile.photo,
-    });
-    //console.log("profileDetails: " + profileDetails.photo)
+    setProfile(profile);
+    //console.log("profilePhoto: " + profile.photo)
   };
 
   useEffect(() => {
-    fetchProfileDetails();
+    fetchProfile();
   }, []);
 
   useEffect(() => {
@@ -320,7 +372,7 @@ const Profile = (props) => {
             userState={props.userState}
             clases={clases}
             pagination={pagination}
-            photo={profileDetails.photo}
+            profile={profile}
           />
         }
       />

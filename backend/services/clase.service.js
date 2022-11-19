@@ -128,11 +128,24 @@ exports.addReview = async function (body) {
 };
 
 exports.addClase = async function (body) {
-  try {
-    let user = await User.findOne(body.user);
-    let profile = await Profile.findOne({_id: user.profile._id});
 
-    if (profile.role !== constants.RoleEnum[2]) {
+  let user;
+  let profile;
+  try {
+
+    user = await User.findOne(body.user);
+    profile = await Profile.findOne({_id: user.profile._id});
+    
+  } catch (e) {
+    throw new BaseError(
+      "err",
+      HttpStatusCodes.INTERNAL_SERVER,
+      true,
+      e.message
+    );
+  }
+
+  if (profile.role !== constants.RoleEnum[2]) {
       throw new BaseError(
         "err",
         HttpStatusCodes.UNAUTHORIZED,
@@ -141,6 +154,8 @@ exports.addClase = async function (body) {
       );
     }
 
+  try {
+    
     body.teacher_profile_id = profile._id;
 
     const newClaseSchema = getNewClaseSchema(body);

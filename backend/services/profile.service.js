@@ -5,6 +5,8 @@ const BaseError = require("../utils/error/BaseError");
 const NotFoundError = require("../utils/error/NotFoundError.js");
 const HttpStatusCodes = require("../utils/HttpStatusCodes");
 
+const constants = require("../utils/constants")
+
 const moment = require("moment");
 
 const authService = require("./auth.service")
@@ -55,6 +57,18 @@ async function patchProfile(body) {
     if (body.role && body.role != "") {
       objCount = objCount+1;
       profile.role = body.role;
+
+
+      if (body.role == "student") { 
+        profile.photo = constants.defaultProfileStudentImage;
+      } else {
+        profile.photo = constants.defaultProfileTeacherImage;
+      }     
+    }
+
+    if (body.titulo && body.titulo != "" ){
+      objCount = objCount+1;
+      profile.titulo = body.titulo;
     }
 
     if (body.experiencias && body.experiencias.length > 0) {

@@ -9,7 +9,7 @@ var experienciaSchema = new mongoose.Schema(
   {
     nivel: { type: String, required: true },
     descr: { type: String, required: false, default: ""},
-    completed: { type: Boolean, required: true },
+    completed: { type: Boolean, required: false, default: true },
   },
   {
     timestamps: true,
@@ -21,7 +21,7 @@ var profileSchema = new mongoose.Schema(
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     fecha_nacimiento: { type: String, required: false },
-    titulo: { type: String, required: false },
+    titulo: { type: String, required: false, default: "" },
     experiencias: [experienciaSchema],
     photo: { type: String, required: false } /* base 64 */,
     clases: [{ type: mongoose.Schema.Types.ObjectId, ref: "Clase" }],

@@ -61,7 +61,17 @@ const App = () => {
         <Route path="/clase/:id" element={<Clase userState={userState} />} />
         <Route
           path="/clase/add"
-          element={<CrearClase userState={userState} />}
+          element={
+            userState ? (
+              userState.role && userState.role === "teacher" ? (
+                <CrearClase userState={userState} />
+              ) : (
+                <Navigate to="/" />
+              )
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
         <Route path="/profile" element={<Navigate to="/profile/1" />} />
         <Route

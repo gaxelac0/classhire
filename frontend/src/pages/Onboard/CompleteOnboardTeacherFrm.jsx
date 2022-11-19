@@ -13,6 +13,7 @@ import {
   WrapItem,
   FormControl,
   FormLabel,
+  FormErrorMessage,
   Input,
   InputGroup,
   InputLeftElement,
@@ -26,58 +27,49 @@ import { FaUniversity } from "react-icons/fa";
 
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 
-const CompleteOnboardTeacherFrmComponent = () => {
+import { useToast } from "@chakra-ui/react";
+
+import { useNavigate } from "react-router-dom";
+
+
+import * as profileService from "../../services/profileService"
+
+const CompleteOnboardTeacherFrmComponent = (props) => {
+  const navigate = useNavigate();
+  const toast = useToast();
+
+  const [formData, setFormData] = useState({
+    role: "teacher",
+    titulo: "",
+    experiencias: [],
+  });
+
   const [experienciasList, setExperienciasList] = useState([
-    { type: "", description: "", current: "" },
+    { nivel: "", descr: "" },
   ]);
 
   // Agrega para completar una experiencia mas
   const handleExperienciaAdd = () => {
-    //console.log("Before handleAdd: ", experienciasList);
-    setExperienciasList([
-      ...experienciasList,
-      { type: "", description: "", current: "" },
-    ]);
-    //console.log("After handleAdd: ", experienciasList);
-  };
-
-  const handleExperienciaInputChange = (e, index) => {
-    //console.log("***************************************")
-    //console.log(e.target)
-    const { value } = e.target;
-    //console.log("e.target: ", e.target)
-    const list = [...experienciasList];
-    list[index]["description"] = value;
-    //console.log("Before handleExperienciaInputChange" + experienciasList[index])
-    setExperienciasList(list);
-    //console.log("After handleExperienciaInputChange" + experienciasList[index])
-    //console.log("***************************************")
+    setExperienciasList([...experienciasList, { nivel: "", descr: "" }]);
   };
 
   const handleExperienciaSelectChange = (e, index) => {
-    //console.log("***************************************")
-    //console.log(e.target)
     const { value } = e.target;
-    //console.log("e.target: ", e.target)
     const list = [...experienciasList];
-    list[index]["type"] = value;
-    //console.log("Before handleExperienciaSelectChange" + experienciasList[index])
+    list[index]["nivel"] = value;
     setExperienciasList(list);
-    //console.log("After handleExperienciaSelectChange" + experienciasList[index])
-    //console.log("***************************************")
+    setFormData({
+      ...formData,
+      ["experiencias"]: list,
+    });
   };
 
-  const handleExperienciaCheckboxChange = (e, index) => {
-    //console.log("***************************************")
-    //console.log(e.target)
-    const { checked } = e.target;
-    //console.log("e.target: ", e.target)
+  const handleExperienciaInputChange = (e, index) => {
+    const { value } = e.target;
     const list = [...experienciasList];
-    list[index]["current"] = checked;
-    //console.log("Before handleExperienciaCheckboxChange" + experienciasList[index])
+    list[index]["descr"] = value;
+    console.log(value);
     setExperienciasList(list);
-    //console.log("After handleExperienciaCheckboxChange" + experienciasList[index])
-    //console.log("***************************************")
   };
 
   const handleExperienciaRemove = (index) => {
@@ -85,6 +77,44 @@ const CompleteOnboardTeacherFrmComponent = () => {
     list.splice(index, 1);
     setExperienciasList(list);
   };
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+
+  const [message, setMessage] = useState([""]);
+  const updateMessage = (msg) => {
+    setMessage(msg);
+    if (msg && (msg !== "" || msg[0] !== "")) {
+      toast({
+        title: "Error!",
+        description: msg,
+        status: "error",
+        position: "top-right",
+        duration: 6000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      let result = await profileService.patchProfile(formData);
+      if (result.status === "ok") {
+        props.userState.role = result.data.patchedProfile.role;
+      }
+      navigate("/profile/1");
+    } catch (err) {
+      updateMessage(err.message);
+    }
+  };
+
+  const isErrorTitulo = formData.titulo === "";
 
   return (
     <Container maxW="full" mt={0} centerContent overflow="hidden">
@@ -113,92 +143,94 @@ const CompleteOnboardTeacherFrmComponent = () => {
               <WrapItem>
                 <Box bg="white" borderRadius="lg">
                   <Box m={8} color="#0B0E3F">
-                    <VStack spacing={5}>
-                      <FormControl id="teacher">
-                        <FormLabel>Titulo</FormLabel>
-                        <InputGroup borderColor="#E0E1E7">
-                          <InputLeftElement
-                            pointerEvents="none"
-                            children={<FaUniversity color="gray.800" />}
-                          />
-                          <Input type="text" size="md" value="Ingenierito" />
-                        </InputGroup>
-                      </FormControl>
-                      <FormControl id="teacher">
-                        <FormLabel>Experiencia</FormLabel>
-                        <InputGroup borderColor="#E0E1E7">
-                          <VStack>
-                            {experienciasList.map(
-                              (singleExperiencia, index) => (
-                                <Box key={index}>
-                                  <HStack>
-                                    <Select
-                                      placeholder="Donde tuviste la experiencia?"
-                                      onChange={(e) =>
-                                        handleExperienciaSelectChange(e, index)
-                                      }
-                                    >
-                                      <option value="catedra">Catedra</option>
-                                      <option value="seminario">
-                                        Seminario
-                                      </option>
-                                      <option value="curso">Curso</option>
-                                      <option value="primaria">Primaria</option>
-                                      <option value="secundario">
-                                        Secundario
-                                      </option>
-                                      <option value="terciario">
-                                        Terciario
-                                      </option>
-                                      <option value="universitario">
-                                        Universitario
-                                      </option>
-                                    </Select>
+                    <form onSubmit={handleSubmit}>
+                      <VStack spacing={5}>
+                        <FormControl id="titulo" isInvalid={isErrorTitulo} isRequired>
+                          <FormLabel>Titulo</FormLabel>
+                          <InputGroup borderColor="#E0E1E7">
+                            <InputLeftElement
+                              pointerEvents="none"
+                              children={<FaUniversity color="gray.800" />}
+                            />
+                            <Input id="titulo" name="titulo"
+                             type="text" size="md" placeholder="Titulo"
+                             onChange={handleChange} />
+                          </InputGroup>
+                          {isErrorTitulo && (
+                            <FormErrorMessage>
+                              El campo de titulo es obligatorio.
+                            </FormErrorMessage>
+                          )}
+                        </FormControl>
+                        <FormControl id="experiencias">
+                          <FormLabel>Experiencia</FormLabel>
+                          <InputGroup borderColor="#E0E1E7">
+                            <VStack>
+                              {experienciasList.map(
+                                (singleExperiencia, index) => (
+                                  <Box key={index}>
+                                    <HStack>
+                                      <Select
+                                        placeholder="Donde tuviste la experiencia?"
+                                        onChange={(e) =>
+                                          handleExperienciaSelectChange(
+                                            e,
+                                            index
+                                          )
+                                        }
+                                      >
+                                        <option value="catedra">Catedra</option>
+                                        <option value="seminario">
+                                          Seminario
+                                        </option>
+                                        <option value="curso">Curso</option>
+                                        <option value="primaria">
+                                          Primaria
+                                        </option>
+                                        <option value="secundario">
+                                          Secundario
+                                        </option>
+                                        <option value="terciario">
+                                          Terciario
+                                        </option>
+                                        <option value="universitario">
+                                          Universitario
+                                        </option>
+                                      </Select>
 
-                                    <Input
-                                      id={"experienciaDesc_" + index}
-                                      type="text"
-                                      placeholder="descripcion"
-                                      value={singleExperiencia.description}
-                                      onChange={(e) =>
-                                        handleExperienciaInputChange(e, index)
-                                      }
-                                    />
-                                    <Checkbox
-                                      id={"experienciaCheckbox_" + index}
-                                      placeholder="Terminado?"
-                                      value={singleExperiencia.current}
-                                      onChange={(e) =>
-                                        handleExperienciaCheckboxChange(
-                                          e,
-                                          index
-                                        )
-                                      }
-                                    />
-                                    <VStack>
-                                      {experienciasList.length !== 1 && (
-                                        <IconButton
-                                          size="xs"
-                                          icon={<DeleteIcon />}
-                                          onClick={() =>
-                                            handleExperienciaRemove(index)
-                                          }
-                                        />
-                                      )}
-                                      {experienciasList.length - 1 === index &&
-                                        experienciasList.length < 4 && (
+                                      <Input
+                                        id={"experienciaDesc_" + index}
+                                        type="text"
+                                        placeholder="descripcion"
+                                        value={singleExperiencia.description}
+                                        onChange={(e) =>
+                                          handleExperienciaInputChange(e, index)
+                                        }
+                                      />
+                                      <VStack>
+                                        {experienciasList.length !== 1 && (
                                           <IconButton
                                             size="xs"
-                                            icon={<AddIcon />}
-                                            onClick={handleExperienciaAdd}
+                                            icon={<DeleteIcon />}
+                                            onClick={() =>
+                                              handleExperienciaRemove(index)
+                                            }
                                           />
                                         )}
-                                    </VStack>
-                                  </HStack>
-                                </Box>
-                              )
-                            )}
-                            {/* <div className="output">
+                                        {experienciasList.length-1 === index 
+                                        && experienciasList.length < 4 && (
+                                            <IconButton
+                                              size="xs"
+                                              icon={<AddIcon />}
+                                              onClick={handleExperienciaAdd}
+                                            />
+                                          )}
+                                      </VStack>
+                                    </HStack>
+                                  </Box>
+                                )
+                              )}
+                              {/* <div className="output">
                             <h2>Output</h2>
                             {experienciaList &&
                               experienciaList.map((obj, index) => (
@@ -207,22 +239,24 @@ const CompleteOnboardTeacherFrmComponent = () => {
                                 </ul>
                               ))}
                           </div> */}
-                          </VStack>
-                        </InputGroup>
-                      </FormControl>
-                      <FormControl id="teacher" float="right">
-                        <Link href="/profile">
-                          <Button
-                            variant="solid"
-                            bg="teal"
-                            color="white"
-                            _hover={{}}
-                          >
-                            Enviar
-                          </Button>
-                        </Link>
-                      </FormControl>
-                    </VStack>
+                            </VStack>
+                          </InputGroup>
+                        </FormControl>
+                        <FormControl id="teacher" float="right">
+                          <Link href="/profile">
+                            <Button
+                              type="submit"
+                              variant="solid"
+                              bg="teal"
+                              color="white"
+                              _hover={{}}
+                            >
+                              Enviar
+                            </Button>
+                          </Link>
+                        </FormControl>
+                      </VStack>
+                    </form>
                   </Box>
                 </Box>
               </WrapItem>
@@ -236,7 +270,7 @@ const CompleteOnboardTeacherFrmComponent = () => {
 
 const CompleteOnboardTeacherFrm = (props) => {
   return (
-    <BackgroundLayout component={<CompleteOnboardTeacherFrmComponent />} />
+    <BackgroundLayout component={<CompleteOnboardTeacherFrmComponent userState={props.userState} />} />
   );
 };
 

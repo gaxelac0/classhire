@@ -33,12 +33,9 @@ import * as profileService from "../../services/profileService";
 import { useNavigate } from "react-router-dom";
 
 const CompleteOnboardStudentFrmComponent = (props) => {
+
   const navigate = useNavigate();
   const toast = useToast();
-
-  const [estudiosList, setEstudiosList] = useState([
-    { nivel: "", completed: false },
-  ]);
 
   const [formData, setFormData] = useState({
     role: "student",
@@ -46,16 +43,20 @@ const CompleteOnboardStudentFrmComponent = (props) => {
     experiencias: [],
   });
 
+  const [experienciasList, setExperienciasList] = useState([
+    { nivel: "", completed: false },
+  ]);
+
   // Agrega para completar un estudio mas
-  const handleEstudioAdd = () => {
-    setEstudiosList([...estudiosList, { nivel: "", completed: false }]);
+  const handleExperienciaAdd = () => {
+    setExperienciasList([...experienciasList, { nivel: "", completed: false }]);
   };
 
-  const handleEstudioSelectChange = (e, index) => {
+  const handleExperienciaSelectChange = (e, index) => {
     const { value } = e.target;
-    const list = [...estudiosList];
+    const list = [...experienciasList];
     list[index]["nivel"] = value;
-    setEstudiosList(list);
+    setExperienciasList(list);
     setFormData({
       ...formData,
       ["experiencias"]: list
@@ -64,9 +65,9 @@ const CompleteOnboardStudentFrmComponent = (props) => {
 
   const handleEstudioCheckboxChange = (e, index) => {
     const { checked } = e.target;
-    const list = [...estudiosList];
+    const list = [...experienciasList];
     list[index]["completed"] = checked;
-    setEstudiosList(list);
+    setExperienciasList(list);
     setFormData({
       ...formData,
       ["experiencias"]: list
@@ -74,9 +75,9 @@ const CompleteOnboardStudentFrmComponent = (props) => {
   };
 
   const handleEstudioRemove = (index) => {
-    const list = [...estudiosList];
+    const list = [...experienciasList];
     list.splice(index, 1);
-    setEstudiosList(list);
+    setExperienciasList(list);
     setFormData({
       ...formData,
       ["experiencias"]: list
@@ -175,7 +176,7 @@ const CompleteOnboardStudentFrmComponent = (props) => {
                           <FormLabel>Estudios Realizados (max. 4)</FormLabel>
                           <InputGroup borderColor="#E0E1E7">
                             <VStack>
-                              {estudiosList.map((singleEstudio, index) => (
+                              {experienciasList.map((singleEstudio, index) => (
                                 <Box
                                   key={index}
                                   alignItems="center"
@@ -191,7 +192,7 @@ const CompleteOnboardStudentFrmComponent = (props) => {
                                         mt={"1em"}
                                         placeholder="Ingresa nivel de estudio"
                                         onChange={(e) =>
-                                          handleEstudioSelectChange(e, index)
+                                          handleExperienciaSelectChange(e, index)
                                         }
                                       >
                                         <option id="primaria" value="primaria">
@@ -225,7 +226,7 @@ const CompleteOnboardStudentFrmComponent = (props) => {
                                     </VStack>
 
                                     <VStack>
-                                      {estudiosList.length !== 1 && (
+                                      {experienciasList.length !== 1 && (
                                         <IconButton
                                           mt={"1em"}
                                           size="xs"
@@ -235,13 +236,13 @@ const CompleteOnboardStudentFrmComponent = (props) => {
                                           }
                                         />
                                       )}
-                                      {estudiosList.length - 1 === index &&
-                                        estudiosList.length < 4 && (
+                                      {experienciasList.length - 1 === index &&
+                                        experienciasList.length < 4 && (
                                           <IconButton
                                             mt={"1em"}
                                             size="xs"
                                             icon={<AddIcon />}
-                                            onClick={handleEstudioAdd}
+                                            onClick={handleExperienciaAdd}
                                           />
                                         )}
                                     </VStack>
