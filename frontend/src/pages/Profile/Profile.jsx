@@ -25,13 +25,6 @@ import {
 
 import { PhoneIcon, DeleteIcon } from "@chakra-ui/icons";
 
-import {
-  MdChangeCircle,
-  MdEmail,
-  MdUpdate,
-  MdUploadFile,
-} from "react-icons/md";
-
 import Pagination from "../../components/Pagination/Pagination";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 
@@ -44,8 +37,11 @@ import * as profileService from "../../services/profileService";
 import { Heading } from "@chakra-ui/react";
 
 import { Link, useParams } from "react-router-dom";
+import EditProfileFrm from "./EditProfileFrm";
 
 const FittedTab = (props) => {
+
+
   return (
     <Tabs variant="soft-rounded" colorScheme="teal">
       <TabList mb="1em">
@@ -91,27 +87,7 @@ const FittedTab = (props) => {
           <Text color="red">totalPages: {props.pagination.totalPages}</Text>
         </TabPanel>
         <TabPanel>
-          <VStack>
-            <Image
-              opacity={0.5}
-              _hover={{
-                opacity: 1,
-              }}
-              borderRadius="full"
-              boxSize={"200px"}
-              src={`data:image/jpeg;base64,${props.profile.photo}`}
-              alt={props.userState.user.firstName}
-              mt="1em"
-              mb={"-10"}
-            ></Image>
-            <Icon
-              as={MdUploadFile}
-              boxSize="8"
-              alignSelf="left"
-              color="teal.500"
-            />
-            <TablaDatos userState={props.userState} profile={props.profile} />
-          </VStack>
+            <EditProfileFrm userState={props.userState} roleSelection={props.userState.role} />
         </TabPanel>
       </TabPanels>
     </Tabs>
@@ -222,108 +198,11 @@ const TablaMaterias = (props) => {
   );
 };
 
-const TablaDatos = (props) => {
-  //console.log(props);
-
-  return (
-    <TableContainer>
-      <Table variant="striped" colorScheme="teal" size="md">
-        <TableCaption>
-          <Button colorScheme="teal" size="sm">
-            Editar datos
-          </Button>
-        </TableCaption>
-        <Tbody>
-          <Tr>
-            <Td>
-              <Text as="b" color="#797878" textTransform={"uppercase"}>
-                Nombre y Apellido:
-              </Text>
-            </Td>
-            <Td>
-              {props.userState.user.firstName +
-                " " +
-                props.userState.user.lastName}
-            </Td>
-          </Tr>
-          {props && props.userState && props.userState.role === "teacher" && (
-            <Tr>
-              <Td>
-                <Text as="b" color="#797878" textTransform={"uppercase"}>
-                  Titulo:
-                </Text>
-              </Td>
-              <Td>
-                {props.profile && props.profile.titulo && props.profile.titulo}
-              </Td>
-            </Tr>
-          )}
-          {props && props.userState && props.userState.role === "student" && (
-            <Tr>
-              <Td>
-                <Text as="b" color="#797878" textTransform={"uppercase"}>
-                  Fecha de Nacimiento:
-                </Text>
-              </Td>
-              <Td>
-                {props.profile &&
-                  props.profile.fecha_nacimiento &&
-                  props.profile.fecha_nacimiento}
-              </Td>
-            </Tr>
-          )}
-          <Tr>
-            <Td>
-              <Text as="b" color="#797878" textTransform={"uppercase"}>
-                Estudios:
-              </Text>
-            </Td>
-
-            {props.profile &&
-            props.profile.experiencias &&
-            props.profile.experiencias.length > 0 ? (
-              <>
-                <Td>
-                  <Center>
-                    <VStack>
-                      {props.profile.experiencias.map((c, idx) => (
-                        <VStack>
-                          <Box mt="1em">
-                            <Text key={idx} textTransform={"uppercase"}>
-                              {"- " +
-                                c.nivel +
-                                ": " +
-                                (c.completed && c.completed === true
-                                  ? "completada"
-                                  : "no completada")}
-                            </Text>
-                            <Text key={idx} textTransform={"uppercase"}>
-                              {"Descripcion: " + c.descr}
-                            </Text>
-                          </Box>
-                        </VStack>
-                      ))}
-                    </VStack>
-                  </Center>
-                </Td>
-              </>
-            ) : (
-              <>
-                <Td>No se registraron experiencias.</Td>
-              </>
-            )}
-          </Tr>
-        </Tbody>
-      </Table>
-    </TableContainer>
-  );
-};
-
 const Profile = (props) => {
   let { page } = useParams();
 
   const [clases, setClases] = useState([]);
-  const [profile, setProfile] = useState([]);
+
   const [pagination, setPagination] = useState({
     page: 0,
     totalPages: 0,
@@ -346,20 +225,6 @@ const Profile = (props) => {
     //console.log(pagination);
   };
 
-  const fetchProfile = async () => {
-    console.log("executing fetchProfile at Profile");
-    const result = await profileService.getProfileById(
-      props.userState.user.profile
-    );
-    let profile = result.data.docs[0];
-    setProfile(profile);
-    //console.log("profilePhoto: " + profile.photo)
-  };
-
-  useEffect(() => {
-    fetchProfile();
-  }, []);
-
   useEffect(() => {
     fetchClases();
   }, [page]);
@@ -372,7 +237,6 @@ const Profile = (props) => {
             userState={props.userState}
             clases={clases}
             pagination={pagination}
-            profile={profile}
           />
         }
       />
