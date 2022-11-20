@@ -2,9 +2,9 @@ var Profile = require("../models/profile.model");
 var cloudinary = require("cloudinary").v2;
 
 cloudinary.config({ 
-  cloud_name: 'dvjdc3ssy', 
-  api_key: '747697918882398', 
-  api_secret: 'ENcu5ShCD7-wFCkvi7nv0b8T8lA' 
+  cloud_name: process.env.CLOUDINARY_USER, 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_SECRET, 
 });
 
 var profileService = require("../services/profile.service");
