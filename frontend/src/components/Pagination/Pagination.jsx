@@ -21,7 +21,7 @@ const Pagination = (props) => {
       break;
     }
 
-    if (i === props.pagination.page) {
+    if (i == props.pagination.page) {
       //console.log("added button " + i)
       buttons.push(
         <PagButton key={"pagButtonActive"} active>
@@ -45,7 +45,7 @@ const Pagination = (props) => {
   return (
     <Flex p={50} w="full" alignItems="center" justifyContent="center">
       <Flex>
-        {props.pagination.page === 1 ? (
+        {props.pagination.page == 1 ? (
           <PagButton key={"pagButtonPrevious"} disabled>
             Previous
           </PagButton>
@@ -60,7 +60,7 @@ const Pagination = (props) => {
           </PagButton>
         )}
         {buttons}
-        {props.pagination.page === props.pagination.totalPages ? (
+        {props.pagination.page == props.pagination.totalPages ? (
           <PagButton key={"pagButtonNext"} disabled>
             Next
           </PagButton>

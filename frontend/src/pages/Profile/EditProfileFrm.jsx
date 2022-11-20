@@ -44,31 +44,27 @@ const EditProfileFrm = (props) => {
 
   const [file, selectFile] = useFileUpload();
 
-  const [experienciasList, setExperienciasList] = useState([
-    { firstName: "", lastName: "", nivel: "", descr: "", completed: false },
-  ]);
-
   const [formData, setFormData] = useState({
     role: props.roleSelection,
     fecha_nacimiento: new Date().toDateString(),
     titulo: undefined,
-    experiencias: [],
+    experiencias: [{ firstName: "", lastName: "", nivel: "", descr: "", completed: false }],
     description: "",
   });
 
   // Agrega para completar un estudio mas
-  const handleExperienciaAdd = () => {
-    setExperienciasList([
-      ...experienciasList,
-      { nivel: "", descr: "", completed: false },
-    ]);
+  const handleExperienciaAdd = () => { 
+    let list = [...formData.experiencias, { nivel: "", descr: "", completed: false }];
+    setFormData({
+      ...formData,
+      experiencias: list,
+    });
   };
 
   const handleExperienciaSelectChange = (e, index) => {
     const { value } = e.target;
-    let list = [...experienciasList];
+    let list = [...formData.experiencias];
     list[index]["nivel"] = value;
-    setExperienciasList(list);
     setFormData({
       ...formData,
       experiencias: list,
@@ -77,23 +73,28 @@ const EditProfileFrm = (props) => {
 
   const handleExperienciaInputChange = (e, index) => {
     const { value } = e.target;
-    let list = [...experienciasList];
+    let list = [...formData.experiencias];
     list[index]["descr"] = value;
     //console.log(value);
-    setExperienciasList(list);
+    setFormData({
+      ...formData,
+      experiencias: list,
+    });
   };
 
   const handleExperienciaRemove = (index) => {
-    let list = [...experienciasList];
+    let list = [...formData.experiencias];
     list.splice(index, 1);
-    setExperienciasList(list);
+    setFormData({
+      ...formData,
+      experiencias: list,
+    });
   };
 
   const handleEstudioCheckboxChange = (e, index) => {
     const { checked } = e.target;
-    let list = [...experienciasList];
+    let list = [...formData.experiencias];
     list[index]["completed"] = checked;
-    setExperienciasList(list);
     setFormData({
       ...formData,
       experiencias: list,
@@ -101,9 +102,8 @@ const EditProfileFrm = (props) => {
   };
 
   const handleEstudioRemove = (index) => {
-    let list = [...experienciasList];
+    let list = [...formData.experiencias];
     list.splice(index, 1);
-    setExperienciasList(list);
     setFormData({
       ...formData,
       experiencias: list,
@@ -164,7 +164,6 @@ const EditProfileFrm = (props) => {
       if (list.length <= 0) {
         list = [{ nivel: "", descr: "", completed: false }];
       }
-      setExperienciasList(list);
       setFormData({
         ...formData,
         firstName: profile.firstName,
@@ -365,7 +364,7 @@ const EditProfileFrm = (props) => {
                             <FormLabel>Experiencia</FormLabel>
 
                               <VStack>
-                                {experienciasList.map(
+                                {formData.experiencias.map(
                                   (singleExperiencia, index) => (
                                     <Box key={index}>
                                       <HStack>
@@ -413,7 +412,7 @@ const EditProfileFrm = (props) => {
                                           }
                                         />
                                         <VStack>
-                                          {experienciasList.length !== 1 && (
+                                          {formData.experiencias.length !== 1 && (
                                             <IconButton
                                               size="xs"
                                               icon={<DeleteIcon />}
@@ -422,9 +421,9 @@ const EditProfileFrm = (props) => {
                                               }
                                             />
                                           )}
-                                          {experienciasList.length - 1 ===
+                                          {formData.experiencias.length - 1 ===
                                             index &&
-                                            experienciasList.length < 4 && (
+                                            formData.experiencias.length < 4 && (
                                               <IconButton
                                                 size="xs"
                                                 icon={<AddIcon />}
@@ -444,7 +443,7 @@ const EditProfileFrm = (props) => {
                             <FormLabel>Estudios Realizados (max. 4)</FormLabel>
                             <InputGroup borderColor="#E0E1E7">
                               <VStack>
-                                {experienciasList.map(
+                                {formData.experiencias.map(
                                   (singleEstudio, index) => (
                                     <Box
                                       key={index}
@@ -513,7 +512,7 @@ const EditProfileFrm = (props) => {
                                         </VStack>
 
                                         <VStack>
-                                          {experienciasList.length !== 1 && (
+                                          {formData.experiencias.length !== 1 && (
                                             <IconButton
                                               mt={"1em"}
                                               size="xs"
@@ -523,9 +522,9 @@ const EditProfileFrm = (props) => {
                                               }
                                             />
                                           )}
-                                          {experienciasList.length - 1 ===
+                                          {formData.experiencias.length - 1 ===
                                             index &&
-                                            experienciasList.length < 4 && (
+                                            formData.experiencias.length < 4 && (
                                               <IconButton
                                                 mt={"1em"}
                                                 size="xs"
