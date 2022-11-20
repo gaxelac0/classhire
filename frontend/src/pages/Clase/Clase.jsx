@@ -12,10 +12,11 @@ import {
   StackDivider,
   List,
   ListItem,
-  ModalFooter,
   Input,
   FormControl,
+  FormHelperText,
   FormLabel,
+  FormErrorMessage,
   ModalBody,
   ModalCloseButton,
   ModalHeader,
@@ -23,6 +24,10 @@ import {
   Modal,
   ModalOverlay,
   useDisclosure,
+  Icon,
+  Center,
+  HStack,
+  Textarea,
 } from "@chakra-ui/react";
 import { MdCall } from "react-icons/md";
 
@@ -36,6 +41,7 @@ import { useToast } from "@chakra-ui/react";
 import * as claseService from "../../services/claseService";
 
 import * as profileService from "../../services/profileService";
+import { CheckIcon } from "@chakra-ui/icons";
 
 const ClaseComponent = (props) => {
   let { id } = useParams();
@@ -53,13 +59,17 @@ const ClaseComponent = (props) => {
 
   const [formData, setFormData] = useState({
     clase_id: "",
-    telefono: "",
-    horario: "",
-    descr_contratacion: "",
+    telefono: undefined,
+    horario: undefined,
+    descr_contratacion: undefined,
   });
 
+  const isErrorTelefono = formData.telefono === "";
+  const isErrorHorario = formData.horario === "";
+  const isErrorDescrContratacion = formData.descr_contratacion === "";
+
   const handleChange = (e) => {
-    console.log(e.target.value)
+    console.log(e.target.value);
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
@@ -71,9 +81,8 @@ const ClaseComponent = (props) => {
         updateMessage(result.msg, "success");
         navigate("/profile/1");
       } else {
-        throw new Error(result.msg)
+        throw new Error(result.msg);
       }
-      
     } catch (err) {
       updateMessage(err.message, "error");
     }
@@ -113,13 +122,11 @@ const ClaseComponent = (props) => {
   };
 
   useEffect(() => {
-
-
     setFormData({
       ...formData,
       clase_id: id,
-    })
-    console.log("id " + id)
+    });
+    console.log("id " + id);
 
     const fetchClaseInformation = async () => {
       console.log("ejecuta fetchClaseInformation at ClaseComponent");
@@ -281,12 +288,16 @@ const ClaseComponent = (props) => {
                     fontWeight={"black"}
                     textTransform={"uppercase"}
                   >
-                    FRECUENCIA:
+                    FRECUENCIA Y DURACION:
                   </Text>{" "}
                   <Text fontWeight={"thin"}>
                     {clase &&
                       clase.frecuencia &&
-                      getStringFrecuencia(clase.frecuencia.value)}
+                      clase.duration &&
+                      getStringFrecuencia(clase.frecuencia.value) +
+                        " de " +
+                        clase.duration +
+                        " hora(s)"}
                   </Text>
                 </ListItem>
                 <ListItem>
@@ -303,36 +314,50 @@ const ClaseComponent = (props) => {
             </Box>
           </Stack>
           {/* Se oculta el boton de Contratar si no es estudiante o si ya la tiene contratada */}
-          {props.userState && props.userState.role === "student" && profile && profile.clases && clase && !(profile.clases.includes(clase._id)) && (
-            <Box>
-              <Button
-                rounded={"none"}
-                w={"full"}
-                mt={8}
-                size={"lg"}
-                py={"7"}
-                onClick={onOpen}
-                bg={"gray.900"}
-                color={"white"}
-                textTransform={"uppercase"}
-                _hover={{
-                  transform: "translateY(2px)",
-                  boxShadow: "lg",
-                }}
-              >
-                Contratar
-              </Button>
+          {props.userState &&
+            props.userState.role === "student" &&
+            (profile &&
+            profile.clases &&
+            clase &&
+            !profile.clases.includes(clase._id) ? (
+              <Box>
+                <Button
+                  rounded={"none"}
+                  w={"full"}
+                  mt={8}
+                  size={"lg"}
+                  py={"7"}
+                  onClick={onOpen}
+                  bg={"gray.900"}
+                  color={"white"}
+                  textTransform={"uppercase"}
+                  _hover={{
+                    transform: "translateY(2px)",
+                    boxShadow: "lg",
+                  }}
+                >
+                  Contratar
+                </Button>
 
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent={"center"}
-              >
-                <MdCall />
-                <Text>Contacto garantizado en menos de 48 horas</Text>
-              </Stack>
-            </Box>
-          )}
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent={"center"}
+                >
+                  <MdCall />
+                  <Text>Contacto garantizado en menos de 48 horas</Text>
+                </Stack>
+              </Box>
+            ) : (
+              <>
+                <Center>
+                  <VStack mt="1em">
+                    <Icon as={CheckIcon} color="green" boxSize="100"></Icon>
+                    <Text>Ya contrataste esta clase</Text>
+                  </VStack>
+                </Center>
+              </>
+            ))}
         </Stack>
       </SimpleGrid>
 
@@ -348,7 +373,7 @@ const ClaseComponent = (props) => {
           <ModalCloseButton />
           <ModalBody pb={6}>
             <form onSubmit={handleSubmit}>
-              <FormControl id="telefono">
+              <FormControl id="telefono" isInvalid={isErrorTelefono} isRequired>
                 <FormLabel>Telefono</FormLabel>
                 <Input
                   ref={initialRef}
@@ -357,9 +382,14 @@ const ClaseComponent = (props) => {
                   value={formData.telefono}
                   onChange={handleChange}
                 />
+                {isErrorTelefono && (
+                  <FormErrorMessage>
+                    El campo de telefono es obligatorio
+                  </FormErrorMessage>
+                )}
               </FormControl>
 
-              <FormControl mt={4} id="horario">
+              <FormControl mt={4} id="horario" isInvalid={isErrorHorario} isRequired>
                 <FormLabel>Horario</FormLabel>
                 <Input
                   placeholder="Horario"
@@ -367,26 +397,52 @@ const ClaseComponent = (props) => {
                   value={formData.horario}
                   onChange={handleChange}
                 />
+                           {isErrorHorario && (
+                  <FormErrorMessage>
+                    El campo de horario es obligatorio
+                  </FormErrorMessage>
+                )}
               </FormControl>
 
-              <FormControl mt={4} id="descr_contratacion">
+              <FormControl mt={4} id="descr_contratacion" isInvalid={isErrorDescrContratacion} isRequired>
                 <FormLabel>Descripcion de contratacion</FormLabel>
-                <Input
-                  name="descr_contratacion"
-                  placeholder="Descripcion al profesor del interes por la clase"
-                  value={formData.descr_contratacion}
-                  onChange={handleChange}
-                />
+                <Textarea
+                      id="descr_contratacion"
+                      placeholder="Descripcion de la contratacion"
+                      value={formData.descr_contratacion}
+                      onChange={handleChange}
+                      resize={"vertical"}
+                      mt={1}
+                      rows={3}
+                      minLength={60}
+                      shadow="sm"
+                      focusBorderColor="brand.400"
+                      fontSize={{
+                        sm: "sm",
+                      }}
+                    />
+                    <FormHelperText>
+                      Razon por la que quieres tomar la clase, preguntas sobre contenido, etc
+                    </FormHelperText>
+                    {isErrorDescrContratacion && (
+                      <FormErrorMessage>
+                        La descripcion de contratacion es requerida.
+                      </FormErrorMessage>
+                    )}
               </FormControl>
-              <Button type="submit" colorScheme="teal" mr={3}>
-                Contratar
-              </Button>
+
+              <Center>
+                <HStack>
+                  <Button type="submit" colorScheme="teal" m={"1em"}>
+                    Contratar
+                  </Button>
+                  <Button onClick={onClose} m={"1em"}>
+                    Cancelar
+                  </Button>
+                </HStack>
+              </Center>
             </form>
           </ModalBody>
-
-          <ModalFooter>
-            <Button onClick={onClose}>Cancelar</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </Container>

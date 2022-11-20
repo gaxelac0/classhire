@@ -10,5 +10,5 @@
 
 
 - logica de add review contra el back... 
-- cuando finaliza la publicacion todas las contrataciones van a finalizado 
+- cuando profesor finaliza la publicacion todas las contrataciones van a finalizado 
 - arreglar registro, crear publicacion validation

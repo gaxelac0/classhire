@@ -132,14 +132,22 @@ const TablaMaterias = (props) => {
                       <HStack>
                         <Tooltip
                           label={
-                            <Text textTransform={"uppercase"}>
-                              {c.contrataciones.docs[0].state}
+                            <Box>
+                              <Text textTransform={"uppercase"}>
+                              {c.contrataciones.docs[0].state_in_order[c.contrataciones.docs[0].state_in_order.length-1]}
                             </Text>
+                            <Text>
+                              {c.contrataciones.docs[0].state_in_order[c.contrataciones.docs[0].state_in_order.length-1] === "solicitada" 
+                              && "Quedan " + (-Math.floor((new Date()-new Date(c.contrataciones.docs[0].createdAt))/3600000)+48) + " horas"
+                              }
+                            </Text>
+                            </Box>
+                            
                           }
                         >
                           <Icon
                             mr={"1em"}
-                            as={iconByStatus(c.contrataciones.docs[0].state)}
+                            as={iconByStatus(c.contrataciones.docs[0].state_in_order[c.contrataciones.docs[0].state_in_order.length-1])}
                             size="xs"
                             alignSelf="left"
                             color="teal.500"
@@ -161,7 +169,7 @@ const TablaMaterias = (props) => {
                   <Td display={{ sm: "none", md: "inline-block" }}>{c.date}</Td>
                   <Td>
                     <HStack>
-                      {c.contrataciones.docs[0].state === "aceptada" && (
+                      {c.contrataciones.docs[0].state_in_order[c.contrataciones.docs[0].state_in_order.length-1] === "aceptada" && (
                         <Tooltip label={"Finalizar Contratacion"}>
                           <IconButton
                             colorScheme="teal"
@@ -171,7 +179,7 @@ const TablaMaterias = (props) => {
                           />
                         </Tooltip>
                       )}
-                      {c.contrataciones.docs[0].state === "solicitada" && (
+                      {c.contrataciones.docs[0].state_in_order[c.contrataciones.docs[0].state_in_order.length-1] === "solicitada" && (
                         <Tooltip label={"Cancelar"}>
                           <IconButton
                             colorScheme="teal"
@@ -182,7 +190,7 @@ const TablaMaterias = (props) => {
                         </Tooltip>
                       )}
 
-                      {c.contrataciones.docs[0].state === "finalizada" && (
+                      {c.contrataciones.docs[0].state_in_order[c.contrataciones.docs[0].state_in_order.length-1] === "finalizada" && (
                         <Tooltip label={"Agregar Review"}>
                           <IconButton
                             colorScheme="teal"

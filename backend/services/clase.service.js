@@ -291,6 +291,10 @@ exports.contratar = async function (body) {
     return Contratacion.create({
       clase_id: clase._id,
       profile_id: profile._id,
+      horario: body.horario,
+      telefono: body.telefono,
+      state_in_order: ["solicitada"],
+      reasons_in_order: [body.descr_contratacion],
     });
   } catch (e) {
     // return a Error message describing the reason
