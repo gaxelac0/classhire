@@ -2,9 +2,7 @@ import { React, useEffect } from "react";
 import {
   chakra,
   Box,
-  Divider,
   Stack,
-  Flex,
   FormLabel,
   FormControl,
   GridItem,
@@ -208,7 +206,7 @@ const SearchComponent = (props) => {
                     step={20}
                     onChange={(val) => {
                       setRating(val / 20);
-                      console.log(val / 20);
+                      //console.log(val / 20);
                     }}
                   >
                     <SliderMark

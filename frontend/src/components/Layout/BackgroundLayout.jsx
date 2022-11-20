@@ -1,5 +1,5 @@
 import { React } from "react";
-import { Box, Flex, Button, Center, SimpleGrid } from "@chakra-ui/react";
+import { Box, Flex, Button, SimpleGrid } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 

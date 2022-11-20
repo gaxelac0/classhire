@@ -12,7 +12,6 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
-import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import * as authService from "../../services/authService";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
@@ -29,9 +28,7 @@ const LoginComponent = (props) => {
     password: "",
   });
 
-  const [message, setMessage] = useState([""]);
   const updateMessage = (msg) => {
-    setMessage(msg);
     if (msg && (msg !== "" || msg[0] !== "")) {
       toast({
         title: "Error!",

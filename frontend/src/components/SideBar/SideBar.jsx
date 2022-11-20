@@ -1,9 +1,7 @@
 import { React } from "react";
-import { Box, Flex, Icon, Image, Link, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Link, Text } from "@chakra-ui/react";
 import { FaClipboardCheck, FaRss } from "react-icons/fa";
-import { AiFillGift } from "react-icons/ai";
-import { BsGearFill } from "react-icons/bs";
-import { HiCode, HiCollection } from "react-icons/hi";
+import { HiCollection } from "react-icons/hi";
 import { MdHome } from "react-icons/md";
 
 import ClasshireLogo from "../Logo/ClasshireLogo";

@@ -30,7 +30,6 @@ import * as claseService from "../../services/claseService";
 const CrearClaseComponent = (props) => {
   const toast = useToast();
   const navigate = useNavigate();
-  const [message, setMessage] = useState([""]);
   const [formData, setFormData] = useState({
     title: undefined,
     materia: undefined,
@@ -79,7 +78,6 @@ const CrearClaseComponent = (props) => {
   };
 
   const updateMessage = (msg) => {
-    setMessage(msg);
     if (msg && (msg !== "" || msg[0] !== "")) {
       toast({
         title: "Error!",

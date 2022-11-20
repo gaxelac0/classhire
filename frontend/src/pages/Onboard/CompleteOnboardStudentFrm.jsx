@@ -6,22 +6,9 @@ import {
   Box,
   Heading,
   Text,
-  IconButton,
-  Button,
-  VStack,
-  HStack,
   Wrap,
   WrapItem,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  Input,
-  InputGroup,
-  InputLeftElement,
   Image,
-  Checkbox,
-  Select,
-  Link,
 } from "@chakra-ui/react";
 
 

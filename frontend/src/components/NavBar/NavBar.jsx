@@ -4,7 +4,6 @@ import {
   chakra,
   Flex,
   useColorModeValue,
-  VisuallyHidden,
   HStack,
   Button,
   useDisclosure,
@@ -13,7 +12,6 @@ import {
   DrawerContent,
   DrawerOverlay,
   Link,
-  Image,
   Text,
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";

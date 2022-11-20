@@ -1,5 +1,3 @@
-import { chakra } from "@chakra-ui/react";
-
 import { Button } from "@chakra-ui/react";
 
 const activeStyle = {

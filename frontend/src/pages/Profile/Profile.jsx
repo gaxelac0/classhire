@@ -1,13 +1,11 @@
 import {
   Box,
-  Button,
   Table,
   Thead,
   Tbody,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
   Tabs,
   Tab,
@@ -18,12 +16,9 @@ import {
   Text,
   HStack,
   IconButton,
-  VStack,
-  Center,
-  Icon,
 } from "@chakra-ui/react";
 
-import { PhoneIcon, DeleteIcon } from "@chakra-ui/icons";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 import Pagination from "../../components/Pagination/Pagination";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
@@ -32,7 +27,6 @@ import { FaComment } from "react-icons/fa";
 
 import { useState, useEffect } from "react";
 import * as claseService from "../../services/claseService";
-import * as profileService from "../../services/profileService";
 
 import { Heading } from "@chakra-ui/react";
 
@@ -40,8 +34,6 @@ import { Link, useParams } from "react-router-dom";
 import EditProfileFrm from "./EditProfileFrm";
 
 const FittedTab = (props) => {
-
-
   return (
     <Tabs variant="soft-rounded" colorScheme="teal">
       <TabList mb="1em">
@@ -87,7 +79,10 @@ const FittedTab = (props) => {
           <Text color="red">totalPages: {props.pagination.totalPages}</Text>
         </TabPanel>
         <TabPanel>
-            <EditProfileFrm userState={props.userState} roleSelection={props.userState.role} />
+          <EditProfileFrm
+            userState={props.userState}
+            roleSelection={props.userState.role}
+          />
         </TabPanel>
       </TabPanels>
     </Tabs>
@@ -208,24 +203,23 @@ const Profile = (props) => {
     totalPages: 0,
   });
 
-  const fetchClases = async () => {
-    console.log("executing fetchClases at Profile");
-    const clasesData = await claseService.getClasesByUser(
-      props.userState.user.profile,
-      page,
-      5
-    );
-    setClases(clasesData.data.docs);
-    setPagination({
-      page: clasesData.data.page,
-      totalPages: clasesData.data.totalPages,
-    });
-    //console.log("retrieving clases");
-    //console.log(clases);
-    //console.log(pagination);
-  };
-
   useEffect(() => {
+    const fetchClases = async () => {
+      console.log("executing fetchClases at Profile");
+      const clasesData = await claseService.getClasesByUser(
+        props.userState.user.profile,
+        page,
+        5
+      );
+      setClases(clasesData.data.docs);
+      setPagination({
+        page: clasesData.data.page,
+        totalPages: clasesData.data.totalPages,
+      });
+      //console.log("retrieving clases");
+      //console.log(clases);
+      //console.log(pagination);
+    };
     fetchClases();
   }, [page]);
 

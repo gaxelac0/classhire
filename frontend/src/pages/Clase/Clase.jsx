@@ -74,9 +74,8 @@ const ClaseComponent = () => {
     }
   };
 
-  const [message, setMessage] = useState([""]);
   const updateMessage = (msg) => {
-    setMessage(msg);
+
     if (msg && (msg !== "" || msg[0] !== "")) {
       toast({
         title: "Error!",
@@ -97,7 +96,7 @@ const ClaseComponent = () => {
       query["ids"] = [id];
 
       const clasesData = await claseService.getClases(query, 1, 1);
-      if (clasesData.data.docs.length != 1) {
+      if (clasesData.data.docs.length !==1) {
         navigate("/404");
         return;
       }
@@ -106,7 +105,7 @@ const ClaseComponent = () => {
       const teacherData = await profileService.getProfileById(
         clasesData.data.docs[0].teacher_profile_id
       );
-      if (teacherData.data.docs.length != 1) {
+      if (teacherData.data.docs.length !==1) {
         navigate("/404");
         return;
       }

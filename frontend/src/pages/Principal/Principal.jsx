@@ -1,24 +1,15 @@
 import { React } from "react";
 import {
   Box,
-  Center,
-  VStack,
   Button,
-  Flex,
   Divider,
   chakra,
   Grid,
   GridItem,
   Container,
   SimpleGrid,
-  InputGroup,
-  InputLeftElement,
-  Input,
-  Image,
   Select,
 } from "@chakra-ui/react";
-import BkgHome from "../../images/HomBackground.jpg";
-import { SearchIcon } from "@chakra-ui/icons";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 
 import ClaseCard from "../../components/ClaseCard/ClaseCard";

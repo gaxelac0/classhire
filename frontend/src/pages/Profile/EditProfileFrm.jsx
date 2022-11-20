@@ -19,9 +19,7 @@ import {
   Image,
   Checkbox,
   Select,
-  Link,
   Icon,
-  PinInputProvider,
 } from "@chakra-ui/react";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaUniversity, FaBaby, FaIdCard } from "react-icons/fa";
@@ -65,47 +63,47 @@ const EditProfileFrm = (props) => {
 
   const handleExperienciaSelectChange = (e, index) => {
     const { value } = e.target;
-    const list = [...experienciasList];
+    let list = [...experienciasList];
     list[index]["nivel"] = value;
     setExperienciasList(list);
     setFormData({
       ...formData,
-      ["experiencias"]: list,
+      "experiencias": list,
     });
   };
 
   const handleExperienciaInputChange = (e, index) => {
     const { value } = e.target;
-    const list = [...experienciasList];
+    let list = [...experienciasList];
     list[index]["descr"] = value;
-    console.log(value);
+    //console.log(value);
     setExperienciasList(list);
   };
 
   const handleExperienciaRemove = (index) => {
-    const list = [...experienciasList];
+    let list = [...experienciasList];
     list.splice(index, 1);
     setExperienciasList(list);
   };
 
   const handleEstudioCheckboxChange = (e, index) => {
     const { checked } = e.target;
-    const list = [...experienciasList];
+    let list = [...experienciasList];
     list[index]["completed"] = checked;
     setExperienciasList(list);
     setFormData({
       ...formData,
-      ["experiencias"]: list,
+      "experiencias": list,
     });
   };
 
   const handleEstudioRemove = (index) => {
-    const list = [...experienciasList];
+    let list = [...experienciasList];
     list.splice(index, 1);
     setExperienciasList(list);
     setFormData({
       ...formData,
-      ["experiencias"]: list,
+      "experiencias": list,
     });
   };
 
@@ -116,9 +114,7 @@ const EditProfileFrm = (props) => {
     });
   };
 
-  const [message, setMessage] = useState([""]);
   const updateMessage = (msg, status) => {
-    setMessage(msg);
     if (msg && (msg !== "" || msg[0] !== "")) {
       toast({
         title: status === "error" ? "Error!" : "Success!",
@@ -150,53 +146,55 @@ const EditProfileFrm = (props) => {
   const isErrorFirstName = formData.firstName === "";
   const isErrorLastName = formData.lastName === "";
 
-  const fetchProfile = async () => {
-    console.log("executing fetchProfile at Profile");
-    const result = await profileService.getProfileById(
-      props.userState.user.profile
-    );
-    let profile = result.data.docs[0];
-    setProfile(profile);
 
-    const list = [...profile.experiencias];
-    if (list.length <= 0) {
-      list = [{ nivel: "", descr: "", completed: false }];
-    }
-    setExperienciasList(list);
-    setFormData({
-      ...formData,
-      ["firstName"]: profile.firstName,
-      ["lastName"]: profile.lastName,
-      ["experiencias"]: list,
-      ["titulo"]: profile.titulo,
-      ["fecha_nacimiento"]: profile.fecha_nacimiento
-        .split("/")
-        .reverse()
-        .join("-"),
-    });
 
-    console.log("formData: " + JSON.stringify(formData));
-    //console.log("profilePhoto: " + profile.photo)
-  };
 
-  const uploadImage = async () => {
-    console.log("executing uploadImage at Profile");
-    const result = await profileService.addPhoto(file, profile._id);
-    if (result.status === "ok") {
-      let profileNew = profile;
-      profileNew["photo"] = result.image_url;
-      setProfile(profileNew);
-      updateMessage("Foto actualizada", "success")
-    }
-    console.log("profilePhoto: " + JSON.stringify(result))
-  };
 
   useEffect(() => {
+    const fetchProfile = async () => {
+      console.log("executing fetchProfile at Profile");
+      const result = await profileService.getProfileById(
+        props.userState.user.profile
+      );
+      let profile = result.data.docs[0];
+      setProfile(profile);
+  
+      let list = [...profile.experiencias];
+      if (list.length <= 0) {
+        list = [{ nivel: "", descr: "", completed: false }];
+      }
+      setExperienciasList(list);
+      setFormData({
+        ...formData,
+        "firstName": profile.firstName,
+        "lastName": profile.lastName,
+        "experiencias": list,
+        "titulo": profile.titulo,
+        "fecha_nacimiento": profile.fecha_nacimiento
+          .split("/")
+          .reverse()
+          .join("-"),
+      });
+  
+      //console.log("formData: " + JSON.stringify(formData));
+      //console.log("profilePhoto: " + profile.photo)
+    };
     fetchProfile();
   }, []);
 
   useEffect(() => {
     if (file) {
+      const uploadImage = async () => {
+        console.log("executing uploadImage at Profile");
+        const result = await profileService.addPhoto(file, profile._id);
+        if (result.status === "ok") {
+          let profileNew = profile;
+          profileNew["photo"] = result.image_url;
+          setProfile(profileNew);
+          updateMessage("Foto actualizada", "success")
+        }
+        //console.log("profilePhoto: " + JSON.stringify(result))
+      };
       uploadImage();
     }
 
@@ -206,7 +204,7 @@ const EditProfileFrm = (props) => {
 
   return (
     <VStack>
-      {profile && profile.photo && props.usage != "onboard" && (
+      {profile && profile.photo && props.usage !== "onboard" && (
         <>
           <Image
             onClick={() => {

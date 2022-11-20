@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { Link as LinkRoute, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 import * as authService from "../../services/authService";
-
-import styles from "./Signup.module.css";
 
 import {
   Flex,
@@ -32,9 +30,7 @@ const SignupCard = (props) => {
   
   const toast = useToast();
 
-  const [message, setMessage] = useState([""]);
   const updateMessage = (msg) => {
-    setMessage(msg);
     if (msg && (msg !== "" || msg[0] !== "")) {
       toast({
         title: "Error!",
@@ -46,8 +42,6 @@ const SignupCard = (props) => {
       });
     }
   };
-
-
 
   const [formData, setFormData] = useState({
     firstName: "",
