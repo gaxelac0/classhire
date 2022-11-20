@@ -49,6 +49,7 @@ const ClaseComponent = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [clase, setClase] = useState({});
   const [teacher, setTeacher] = useState({});
+  const [profile, setProfile] = useState({});
 
   const [formData, setFormData] = useState({
     clase_id: "",
@@ -68,9 +69,11 @@ const ClaseComponent = (props) => {
       let result = await claseService.contratar(formData);
       if (result.status === "ok") {
         updateMessage(result.msg, "success");
-        //navigate("/profile/1");
+        navigate("/profile/1");
+      } else {
+        throw new Error(result.msg)
       }
-      updateMessage(result.msg, "error");
+      
     } catch (err) {
       updateMessage(err.message, "error");
     }
@@ -131,9 +134,6 @@ const ClaseComponent = (props) => {
       }
       setClase(clasesData.data.docs[0]);
 
-
-      
-
       const teacherData = await profileService.getProfileById(
         clasesData.data.docs[0].teacher_profile_id
       );
@@ -142,6 +142,15 @@ const ClaseComponent = (props) => {
         return;
       }
       setTeacher(teacherData.data.docs[0]);
+
+      const profileData = await profileService.getProfileById(
+        props.userState.user.profile
+      );
+      if (profileData.data.docs.length !== 1) {
+        navigate("/404");
+        return;
+      }
+      setProfile(profileData.data.docs[0]);
 
       //console.log("retrieving clases");
       //console.log(clases);
@@ -293,7 +302,8 @@ const ClaseComponent = (props) => {
               </List>
             </Box>
           </Stack>
-          {props.userState && props.userState.role === "student" && (
+          {/* Se oculta el boton de Contratar si no es estudiante o si ya la tiene contratada */}
+          {props.userState && props.userState.role === "student" && profile && profile.clases && clase && !(profile.clases.includes(clase._id)) && (
             <Box>
               <Button
                 rounded={"none"}

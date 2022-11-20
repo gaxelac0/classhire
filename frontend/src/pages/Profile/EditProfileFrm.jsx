@@ -242,7 +242,6 @@ const EditProfileFrm = (props) => {
                   <Box m={8} color="#0B0E3F">
                     <form onSubmit={handleSubmit}>
                       <VStack spacing={5}>
-                        
                         {props.usage !== "onboard" && (
                           <>
                             <FormControl
@@ -288,7 +287,7 @@ const EditProfileFrm = (props) => {
                                   name="lastName"
                                   type="text"
                                   size="md"
-                                  placeholder="Nombre"
+                                  placeholder="Apellido"
                                   value={formData && formData["lastName"]}
                                   onChange={handleChange}
                                 />
@@ -364,7 +363,7 @@ const EditProfileFrm = (props) => {
                         props.roleSelection === "teacher" ? (
                           <FormControl id="experiencias">
                             <FormLabel>Experiencia</FormLabel>
-                            <InputGroup borderColor="#E0E1E7">
+
                               <VStack>
                                 {experienciasList.map(
                                   (singleExperiencia, index) => (
@@ -437,17 +436,8 @@ const EditProfileFrm = (props) => {
                                     </Box>
                                   )
                                 )}
-                                {/* <div className="output">
-                            <h2>Output</h2>
-                            {experienciaList &&
-                              experienciaList.map((obj, index) => (
-                                <ul key={index}>
-                                  {obj && <li>{obj.type+":"+obj.description+":"+obj.current}</li>}
-                                </ul>
-                              ))}
-                          </div> */}
                               </VStack>
-                            </InputGroup>
+
                           </FormControl>
                         ) : (
                           <FormControl id="experiencias">
@@ -566,8 +556,7 @@ const EditProfileFrm = (props) => {
                           </FormControl>
                         )}
 
-{
-                          props.roleSelection &&
+                        {props.roleSelection &&
                           props.roleSelection === "teacher" && (
                             <>
                               <FormControl
@@ -593,7 +582,8 @@ const EditProfileFrm = (props) => {
                                   }}
                                 />
                                 <FormHelperText>
-                                  Detalla una descripcion sobre tu experiencia personal, tu metodologia de ensenanza, etc
+                                  Detalla una descripcion sobre tu experiencia
+                                  personal, tu metodologia de ensenanza, etc
                                 </FormHelperText>
                                 {isErrorDescription && (
                                   <FormErrorMessage>

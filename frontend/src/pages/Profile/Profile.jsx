@@ -20,7 +20,14 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 
-import { CheckIcon, DeleteIcon, SmallCloseIcon, SpinnerIcon, TimeIcon } from "@chakra-ui/icons";
+import {
+  CheckIcon,
+  DeleteIcon,
+  LockIcon,
+  SmallCloseIcon,
+  SpinnerIcon,
+  TimeIcon,
+} from "@chakra-ui/icons";
 import { MdUploadFile } from "react-icons/md";
 
 import Pagination from "../../components/Pagination/Pagination";
@@ -92,14 +99,7 @@ const FittedTab = (props) => {
   );
 };
 
-
-
 const TablaMaterias = (props) => {
-
-  
-
-
-
   return (
     <TableContainer>
       <Table variant="unstyled">
@@ -130,14 +130,20 @@ const TablaMaterias = (props) => {
                   <Td>
                     <Link to={"/clase/" + c._id}>
                       <HStack>
-                      <Tooltip label={<Text textTransform={"uppercase"}>{c.contrataciones.docs[0].state}</Text>}>
-                        <Icon
-                          mr={"1em"}
-                          as={iconByStatus(c.contrataciones.docs[0].state)}
-                          size="xs"
-                          alignSelf="left"
-                          color="teal.500"
-                        />
+                        <Tooltip
+                          label={
+                            <Text textTransform={"uppercase"}>
+                              {c.contrataciones.docs[0].state}
+                            </Text>
+                          }
+                        >
+                          <Icon
+                            mr={"1em"}
+                            as={iconByStatus(c.contrataciones.docs[0].state)}
+                            size="xs"
+                            alignSelf="left"
+                            color="teal.500"
+                          />
                         </Tooltip>
                         <Text fontWeight="semibold">{c.title}</Text>
                         <Image
@@ -155,18 +161,37 @@ const TablaMaterias = (props) => {
                   <Td display={{ sm: "none", md: "inline-block" }}>{c.date}</Td>
                   <Td>
                     <HStack>
-                      <IconButton
-                        colorScheme="teal"
-                        aria-label="Call Segun"
-                        size="xs"
-                        icon={<DeleteIcon />}
-                      />
-                      <IconButton
-                        colorScheme="teal"
-                        aria-label="Call Segun"
-                        size="xs"
-                        icon={<FaComment />}
-                      />
+                      {c.contrataciones.docs[0].state === "aceptada" && (
+                        <Tooltip label={"Finalizar Contratacion"}>
+                          <IconButton
+                            colorScheme="teal"
+                            aria-label="Call Segun"
+                            size="xs"
+                            icon={<LockIcon />}
+                          />
+                        </Tooltip>
+                      )}
+                      {c.contrataciones.docs[0].state === "solicitada" && (
+                        <Tooltip label={"Cancelar"}>
+                          <IconButton
+                            colorScheme="teal"
+                            aria-label="Call Segun"
+                            size="xs"
+                            icon={<DeleteIcon />}
+                          />
+                        </Tooltip>
+                      )}
+
+                      {c.contrataciones.docs[0].state === "finalizada" && (
+                        <Tooltip label={"Agregar Review"}>
+                          <IconButton
+                            colorScheme="teal"
+                            aria-label="Call Segun"
+                            size="xs"
+                            icon={<FaComment />}
+                          />
+                        </Tooltip>
+                      )}
                     </HStack>
                   </Td>
                 </>
@@ -258,8 +283,7 @@ const Profile = (props) => {
 };
 
 const iconByStatus = (state) => {
-
-  switch(state) {
+  switch (state) {
     case "solicitada": {
       return TimeIcon;
     }
@@ -276,6 +300,6 @@ const iconByStatus = (state) => {
       return TimeIcon;
     }
   }
-}
+};
 
 export default Profile;
