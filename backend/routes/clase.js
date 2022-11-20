@@ -11,7 +11,6 @@ var router = express.Router();
 
 /*---------- Public Routes ----------*/
 router.post("/", claseCtrl.getClases);
-router.post("/byprofile", claseCtrl.getClasesByProfileId);
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken);
@@ -23,6 +22,8 @@ router.post(
 );
 
 router.delete("/", checkAuth, claseCtrl.deleteClase);
+
+router.post("/byprofile", checkAuth, claseCtrl.getClasesByProfileId);
 
 router.post(
   "/review",

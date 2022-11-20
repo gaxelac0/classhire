@@ -543,3 +543,47 @@ db.users.insertOne({
   email: "student@uade.edu.ar",
   password: "$2b$06$T8qZKC8v28SC2SfcVRWLgOgaEwwDy.DXlI2BbnOjpLTm9ApOE67Ru",
 });
+
+
+db.contratacions.insertOne({
+  profile_id: ObjectId("demostudent0"),
+  clase_id: ObjectId("clase0000001"),
+  state: "solicitada",
+  reason: "hola me gustaria tomar clases particulares, sabes de los temas del CBC?"
+});
+
+db.contratacions.insertOne({
+  profile_id: ObjectId("demostudent0"),
+  clase_id: ObjectId("clase0000002"),
+  state: "cancelada",
+  reason: "hola me gustaria tomar clases particulares, sabes de los temas del CBC?"
+});
+
+db.contratacions.insertOne({
+  profile_id: ObjectId("demostudent0"),
+  clase_id: ObjectId("clase0000003"),
+  state: "finalizada",
+  reason: "hola me gustaria tomar clases particulares, sabes de los temas del CBC?"
+});
+
+db.contratacions.insertOne({
+  profile_id: ObjectId("demostudent0"),
+  clase_id: ObjectId("clase0000004"),
+  state: "aceptada",
+  reason: "hola me gustaria tomar clases particulares, sabes de los temas del CBC?"
+});
+
+db.contratacions.insertOne({
+  profile_id: ObjectId("demostudent0"),
+  clase_id: ObjectId("clase0000005"),
+  state: "solicitada",
+  reason: "hola me gustaria tomar clases particulares, sabes de los temas del CBC?"
+});
+
+db.contratacions.insertOne({
+  profile_id: ObjectId("demostudent0"),
+  clase_id: ObjectId("clase0000006"),
+  state: "aceptada",
+  reason: "hola me gustaria tomar clases particulares, sabes de los temas del CBC?"
+});
+

@@ -16,9 +16,12 @@ import {
   Text,
   HStack,
   IconButton,
+  Icon,
+  Tooltip,
 } from "@chakra-ui/react";
 
-import { DeleteIcon } from "@chakra-ui/icons";
+import { CheckIcon, DeleteIcon, SmallCloseIcon, SpinnerIcon, TimeIcon } from "@chakra-ui/icons";
+import { MdUploadFile } from "react-icons/md";
 
 import Pagination from "../../components/Pagination/Pagination";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
@@ -89,7 +92,14 @@ const FittedTab = (props) => {
   );
 };
 
+
+
 const TablaMaterias = (props) => {
+
+  
+
+
+
   return (
     <TableContainer>
       <Table variant="unstyled">
@@ -98,14 +108,14 @@ const TablaMaterias = (props) => {
           <Tr>
             {props.userState.role === "student" ? (
               <>
-                <Th>Titulo</Th>
+                <Th>Clase</Th>
                 <Th display={{ sm: "none", md: "inline-block" }}>Profesor</Th>
                 <Th display={{ sm: "none", md: "inline-block" }}>Fecha</Th>
                 <Th>Acciones</Th>
               </>
             ) : (
               <>
-                <Th>Titulo</Th>
+                <Th>Clase</Th>
                 <Th display={{ sm: "none", md: "flex" }}>Fecha</Th>
                 <Th>Acciones</Th>
               </>
@@ -120,6 +130,15 @@ const TablaMaterias = (props) => {
                   <Td>
                     <Link to={"/clase/" + c._id}>
                       <HStack>
+                      <Tooltip label={<Text textTransform={"uppercase"}>{c.contrataciones.docs[0].state}</Text>}>
+                        <Icon
+                          mr={"1em"}
+                          as={iconByStatus(c.contrataciones.docs[0].state)}
+                          size="xs"
+                          alignSelf="left"
+                          color="teal.500"
+                        />
+                        </Tooltip>
                         <Text fontWeight="semibold">{c.title}</Text>
                         <Image
                           alt="Ir a la Clase"
@@ -237,5 +256,26 @@ const Profile = (props) => {
     </>
   );
 };
+
+const iconByStatus = (state) => {
+
+  switch(state) {
+    case "solicitada": {
+      return TimeIcon;
+    }
+    case "cancelada": {
+      return SmallCloseIcon;
+    }
+    case "aceptada": {
+      return SpinnerIcon;
+    }
+    case "finalizada": {
+      return CheckIcon;
+    }
+    default: {
+      return TimeIcon;
+    }
+  }
+}
 
 export default Profile;

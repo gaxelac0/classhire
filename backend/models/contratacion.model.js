@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+var mongoosePaginate = require("mongoose-paginate");
 
 var contratacionSchema = new mongoose.Schema(
   {
@@ -12,6 +13,7 @@ var contratacionSchema = new mongoose.Schema(
   }
 );
 
+contratacionSchema.plugin(mongoosePaginate);
 const Contratacion = mongoose.model("Contratacion", contratacionSchema);
 
 module.exports = Contratacion;

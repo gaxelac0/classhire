@@ -59,6 +59,7 @@ async function getClasesByUser(profile_id, page, limit) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${tokenService.getToken()}`,
       },
       body: JSON.stringify(data),
     }

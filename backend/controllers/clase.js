@@ -49,6 +49,8 @@ exports.getClasesByProfileId = async function getClasesByProfileId(req, res) {
   var page = req.query.page ? req.query.page : 1;
   var limit = req.query.limit ? req.query.limit : 10;
 
+  req.body.user = req.user;
+
   try {
     let clases = await claseService.getClasesByProfileId(req.body, page, limit);
     return res.status(200).json({ status: "ok", data: clases });

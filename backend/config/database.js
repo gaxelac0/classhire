@@ -2,6 +2,8 @@ var mongoose = require("mongoose");
 
 const db = mongoose.connection;
 
+mongoose.Promise = global.Promise
+
 mongoose.connect(process.env.DATABASE_URL, {
   user: process.env.MONGO_USER,
   pass: process.env.MONGO_PASSWORD,

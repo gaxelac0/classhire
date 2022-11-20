@@ -47,12 +47,33 @@ async function getClases(query, page, limit) {
 }
 exports.getClases = getClases;
 
-async function getClasesByProfileId(body, page, limit) {
-  let profile_id = body.profile_id;
+async function getContrataciones(query, page, limit) {
+  // Options setup for the mongoose paginate
+  var options = {
+    page,
+    limit,
+  };
 
   try {
-    let profile = await Profile.findOne({ _id: body.profile_id }).lean()
-    .exec();
+    var contrataciones = await Contratacion.paginate(query, options);
+
+    return contrataciones;
+  } catch (e) {
+    // return a Error message describing the reason
+    console.log("error services", e);
+    throw new BaseError(
+      "err",
+      HttpStatusCodes.INTERNAL_SERVER,
+      true,
+      e.message
+    );
+  }
+}
+exports.getContrataciones = getContrataciones;
+
+async function getClasesByProfileId(body, page, limit) {
+  try {
+    let profile = await Profile.findOne({ _id: body.profile_id }).lean().exec();
 
     // console.log(`getClasesByProfileId  - retrieving clases(${profile.clases.length}) for profileId ${profile_id}`)
     // console.log(profile.clases);
@@ -60,8 +81,25 @@ async function getClasesByProfileId(body, page, limit) {
     var result = profile.clases;
     if (profile.clases.length > 0) {
       query = {};
-      query["_id"] = { $in: profile.clases};
+      query["_id"] = { $in: profile.clases };
       var result = await getClases(query, page, limit);
+
+      var cloneResult = { ...result };
+      await Promise.all(
+        cloneResult.docs.map(async (clase, idx) => {
+          query = { clase_id: clase._id };
+          if (profile.role === "student") {
+            query["profile_id"] = profile._id;
+          }
+  
+          // obtener contrataciones de la clase
+          let contrataciones = await getContrataciones(query, page, limit);
+  
+          result.docs[idx]["contrataciones"] = contrataciones;
+        })
+      )
+      
+
       return { docs: result.docs, page: result.page, totalPages: result.pages };
     }
 
@@ -128,14 +166,11 @@ exports.addReview = async function (body) {
 };
 
 exports.addClase = async function (body) {
-
   let user;
   let profile;
   try {
-
     user = await User.findOne(body.user);
-    profile = await Profile.findOne({_id: user.profile._id});
-    
+    profile = await Profile.findOne({ _id: user.profile._id });
   } catch (e) {
     throw new BaseError(
       "err",
@@ -146,16 +181,15 @@ exports.addClase = async function (body) {
   }
 
   if (profile.role !== constants.RoleEnum[2]) {
-      throw new BaseError(
-        "err",
-        HttpStatusCodes.UNAUTHORIZED,
-        true,
-        "Unauthorized: solo el rol teacher puede crear clases."
-      );
-    }
+    throw new BaseError(
+      "err",
+      HttpStatusCodes.UNAUTHORIZED,
+      true,
+      "Unauthorized: solo el rol teacher puede crear clases."
+    );
+  }
 
   try {
-    
     body.teacher_profile_id = profile._id;
 
     const newClaseSchema = getNewClaseSchema(body);
@@ -226,9 +260,9 @@ exports.contratar = async function (body) {
         "La clase no existe"
       );
     }
-    
+
     let user = await User.findOne(body.user);
-    let profile = await Profile.findOne({_id: user.profile._id});
+    let profile = await Profile.findOne({ _id: user.profile._id });
 
     if (profile.role !== constants.RoleEnum[1]) {
       throw new BaseError(
@@ -239,7 +273,6 @@ exports.contratar = async function (body) {
       );
     }
 
-
     if (clase.teacher_profile_id.equals(profile._id)) {
       throw new BaseError(
         "err",
@@ -249,12 +282,13 @@ exports.contratar = async function (body) {
       );
     }
 
-
     profile.clases.push(clase._id);
 
     await profile.save();
-    return Contratacion.create({clase_id: clase._id, profile_id: profile._id})
-    
+    return Contratacion.create({
+      clase_id: clase._id,
+      profile_id: profile._id,
+    });
   } catch (e) {
     // return a Error message describing the reason
     console.log("error services", e);
