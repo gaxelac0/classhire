@@ -66,6 +66,16 @@ async function patchProfile(body) {
       }     
     }
 
+    if (body.firstName && body.firstName != "" ){
+      objCount = objCount+1;
+      profile.firstName = body.firstName;
+    }
+
+    if (body.lastName && body.lastName != "" ){
+      objCount = objCount+1;
+      profile.lastName = body.lastName;
+    }
+
     if (body.titulo && body.titulo != "" ){
       objCount = objCount+1;
       profile.titulo = body.titulo;

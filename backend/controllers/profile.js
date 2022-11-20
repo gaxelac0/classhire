@@ -1,6 +1,12 @@
 var Profile = require("../models/profile.model");
 var cloudinary = require("cloudinary").v2;
 
+cloudinary.config({ 
+  cloud_name: 'dvjdc3ssy', 
+  api_key: '747697918882398', 
+  api_secret: 'ENcu5ShCD7-wFCkvi7nv0b8T8lA' 
+});
+
 var profileService = require("../services/profile.service");
 var authService = require("../services/auth.service");
 
@@ -42,14 +48,15 @@ exports.patchProfile = async function patchProfile(req, res) {
 };
 
 exports.addPhoto = async function addPhoto(req, res) {
-  const imageFile = req.files.photo.path;
-  Profile.findById(req.params.id).then((profile) => {
+  const imageFile = req.files["photo"].path;
+  const id = req.params.id;
+  Profile.findById(id).then((profile) => {
     cloudinary.uploader
-      .upload(imageFile, { tags: `${profile.email}` })
+      .upload(imageFile, { format: 'png', width: 200, height: 200, tags: [`${profile.firstName}`, `${profile.lastName}`, "classhire", "uade", "interactive", "app"] })
       .then((image) => {
         profile.photo = image.url;
         profile.save().then((profile) => {
-          res.status(201).json(profile.photo);
+          res.status(201).json({status: "ok", image_url: profile.photo});
         });
       })
       .catch((err) => {

@@ -20,7 +20,7 @@ var profileSchema = new mongoose.Schema(
   {
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    fecha_nacimiento: { type: String, required: false },
+    fecha_nacimiento: { type: String, required: false, default: new Date()},
     titulo: { type: String, required: false, default: "" },
     experiencias: [experienciaSchema],
     photo: { type: String, required: false } /* base 64 */,

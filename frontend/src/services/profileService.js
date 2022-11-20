@@ -41,13 +41,18 @@ async function patchProfile(fields) {
   }
 }
 
-async function addPhoto(photoData, profileId) {
+async function addPhoto(file, profileId) {
+
+  const formData = new FormData();
+  formData.append("photo", file.file);
+
+
   const res = await fetch(`${BASE_URL}/${profileId}/add-photo`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${tokenService.getToken()}`,
     },
-    body: photoData,
+    body: formData,
   });
   return await res.json();
 }

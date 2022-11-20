@@ -11,7 +11,7 @@ const BackgroundLayout = (props) => {
   return (
     <>
       <Flex
-        as="body"
+
         bg="teal"
         justifyContent={"center"}
         width="full"

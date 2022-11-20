@@ -155,7 +155,7 @@ const ClaseComponent = () => {
               <Image
                 rounded={"md"}
                 alt={"teacher photo"}
-                src={`data:image/jpeg;base64,${teacher.photo}`}
+                src={teacher.photo}
                 fit={"cover"}
                 align={"center"}
                 w={"100%"}
