@@ -35,13 +35,14 @@ db.profiles.insertOne({
   role: "teacher",
   titulo: "Ingeniero en Informatica",
   fecha_nacimiento: "14/01/1964",
+  description: "Joe Fathree es un author ganador de diversos premios al merito educativo, incluyendo ser nombrado como uno de los mejores profesores del mundo en 2016",
   experiencias: [
     {
       nivel: "primaria",
       descr: "Profesor de primaria",
     },
   ],
-  photo: "http://res.cloudinary.com/dvjdc3ssy/image/upload/v1668894991/dohnmb6blyd2ei1bjha7.png"
+  photo: "http://res.cloudinary.com/dvjdc3ssy/image/upload/v1668944647/jej6zfcgvfjqikxrdaxt.png"
 });
 
 db.users.insertOne({

@@ -101,7 +101,7 @@ const ClaseCard = (props) => {
                   base: "none",
                   sm: "block",
                 }}
-                src={`data:image/jpeg;base64,${props.clase.teacher_photo}`}
+                src={props.clase.teacher_photo}
                 alt="imag"
               />
               <Text color="gray.700" fontWeight="700" cursor="pointer">

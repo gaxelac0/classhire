@@ -26,6 +26,7 @@ var profileSchema = new mongoose.Schema(
     photo: { type: String, required: false } /* base 64 */,
     clases: [{ type: mongoose.Schema.Types.ObjectId, ref: "Clase" }],
     role: { type: String, enum: RoleEnum },
+    description: { type: String, required: false, default: ""},
   },
   {
     timestamps: true,

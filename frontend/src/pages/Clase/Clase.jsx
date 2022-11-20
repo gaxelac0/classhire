@@ -10,7 +10,6 @@ import {
   Heading,
   SimpleGrid,
   StackDivider,
-  useColorModeValue,
   List,
   ListItem,
   ModalFooter,
@@ -38,13 +37,12 @@ import * as claseService from "../../services/claseService";
 
 import * as profileService from "../../services/profileService";
 
-
-const ClaseComponent = () => {
+const ClaseComponent = (props) => {
   let { id } = useParams();
 
   let navigate = useNavigate();
 
-  let toast = useToast()
+  let toast = useToast();
 
   const initialRef = useRef(null);
   const finalRef = useRef(null);
@@ -60,27 +58,30 @@ const ClaseComponent = () => {
   });
 
   const handleChange = (e) => {
-    //console.log(e)
+    console.log(e.target.value)
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     try {
-      await claseService.contratar(formData);
-      navigate("/profile/1");
+      let result = await claseService.contratar(formData);
+      if (result.status === "ok") {
+        updateMessage(result.msg, "success");
+        //navigate("/profile/1");
+      }
+      updateMessage(result.msg, "error");
     } catch (err) {
-      updateMessage(err.message);
+      updateMessage(err.message, "error");
     }
   };
 
-  const updateMessage = (msg) => {
-
+  const updateMessage = (msg, status) => {
     if (msg && (msg !== "" || msg[0] !== "")) {
       toast({
-        title: "Error!",
+        title: status === "success" ? "Success!" : "Error!",
         description: msg,
-        status: "error",
+        status: status,
         position: "top-right",
         duration: 6000,
         isClosable: true,
@@ -88,7 +89,35 @@ const ClaseComponent = () => {
     }
   };
 
+  const getStringFrecuencia = (key) => {
+    switch (key) {
+      case "once": {
+        return "Unica vez";
+      }
+      case "diaria": {
+        return "Una clase diaria";
+      }
+      case "semanal": {
+        return "Una clase semanal";
+      }
+      case "mensual": {
+        return "Una clase mensual";
+      }
+      default: {
+        return "frecuencia a definir con el profesor".toUpperCase();
+      }
+    }
+  };
+
   useEffect(() => {
+
+
+    setFormData({
+      ...formData,
+      clase_id: id,
+    })
+    console.log("id " + id)
+
     const fetchClaseInformation = async () => {
       console.log("ejecuta fetchClaseInformation at ClaseComponent");
 
@@ -96,16 +125,19 @@ const ClaseComponent = () => {
       query["ids"] = [id];
 
       const clasesData = await claseService.getClases(query, 1, 1);
-      if (clasesData.data.docs.length !==1) {
+      if (clasesData.data.docs.length !== 1) {
         navigate("/404");
         return;
       }
       setClase(clasesData.data.docs[0]);
 
+
+      
+
       const teacherData = await profileService.getProfileById(
         clasesData.data.docs[0].teacher_profile_id
       );
-      if (teacherData.data.docs.length !==1) {
+      if (teacherData.data.docs.length !== 1) {
         navigate("/404");
         return;
       }
@@ -139,34 +171,30 @@ const ClaseComponent = () => {
                 w={"100%"}
                 h={{ base: "150%", sm: "200px", lg: "250px" }}
               />
-              <StackDivider
-                borderColor={useColorModeValue("gray.200", "gray.600")}
-              />
+              <StackDivider borderColor={"gray.200"} />
               <Text
                 fontSize={{ base: "16px", lg: "18px" }}
-                color={useColorModeValue("yellow.500", "yellow.300")}
+                color={"yellow.500"}
                 fontWeight={"500"}
                 textTransform={"uppercase"}
                 mb={"4"}
               >
                 Sobre el profe
               </Text>
+
               <Image
-                rounded={"md"}
-                alt={"teacher photo"}
+                borderRadius="full"
+                boxSize={"200px"}
                 src={teacher.photo}
-                fit={"cover"}
-                align={"center"}
-                w={"100%"}
-                h={{ base: "50%", sm: "100px", lg: "125px" }}
               />
-              <Heading as="h3">{teacher.firstName}</Heading>
-              <StackDivider
-                borderColor={useColorModeValue("gray.200", "gray.600")}
-              />
+
+              <Heading as="h3">
+                {teacher.firstName} {teacher.lastName}
+              </Heading>
+              <StackDivider borderColor={"gray.200"} />
               <Text
                 fontSize={{ base: "12px", lg: "16px" }}
-                color={useColorModeValue("yellow.500", "yellow.300")}
+                color={"yellow.500"}
                 fontWeight={"250"}
                 mb={"4"}
               >
@@ -174,9 +202,7 @@ const ClaseComponent = () => {
               </Text>
             </VStack>
           </Flex>
-          <StackDivider
-            borderColor={useColorModeValue("gray.200", "gray.600")}
-          />
+          <StackDivider borderColor={"gray.200"} />
         </Flex>
         <Stack spacing={{ base: 6, md: 10 }}>
           <Box as={"header"}>
@@ -187,11 +213,7 @@ const ClaseComponent = () => {
             >
               {clase.title}
             </Heading>
-            <Text
-              color={useColorModeValue("gray.900", "gray.400")}
-              fontWeight={300}
-              fontSize={"2xl"}
-            >
+            <Text color={"gray.900"} fontWeight={300} fontSize={"2xl"}>
               ${clase.price} ARS p/clase
             </Text>
           </Box>
@@ -199,11 +221,7 @@ const ClaseComponent = () => {
           <Stack
             spacing={{ base: 4, sm: 6 }}
             direction={"column"}
-            divider={
-              <StackDivider
-                borderColor={useColorModeValue("gray.200", "gray.600")}
-              />
-            }
+            divider={<StackDivider borderColor={"gray.200"} />}
           >
             <VStack spacing={{ base: 4, sm: 6 }}>
               <Text fontSize={"lg"}>{clase.description}</Text>
@@ -211,20 +229,7 @@ const ClaseComponent = () => {
             <Box>
               <Text
                 fontSize={{ base: "16px", lg: "18px" }}
-                color={useColorModeValue("yellow.500", "yellow.300")}
-                fontWeight={"500"}
-                textTransform={"uppercase"}
-                mb={"4"}
-              >
-                Niveles
-              </Text>
-
-              <Text>{clase && clase.nivel && clase.nivel.value}</Text>
-            </Box>
-            <Box>
-              <Text
-                fontSize={{ base: "16px", lg: "18px" }}
-                color={useColorModeValue("yellow.500", "yellow.300")}
+                color={"yellow.500"}
                 fontWeight={"500"}
                 textTransform={"uppercase"}
                 mb={"4"}
@@ -234,25 +239,53 @@ const ClaseComponent = () => {
 
               <List spacing={2}>
                 <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Lugar:
+                  <Text
+                    as={"span"}
+                    fontWeight={"black"}
+                    textTransform={"uppercase"}
+                  >
+                    materia:
                   </Text>{" "}
-                  Google Meets
+                  <Text textTransform={"uppercase"}>
+                    {clase && clase.materia && clase.materia.value}
+                  </Text>
+                </ListItem>
+
+                <ListItem>
+                  <Text
+                    as={"span"}
+                    fontWeight={"black"}
+                    textTransform={"uppercase"}
+                  >
+                    Tipo de Clase:
+                  </Text>{" "}
+                  <Text textTransform={"uppercase"}>
+                    {clase && clase.tipo_clase && clase.tipo_clase.value}
+                  </Text>
+                  <Text textTransform={"uppercase"}>
+                    {clase && clase.nivel && clase.nivel.value}
+                  </Text>
                 </ListItem>
                 <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Cronograma:
+                  <Text
+                    as={"span"}
+                    fontWeight={"black"}
+                    textTransform={"uppercase"}
+                  >
+                    FRECUENCIA:
                   </Text>{" "}
-                  Flexible
+                  <Text fontWeight={"thin"}>
+                    {clase &&
+                      clase.frecuencia &&
+                      getStringFrecuencia(clase.frecuencia.value)}
+                  </Text>
                 </ListItem>
                 <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Clases Incluidas:
-                  </Text>{" "}
-                  6
-                </ListItem>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
+                  <Text
+                    as={"span"}
+                    fontWeight={"black"}
+                    textTransform={"uppercase"}
+                  >
                     Idioma:
                   </Text>{" "}
                   Espanol
@@ -260,29 +293,36 @@ const ClaseComponent = () => {
               </List>
             </Box>
           </Stack>
+          {props.userState && props.userState.role === "student" && (
+            <Box>
+              <Button
+                rounded={"none"}
+                w={"full"}
+                mt={8}
+                size={"lg"}
+                py={"7"}
+                onClick={onOpen}
+                bg={"gray.900"}
+                color={"white"}
+                textTransform={"uppercase"}
+                _hover={{
+                  transform: "translateY(2px)",
+                  boxShadow: "lg",
+                }}
+              >
+                Contratar
+              </Button>
 
-          <Button
-            rounded={"none"}
-            w={"full"}
-            mt={8}
-            size={"lg"}
-            py={"7"}
-            onClick={onOpen}
-            bg={useColorModeValue("gray.900", "gray.50")}
-            color={useColorModeValue("white", "gray.900")}
-            textTransform={"uppercase"}
-            _hover={{
-              transform: "translateY(2px)",
-              boxShadow: "lg",
-            }}
-          >
-            Contratar
-          </Button>
-
-          <Stack direction="row" alignItems="center" justifyContent={"center"}>
-            <MdCall />
-            <Text>Contacto garantizado en menos de 48 horas</Text>
-          </Stack>
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent={"center"}
+              >
+                <MdCall />
+                <Text>Contacto garantizado en menos de 48 horas</Text>
+              </Stack>
+            </Box>
+          )}
         </Stack>
       </SimpleGrid>
 
@@ -302,6 +342,7 @@ const ClaseComponent = () => {
                 <FormLabel>Telefono</FormLabel>
                 <Input
                   ref={initialRef}
+                  name="telefono"
                   placeholder="Telefono"
                   value={formData.telefono}
                   onChange={handleChange}
@@ -312,6 +353,7 @@ const ClaseComponent = () => {
                 <FormLabel>Horario</FormLabel>
                 <Input
                   placeholder="Horario"
+                  name="horario"
                   value={formData.horario}
                   onChange={handleChange}
                 />
@@ -320,6 +362,7 @@ const ClaseComponent = () => {
               <FormControl mt={4} id="descr_contratacion">
                 <FormLabel>Descripcion de contratacion</FormLabel>
                 <Input
+                  name="descr_contratacion"
                   placeholder="Descripcion al profesor del interes por la clase"
                   value={formData.descr_contratacion}
                   onChange={handleChange}
@@ -341,7 +384,11 @@ const ClaseComponent = () => {
 };
 
 const Clase = (props) => {
-  return <BackgroundLayout component={<ClaseComponent />}></BackgroundLayout>;
+  return (
+    <BackgroundLayout
+      component={<ClaseComponent userState={props.userState} />}
+    ></BackgroundLayout>
+  );
 };
 
 export default Clase;

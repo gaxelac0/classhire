@@ -20,11 +20,13 @@ import {
   Checkbox,
   Select,
   Icon,
+  Textarea,
+  FormHelperText,
 } from "@chakra-ui/react";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FaUniversity, FaBaby, FaIdCard } from "react-icons/fa";
 
-import {useFileUpload} from "use-file-upload"
+import { useFileUpload } from "use-file-upload";
 
 import { useToast } from "@chakra-ui/react";
 
@@ -40,7 +42,7 @@ const EditProfileFrm = (props) => {
 
   const [profile, setProfile] = useState([]);
 
-  const [file, selectFile] = useFileUpload()
+  const [file, selectFile] = useFileUpload();
 
   const [experienciasList, setExperienciasList] = useState([
     { firstName: "", lastName: "", nivel: "", descr: "", completed: false },
@@ -51,6 +53,7 @@ const EditProfileFrm = (props) => {
     fecha_nacimiento: new Date().toDateString(),
     titulo: undefined,
     experiencias: [],
+    description: "",
   });
 
   // Agrega para completar un estudio mas
@@ -68,7 +71,7 @@ const EditProfileFrm = (props) => {
     setExperienciasList(list);
     setFormData({
       ...formData,
-      "experiencias": list,
+      experiencias: list,
     });
   };
 
@@ -93,7 +96,7 @@ const EditProfileFrm = (props) => {
     setExperienciasList(list);
     setFormData({
       ...formData,
-      "experiencias": list,
+      experiencias: list,
     });
   };
 
@@ -103,7 +106,7 @@ const EditProfileFrm = (props) => {
     setExperienciasList(list);
     setFormData({
       ...formData,
-      "experiencias": list,
+      experiencias: list,
     });
   };
 
@@ -112,6 +115,7 @@ const EditProfileFrm = (props) => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    //console.log(JSON.stringify(formData));
   };
 
   const updateMessage = (msg, status) => {
@@ -133,7 +137,7 @@ const EditProfileFrm = (props) => {
       let result = await profileService.patchProfile(formData);
       if (result.status === "ok") {
         props.userState.role = result.data.patchedProfile.role;
-        updateMessage("Perfil actualizado", "success")
+        updateMessage("Perfil actualizado", "success");
       }
       navigate("/profile/1");
     } catch (err) {
@@ -145,10 +149,7 @@ const EditProfileFrm = (props) => {
   const isErrorTitulo = formData.titulo === "";
   const isErrorFirstName = formData.firstName === "";
   const isErrorLastName = formData.lastName === "";
-
-
-
-
+  const isErrorDescription = formData.description === "";
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -158,7 +159,7 @@ const EditProfileFrm = (props) => {
       );
       let profile = result.data.docs[0];
       setProfile(profile);
-  
+
       let list = [...profile.experiencias];
       if (list.length <= 0) {
         list = [{ nivel: "", descr: "", completed: false }];
@@ -166,16 +167,17 @@ const EditProfileFrm = (props) => {
       setExperienciasList(list);
       setFormData({
         ...formData,
-        "firstName": profile.firstName,
-        "lastName": profile.lastName,
-        "experiencias": list,
-        "titulo": profile.titulo,
-        "fecha_nacimiento": profile.fecha_nacimiento
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        experiencias: list,
+        description: profile.description,
+        titulo: profile.titulo,
+        fecha_nacimiento: profile.fecha_nacimiento
           .split("/")
           .reverse()
           .join("-"),
       });
-  
+
       //console.log("formData: " + JSON.stringify(formData));
       //console.log("profilePhoto: " + profile.photo)
     };
@@ -191,16 +193,13 @@ const EditProfileFrm = (props) => {
           let profileNew = profile;
           profileNew["photo"] = result.image_url;
           setProfile(profileNew);
-          updateMessage("Foto actualizada", "success")
+          updateMessage("Foto actualizada", "success");
         }
         //console.log("profilePhoto: " + JSON.stringify(result))
       };
       uploadImage();
     }
-
-  }, [file])
-
-
+  }, [file]);
 
   return (
     <VStack>
@@ -209,7 +208,7 @@ const EditProfileFrm = (props) => {
           <Image
             onClick={() => {
               // Single File Upload
-              selectFile()
+              selectFile();
             }}
             opacity={0.5}
             _hover={{
@@ -223,10 +222,10 @@ const EditProfileFrm = (props) => {
             mb={"-10"}
           />
           <Icon
-          onClick={() => {
-            // Single File Upload
-            selectFile()
-          }}
+            onClick={() => {
+              // Single File Upload
+              selectFile();
+            }}
             as={MdUploadFile}
             boxSize="8"
             alignSelf="left"
@@ -243,6 +242,7 @@ const EditProfileFrm = (props) => {
                   <Box m={8} color="#0B0E3F">
                     <form onSubmit={handleSubmit}>
                       <VStack spacing={5}>
+                        
                         {props.usage !== "onboard" && (
                           <>
                             <FormControl
@@ -565,6 +565,44 @@ const EditProfileFrm = (props) => {
                             </InputGroup>
                           </FormControl>
                         )}
+
+{
+                          props.roleSelection &&
+                          props.roleSelection === "teacher" && (
+                            <>
+                              <FormControl
+                                id="description"
+                                isInvalid={isErrorDescription}
+                                isRequired
+                              >
+                                <FormLabel>Descripcion profesional</FormLabel>
+                                <Textarea
+                                  id="description"
+                                  name="description"
+                                  placeholder="Describete a ti mismo"
+                                  value={formData && formData["description"]}
+                                  onChange={handleChange}
+                                  resize={"vertical"}
+                                  mt={1}
+                                  rows={3}
+                                  minLength={60}
+                                  shadow="sm"
+                                  focusBorderColor="brand.400"
+                                  fontSize={{
+                                    sm: "sm",
+                                  }}
+                                />
+                                <FormHelperText>
+                                  Detalla una descripcion sobre tu experiencia personal, tu metodologia de ensenanza, etc
+                                </FormHelperText>
+                                {isErrorDescription && (
+                                  <FormErrorMessage>
+                                    El campo de descripcion es obligatorio
+                                  </FormErrorMessage>
+                                )}
+                              </FormControl>
+                            </>
+                          )}
 
                         <FormControl id="submitPatchProfile" float="right">
                           <Button
