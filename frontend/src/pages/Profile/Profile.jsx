@@ -1,11 +1,14 @@
 import {
   Box,
+  Button,
   Table,
   Thead,
   Tbody,
   Tr,
   Th,
+  Tooltip,
   Td,
+  TableCaption,
   TableContainer,
   Tabs,
   Tab,
@@ -16,9 +19,28 @@ import {
   Text,
   HStack,
   IconButton,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  ModalHeader,
+  ModalContent,
+  Modal,
+  ModalOverlay,
+  useDisclosure,
   Icon,
-  Tooltip,
 } from "@chakra-ui/react";
+
+import Pagination from "../../components/Pagination/Pagination";
+import BackgroundLayout from "../../components/Layout/BackgroundLayout";
+import { FaComment} from "react-icons/fa";
+import {BsFillPersonFill} from "react-icons/bs";
+import { useState, useEffect } from "react";
+import * as claseService from "../../services/claseService";
+
+import { Heading } from "@chakra-ui/react";
+
+import { Link, useParams } from "react-router-dom";
+import EditProfileFrm from "./EditProfileFrm";
 
 import {
   CheckIcon,
@@ -28,20 +50,7 @@ import {
   SpinnerIcon,
   TimeIcon,
 } from "@chakra-ui/icons";
-import { MdUploadFile } from "react-icons/md";
 
-import Pagination from "../../components/Pagination/Pagination";
-import BackgroundLayout from "../../components/Layout/BackgroundLayout";
-
-import { FaComment } from "react-icons/fa";
-
-import { useState, useEffect } from "react";
-import * as claseService from "../../services/claseService";
-
-import { Heading } from "@chakra-ui/react";
-
-import { Link, useParams } from "react-router-dom";
-import EditProfileFrm from "./EditProfileFrm";
 
 const FittedTab = (props) => {
   return (
@@ -100,22 +109,29 @@ const FittedTab = (props) => {
 };
 
 const TablaMaterias = (props) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const OverlayOne = () => (
+    <ModalOverlay
+      bg='blackAlpha.300'
+      backdropFilter='blur(10px) hue-rotate(90deg)'
+    />
+  )
   return (
     <TableContainer>
-      <Table variant="unstyled">
+      <Table variant="unstyled" >
         {/* TODO: remover estos captions eran de prueba nomas */}
         <Thead>
           <Tr>
             {props.userState.role === "student" ? (
               <>
-                <Th>Clase</Th>
+                <Th>Titulo</Th>
                 <Th display={{ sm: "none", md: "inline-block" }}>Profesor</Th>
                 <Th display={{ sm: "none", md: "inline-block" }}>Fecha</Th>
                 <Th>Acciones</Th>
               </>
             ) : (
               <>
-                <Th>Clase</Th>
+                <Th>Titulo</Th>
                 <Th display={{ sm: "none", md: "flex" }}>Fecha</Th>
                 <Th>Acciones</Th>
               </>
@@ -144,7 +160,7 @@ const TablaMaterias = (props) => {
                             </Box>
                             
                           }
-                        >
+                      >
                           <Icon
                             mr={"1em"}
                             as={iconByStatus(c.contrataciones.docs[0].state_in_order[c.contrataciones.docs[0].state_in_order.length-1])}
@@ -155,7 +171,7 @@ const TablaMaterias = (props) => {
                         </Tooltip>
                         <Text fontWeight="semibold">{c.title}</Text>
                         <Image
-                          alt="Ir a la Clase"
+                        alt="Ir a la Clase"
                           src={
                             "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg=="
                           }
@@ -181,23 +197,23 @@ const TablaMaterias = (props) => {
                       )}
                       {c.contrataciones.docs[0].state_in_order[c.contrataciones.docs[0].state_in_order.length-1] === "solicitada" && (
                         <Tooltip label={"Cancelar"}>
-                          <IconButton
-                            colorScheme="teal"
-                            aria-label="Call Segun"
-                            size="xs"
-                            icon={<DeleteIcon />}
-                          />
+                      <IconButton
+                        colorScheme="teal"
+                        aria-label="Call Segun"
+                        size="xs"
+                        icon={<DeleteIcon />}
+                      />
                         </Tooltip>
                       )}
 
                       {c.contrataciones.docs[0].state_in_order[c.contrataciones.docs[0].state_in_order.length-1] === "finalizada" && (
                         <Tooltip label={"Agregar Review"}>
-                          <IconButton
-                            colorScheme="teal"
-                            aria-label="Call Segun"
-                            size="xs"
-                            icon={<FaComment />}
-                          />
+                      <IconButton
+                        colorScheme="teal"
+                        aria-label="Call Segun"
+                        size="xs"
+                        icon={<FaComment />}
+                      />
                         </Tooltip>
                       )}
                     </HStack>
@@ -231,8 +247,28 @@ const TablaMaterias = (props) => {
                         colorScheme="teal"
                         aria-label="Call Segun"
                         size="xs"
-                        icon={<FaComment />}
+                        icon={<BsFillPersonFill />}
+                        onClick={onOpen}
                       />
+
+                      <Modal
+                        isOpen={isOpen}
+                        onClose={onClose}
+                        >
+                        <ModalOverlay />
+                        <ModalContent>
+                          <ModalHeader>Listado de Alumnos</ModalHeader>
+                          <ModalCloseButton />
+                          <ModalBody pb={6}>
+                          
+                          </ModalBody>
+
+                          <ModalFooter>
+                            <Button onClick={onClose}>Cerrar</Button>
+                          </ModalFooter>
+                        </ModalContent>
+                        </Modal>
+
                     </HStack>
                   </Td>
                 </>
@@ -256,22 +292,22 @@ const Profile = (props) => {
   });
 
   useEffect(() => {
-    const fetchClases = async () => {
-      console.log("executing fetchClases at Profile");
-      const clasesData = await claseService.getClasesByUser(
-        props.userState.user.profile,
-        page,
-        5
-      );
-      setClases(clasesData.data.docs);
-      setPagination({
-        page: clasesData.data.page,
-        totalPages: clasesData.data.totalPages,
-      });
-      //console.log("retrieving clases");
-      //console.log(clases);
-      //console.log(pagination);
-    };
+  const fetchClases = async () => {
+    console.log("executing fetchClases at Profile");
+    const clasesData = await claseService.getClasesByUser(
+      props.userState.user.profile,
+      page,
+      5
+    );
+    setClases(clasesData.data.docs);
+    setPagination({
+      page: clasesData.data.page,
+      totalPages: clasesData.data.totalPages,
+    });
+    //console.log("retrieving clases");
+    //console.log(clases);
+    //console.log(pagination);
+  };
     fetchClases();
   }, [page]);
 

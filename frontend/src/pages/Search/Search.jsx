@@ -2,7 +2,9 @@ import { React, useEffect } from "react";
 import {
   chakra,
   Box,
+  Divider,
   Stack,
+  Flex,
   FormLabel,
   FormControl,
   GridItem,
@@ -14,8 +16,10 @@ import {
   SliderThumb,
   SliderMark,
   VStack,
+  Text,
+  Icon
 } from "@chakra-ui/react";
-
+import { WarningTwoIcon } from '@chakra-ui/icons'
 import ClaseCard from "../../components/ClaseCard/ClaseCard";
 import Pagination from "../../components/Pagination/Pagination";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
@@ -206,7 +210,7 @@ const SearchComponent = (props) => {
                     step={20}
                     onChange={(val) => {
                       setRating(val / 20);
-                      //console.log(val / 20);
+                      console.log(val / 20);
                     }}
                   >
                     <SliderMark
@@ -230,13 +234,23 @@ const SearchComponent = (props) => {
             </Stack>
           </chakra.form>
           <SimpleGrid columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing="1em">
-            {clases.map((c, idx) => (
+            {clases && clases.map((c, idx) => (
               <ClaseCard
                 key={idx}
                 clase={c}
               />
             ))}
           </SimpleGrid>
+          { clases && clases.length <= 0 && 
+            
+            <Text
+              fontSize='lg'
+              color="GrayText"
+              as="b">
+              <Icon as={WarningTwoIcon} w={8} h={5} color='red.300' />
+              No se encontraron resultados
+            </Text>
+          }
           <Pagination pagination={pagination} route={"search"} />
         </VStack>
       </Box>
