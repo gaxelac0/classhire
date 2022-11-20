@@ -132,7 +132,7 @@ db.clases.insertMany([
     price: 5,
     duration: 5,
     nivel: {
-      value: "secundario",
+      value: "secundaria",
     },
     frecuencia: {
       value: "semanal",

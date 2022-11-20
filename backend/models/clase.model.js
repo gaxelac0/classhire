@@ -23,7 +23,7 @@ var frecuenciaSchema = new mongoose.Schema({
 const NivelEnum = [
   "primaria",
   "secundaria",
-  "terciaria",
+  "terciario",
   "universitario",
   "seminario",
 ];

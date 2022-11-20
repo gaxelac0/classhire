@@ -104,4 +104,17 @@ async function patchContratacion(fields) {
   }
 }
 
-export { addClase, getClases, getClasesByUser, contratar, patchContratacion };
+async function addReview(body) {
+  const res = await fetch(BASE_URL + "/review", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${tokenService.getToken()}`,
+    },
+    body: JSON.stringify(body),
+  });
+
+  return await res.json();
+}
+
+export { addClase, getClases, getClasesByUser, contratar, patchContratacion, addReview };

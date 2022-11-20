@@ -6,9 +6,7 @@ import {
   Tbody,
   Tr,
   Th,
-  Tooltip,
   Td,
-  TableCaption,
   TableContainer,
   Tabs,
   Tab,
@@ -20,13 +18,6 @@ import {
   HStack,
   IconButton,
   ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  ModalHeader,
-  ModalContent,
-  Modal,
-  ModalOverlay,
-  useDisclosure,
   Icon,
   Tooltip,
   Container,
@@ -43,15 +34,15 @@ import {
   FormHelperText,
   FormErrorMessage,
   Center,
-  Button,
+  Select,
 } from "@chakra-ui/react";
 
 import Pagination from "../../components/Pagination/Pagination";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 
-import {BsFillPersonFill} from "react-icons/bs";
+import { BsFillPersonFill } from "react-icons/bs";
 import { FaComment } from "react-icons/fa";
-import { useState, useRef, React, useEffect } from "react";
+import { useState, React, useEffect } from "react";
 import * as claseService from "../../services/claseService";
 
 import { Heading } from "@chakra-ui/react";
@@ -70,8 +61,8 @@ import {
   TimeIcon,
 } from "@chakra-ui/icons";
 
-
 const FittedTab = (props) => {
+  //console.log(props);
   return (
     <Tabs variant="soft-rounded" colorScheme="teal">
       <TabList mb="1em">
@@ -103,6 +94,7 @@ const FittedTab = (props) => {
                   clases={props.clases}
                   pagination={props.pagination}
                   handleOnOpenCancelar={props.handleOnOpenCancelar}
+                  handleOnOpenAddReview={props.handleOnOpenAddReview}
                 />
                 <Pagination pagination={props.pagination} route={"profile"} />
               </>
@@ -132,13 +124,13 @@ const TablaMaterias = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const OverlayOne = () => (
     <ModalOverlay
-      bg='blackAlpha.300'
-      backdropFilter='blur(10px) hue-rotate(90deg)'
+      bg="blackAlpha.300"
+      backdropFilter="blur(10px) hue-rotate(90deg)"
     />
-  )
+  );
   return (
     <TableContainer>
-      <Table variant="unstyled" >
+      <Table variant="unstyled">
         {/* TODO: remover estos captions eran de prueba nomas */}
         <Thead>
           <Tr>
@@ -195,7 +187,7 @@ const TablaMaterias = (props) => {
                               </Text>
                             </Box>
                           }
-                      >
+                        >
                           <Icon
                             mr={"1em"}
                             as={iconByStatus(
@@ -211,7 +203,7 @@ const TablaMaterias = (props) => {
                         </Tooltip>
                         <Text fontWeight="semibold">{c.title}</Text>
                         <Image
-                        alt="Ir a la Clase"
+                          alt="Ir a la Clase"
                           src={
                             "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg=="
                           }
@@ -242,14 +234,18 @@ const TablaMaterias = (props) => {
                       ] === "solicitada" && (
                         <Tooltip label={"Cancelar"}>
                           <IconButton
-                            onClick={() => {props.handleOnOpenCancelar({clase_id: c._id, profile_id: props.userState.user.profile})}}
+                            onClick={() => {
+                              props.handleOnOpenCancelar({
+                                clase_id: c._id,
+                                profile_id: props.userState.user.profile,
+                              });
+                            }}
                             new_state="cancelada"
                             colorScheme="teal"
                             aria-label="Call Segun"
                             size="xs"
                             icon={<DeleteIcon />}
                           />
-
                         </Tooltip>
                       )}
 
@@ -257,12 +253,17 @@ const TablaMaterias = (props) => {
                         c.contrataciones.docs[0].state_in_order.length - 1
                       ] === "finalizada" && (
                         <Tooltip label={"Agregar Review"}>
-                      <IconButton
-                        colorScheme="teal"
-                        aria-label="Call Segun"
-                        size="xs"
-                        icon={<FaComment />}
-                      />
+                          <IconButton
+                            onClick={() => {
+                              props.handleOnOpenAddReview({
+                                clase_id: c._id,
+                              });
+                            }}
+                            colorScheme="teal"
+                            aria-label="Call Segun"
+                            size="xs"
+                            icon={<FaComment />}
+                          />
                         </Tooltip>
                       )}
                     </HStack>
@@ -300,24 +301,18 @@ const TablaMaterias = (props) => {
                         onClick={onOpen}
                       />
 
-                      <Modal
-                        isOpen={isOpen}
-                        onClose={onClose}
-                        >
+                      <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>
                           <ModalHeader>Listado de Alumnos</ModalHeader>
                           <ModalCloseButton />
-                          <ModalBody pb={6}>
-                          
-                          </ModalBody>
+                          <ModalBody pb={6}></ModalBody>
 
                           <ModalFooter>
                             <Button onClick={onClose}>Cerrar</Button>
                           </ModalFooter>
                         </ModalContent>
-                        </Modal>
-
+                      </Modal>
                     </HStack>
                   </Td>
                 </>
@@ -334,11 +329,17 @@ const ProfileComponent = (props) => {
   let navigate = useNavigate();
   let toast = useToast();
 
-  const initialRef = useRef(null);
-  const finalRef = useRef(null);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenCancelar,
+    onOpen: onOpenCancelar,
+    onClose: onCloseCancelar,
+  } = useDisclosure();
 
-  
+  const {
+    isOpen: isOpenAddReview,
+    onOpen: onOpenAddReview,
+    onClose: onCloseAddReview,
+  } = useDisclosure();
 
   const [formData, setFormData] = useState({
     clase_id: "",
@@ -349,9 +350,25 @@ const ProfileComponent = (props) => {
 
   const isErrorReason = formData.new_reason === "";
 
+  const [formDataReview, setFormDataReview] = useState({
+    clase_id: "",
+    type: "positive",
+    comment: undefined,
+  });
+
+  const isErrorTypeReview = formDataReview.type === "";
+
+  const isErrorComment = formDataReview.comment === "";
+
   const handleChange = (e) => {
     console.log(e.target.value);
     setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleChangeReview = (e) => {
+    console.log(e.target.value);
+    setFormDataReview({ ...formDataReview, [e.target.name]: e.target.value });
+    console.log(formDataReview)
   };
 
   const handleSubmit = async (evt) => {
@@ -359,7 +376,34 @@ const ProfileComponent = (props) => {
     try {
       let result = await claseService.patchContratacion(formData);
       if (result.status === "ok") {
-        updateMessage("Clase " + result.data.patchedContratacion.state_in_order[result.data.patchedContratacion.state_in_order.length-1] + " con exito", "success");
+        updateMessage(
+          "Clase " +
+            result.data.patchedContratacion.state_in_order[
+              result.data.patchedContratacion.state_in_order.length - 1
+            ] +
+            " con exito",
+          "success"
+        );
+        navigate("/profile");
+      } else {
+        throw new Error(result.msg);
+      }
+    } catch (err) {
+      updateMessage(err.message, "error");
+    }
+  };
+
+  const handleSubmitAddReview = async (evt) => {
+    evt.preventDefault();
+    try {
+
+      
+
+      let result = await claseService.addReview(formDataReview);
+      if (result.status === "ok") {
+        updateMessage( result.msg,
+          "success"
+        );
         navigate("/profile");
       } else {
         throw new Error(result.msg);
@@ -382,14 +426,23 @@ const ProfileComponent = (props) => {
     }
   };
 
-  const handleOnOpenCancelar = ({clase_id, profile_id}) => {
-    onOpen()
-    setFormData({ ...formData,
+  const handleOnOpenCancelar = ({ clase_id, profile_id }) => {
+    onOpenCancelar();
+    setFormData({
+      ...formData,
       clase_id: clase_id,
       profile_id: profile_id,
       new_state: "cancelada",
     });
-  }
+  };
+
+  const handleOnOpenAddReview = ({ clase_id }) => {
+    onOpenAddReview();
+    setFormDataReview({
+      ...formDataReview,
+      clase_id: clase_id
+    });
+  };
 
   return (
     <Container maxW={"7xl"}>
@@ -398,13 +451,10 @@ const ProfileComponent = (props) => {
         clases={props.clases}
         pagination={props.pagination}
         handleOnOpenCancelar={handleOnOpenCancelar}
+        handleOnOpenAddReview={handleOnOpenAddReview}
       />
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-      >
+
+      <Modal isOpen={isOpenCancelar} onClose={onCloseCancelar}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Cancelando la clase</ModalHeader>
@@ -433,7 +483,9 @@ const ProfileComponent = (props) => {
                     sm: "sm",
                   }}
                 />
-                <FormHelperText>Ingresa la razon por la cual cancelas la clase</FormHelperText>
+                <FormHelperText>
+                  Ingresa la razon por la cual cancelas la clase
+                </FormHelperText>
                 {isErrorReason && (
                   <FormErrorMessage>
                     La razon de actualizacion requerida.
@@ -446,7 +498,87 @@ const ProfileComponent = (props) => {
                   <Button type="submit" colorScheme="teal" m={"1em"}>
                     Cancelar Clase
                   </Button>
-                  <Button onClick={onClose} m={"1em"}>
+                  <Button onClick={onCloseCancelar} m={"1em"}>
+                    Regresar
+                  </Button>
+                </HStack>
+              </Center>
+            </form>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
+      <Modal isOpen={isOpenAddReview} onClose={onCloseAddReview}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Agregando review</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <form onSubmit={handleSubmitAddReview}>
+              <FormControl
+                colSpan={[6, 3]}
+                isInvalid={isErrorTypeReview}
+                isRequired
+              >
+                <FormLabel fontSize="sm" fontWeight="md" color="gray.700">
+                  Tipo de Review
+                </FormLabel>
+                <Select
+                  id="type"
+                  name="type"
+                  mt={1}
+                  focusBorderColor="brand.400"
+                  value={formDataReview.type}
+                  shadow="sm"
+                  size="sm"
+                  w="full"
+                  rounded="md"
+                  onChange={handleChangeReview}
+                >
+                  <option value="positive">Positiva</option>
+                  <option value="negative">Negativa</option>
+                </Select>
+                {isErrorTypeReview && (
+                  <FormErrorMessage>
+                    El tipo de review es requerido
+                  </FormErrorMessage>
+                )}
+              </FormControl>
+
+              <FormControl mt={4} isInvalid={isErrorComment} isRequired>
+                <FormLabel>Comentario / Review</FormLabel>
+                <Textarea
+                      id="comment"
+                      name="comment"
+                      placeholder="Escribe aqui tu comentario o feedback sobre la clase"
+                      value={formDataReview.comment}
+                      onChange={handleChangeReview}
+                      resize={"vertical"}
+                      mt={1}
+                      rows={3}
+                      minLength={10}
+                      shadow="sm"
+                      focusBorderColor="brand.400"
+                      fontSize={{
+                        sm: "sm",
+                      }}
+                    />
+                    <FormHelperText>
+                      Razon por la que quieres tomar la clase, preguntas sobre contenido, etc
+                    </FormHelperText>
+                    {isErrorComment && (
+                      <FormErrorMessage>
+                        La descripcion de contratacion es requerida.
+                      </FormErrorMessage>
+                    )}
+              </FormControl>
+
+              <Center>
+                <HStack>
+                  <Button type="submit" colorScheme="teal" m={"1em"}>
+                    Agregar Review
+                  </Button>
+                  <Button onClick={onCloseAddReview} m={"1em"}>
                     Regresar
                   </Button>
                 </HStack>
@@ -470,22 +602,22 @@ const Profile = (props) => {
   });
 
   useEffect(() => {
-  const fetchClases = async () => {
-    console.log("executing fetchClases at Profile");
-    const clasesData = await claseService.getClasesByUser(
-      props.userState.user.profile,
-      page,
-      5
-    );
-    setClases(clasesData.data.docs);
-    setPagination({
-      page: clasesData.data.page,
-      totalPages: clasesData.data.totalPages,
-    });
-    //console.log("retrieving clases");
-    //console.log(clases);
-    //console.log(pagination);
-  };
+    const fetchClases = async () => {
+      console.log("executing fetchClases at Profile");
+      const clasesData = await claseService.getClasesByUser(
+        props.userState.user.profile,
+        page,
+        5
+      );
+      setClases(clasesData.data.docs);
+      setPagination({
+        page: clasesData.data.page,
+        totalPages: clasesData.data.totalPages,
+      });
+      //console.log("retrieving clases");
+      //console.log(clases);
+      //console.log(pagination);
+    };
     fetchClases();
   }, [page]);
 
