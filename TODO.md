@@ -3,9 +3,6 @@
 
 - completar perfil para mostrar estudios para alumnos y experiencias para profesores.
 
-
-- agregar materia en las cards y pagina de clases
-- agregar duracion a las materias y frecuencia
 - agregar contrataciones en pagina de clase para poder borrar comentarios.
 
 

@@ -69,7 +69,7 @@ async function getClasesByUser(profile_id, page, limit) {
 }
 
 async function contratar(body) {
-  const res = await fetch(BASE_URL + "/contratar", {
+  const res = await fetch(BASE_URL + "/contratacion", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -81,4 +81,27 @@ async function contratar(body) {
   return await res.json();
 }
 
-export { addClase, getClases, getClasesByUser, contratar };
+async function patchContratacion(fields) {
+  try {
+    let token = tokenService.getToken();
+    const res = await fetch(BASE_URL + "/contratacion", {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(fields),
+    });
+
+    const json = await res.json();
+    if (json.err) {
+      throw new Error(json.err);
+    }
+
+    return json;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export { addClase, getClases, getClasesByUser, contratar, patchContratacion };

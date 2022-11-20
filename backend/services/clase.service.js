@@ -285,6 +285,15 @@ exports.contratar = async function (body) {
       );
     }
 
+    if (profile.clases.includes(clase._id)) {
+      throw new BaseError(
+        "err",
+        HttpStatusCodes.UNAUTHORIZED,
+        true,
+        "Solo se puede contratar la clase una vez."
+      );
+    }
+
     profile.clases.push(clase._id);
 
     await profile.save();
@@ -301,7 +310,7 @@ exports.contratar = async function (body) {
     console.log("error services", e);
     throw new BaseError(
       "err",
-      HttpStatusCodes.INTERNAL_SERVER,
+      e.statusCode ? e.statusCode : HttpStatusCodes.INTERNAL_SERVER,
       true,
       e.message
     );
@@ -322,3 +331,54 @@ const getNewClaseSchema = (body) => {
   }
   return newClassObject;
 };
+
+async function patchContratacion(body) {
+  try {
+    let profile = await Profile.findOne({ _id: body.user.profile });
+
+    if (!profile) {
+      throw new BaseError(
+        "err",
+        HttpStatusCodes.NOT_FOUND,
+        true,
+        "Profile not found"
+      );
+    }
+
+    let contratacion = await Contratacion.findOne({ clase_id: body.clase_id, profile_id: body.profile_id });
+
+    let objCount = 0;
+
+    if (body.new_state && body.new_state != "") {
+      objCount = objCount+1;
+      contratacion.state_in_order.push(body.new_state)
+    }
+
+    if (body.new_reason && body.new_reason != "") {
+      objCount = objCount+1;
+      contratacion.reasons_in_order.push(body.new_reason)
+    }
+
+    if (profile.role == "student") { 
+      //profile.photo = constants.defaultProfileStudentImage;
+    } else {
+      // profile.photo = constants.defaultProfileTeacherImage;
+    }     
+    
+    if (objCount === 0) {
+      return null
+    }
+
+    let patchedContratacion = await contratacion.save();
+    return {patchedContratacion};
+
+  } catch (e) {
+    throw new BaseError(
+      "err",
+      HttpStatusCodes.INTERNAL_SERVER,
+      true,
+      e.message
+    );
+  }
+}
+exports.patchContratacion = patchContratacion;

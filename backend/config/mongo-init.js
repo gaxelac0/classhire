@@ -549,7 +549,7 @@ db.contratacions.insertOne({
   profile_id: ObjectId("demostudent0"),
   clase_id: ObjectId("clase0000001"),
   state_in_order: ["solicitada"],
-  reason_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?"],
+  reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?"],
   createdAt: new Date(),
   updatedAt: new Date(),
 });
@@ -558,7 +558,7 @@ db.contratacions.insertOne({
   profile_id: ObjectId("demostudent0"),
   clase_id: ObjectId("clase0000002"),
   state_in_order: ["solicitada", "cancelada"],
-  reason_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?", "no doy para CBC"],
+  reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?", "no doy para CBC"],
   createdAt: new Date(),
   updatedAt: new Date(),
 });
@@ -567,7 +567,7 @@ db.contratacions.insertOne({
   profile_id: ObjectId("demostudent0"),
   clase_id: ObjectId("clase0000003"),
   state_in_order: ["solicitada", "aceptada", "finalizada"],
-  reason_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?", "bienvenido a las clases...", "todo bien"],
+  reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?", "bienvenido a las clases...", "todo bien"],
   createdAt: new Date(),
   updatedAt: new Date(),
 });
@@ -576,7 +576,7 @@ db.contratacions.insertOne({
   profile_id: ObjectId("demostudent0"),
   clase_id: ObjectId("clase0000004"),
   state_in_order: ["solicitada", "aceptada"],
-  reason_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?", "bienvenido a las clases..."],
+  reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?", "bienvenido a las clases..."],
   createdAt: new Date(),
   updatedAt: new Date(),
 });
@@ -585,7 +585,7 @@ db.contratacions.insertOne({
   profile_id: ObjectId("demostudent0"),
   clase_id: ObjectId("clase0000005"),
   state_in_order: ["solicitada"],
-  reason_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?"],
+  reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?"],
   createdAt: new Date(),
   updatedAt: new Date(),
 });
@@ -594,7 +594,7 @@ db.contratacions.insertOne({
   profile_id: ObjectId("demostudent0"),
   clase_id: ObjectId("clase0000006"),
   state_in_order: ["solicitada", "aceptada"],
-  reason_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?", "bienvenido a las clases..."],
+  reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?", "bienvenido a las clases..."],
   createdAt: new Date(),
   updatedAt: new Date(),
 });

@@ -35,10 +35,20 @@ router.post(
 );
 
 router.post(
-  "/contratar",
+  "/contratacion",
   checkAuth,
   body("clase_id").exists().notEmpty(),
   claseCtrl.contratar
+);
+
+router.patch(
+  "/contratacion",
+  checkAuth,
+  body("clase_id").exists().notEmpty(),
+  body("profile_id").exists().notEmpty(),
+  body("new_state").exists().notEmpty(),
+  body("new_reason").exists().notEmpty(),
+  claseCtrl.patchContratacion
 );
 
 module.exports = router;

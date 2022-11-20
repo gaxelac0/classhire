@@ -119,3 +119,16 @@ exports.contratar = async function contratar(req, res) {
     return res.status(e.statusCode).json({ status: e.name, msg: e.message });
   }
 };
+
+exports.patchContratacion = async function patchContratacion(req, res) {
+  try {
+    req.body.user = req.user;
+    let data = await claseService.patchContratacion(req.body);
+    if (!data) return res.status(304).json({status:"ok", msg: "Not Modified"}) 
+    return res.status(200).json({ status: "ok", data: data});
+  } catch (e) {
+    return res
+      .status(e.statusCode)
+      .json({ status: e.name, message: e.message });
+  }
+};

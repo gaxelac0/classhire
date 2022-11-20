@@ -28,18 +28,37 @@ import {
   ModalOverlay,
   useDisclosure,
   Icon,
+  Tooltip,
+  Container,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  useDisclosure,
+  ModalCloseButton,
+  ModalBody,
+  FormControl,
+  FormLabel,
+  Textarea,
+  FormHelperText,
+  FormErrorMessage,
+  Center,
+  Button,
 } from "@chakra-ui/react";
 
 import Pagination from "../../components/Pagination/Pagination";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
-import { FaComment} from "react-icons/fa";
+
 import {BsFillPersonFill} from "react-icons/bs";
-import { useState, useEffect } from "react";
+import { FaComment } from "react-icons/fa";
+import { useState, useRef, React, useEffect } from "react";
 import * as claseService from "../../services/claseService";
 
 import { Heading } from "@chakra-ui/react";
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
+
+import { useToast } from "@chakra-ui/react";
 import EditProfileFrm from "./EditProfileFrm";
 
 import {
@@ -83,6 +102,7 @@ const FittedTab = (props) => {
                   userState={props.userState}
                   clases={props.clases}
                   pagination={props.pagination}
+                  handleOnOpenCancelar={props.handleOnOpenCancelar}
                 />
                 <Pagination pagination={props.pagination} route={"profile"} />
               </>
@@ -150,20 +170,40 @@ const TablaMaterias = (props) => {
                           label={
                             <Box>
                               <Text textTransform={"uppercase"}>
-                              {c.contrataciones.docs[0].state_in_order[c.contrataciones.docs[0].state_in_order.length-1]}
-                            </Text>
-                            <Text>
-                              {c.contrataciones.docs[0].state_in_order[c.contrataciones.docs[0].state_in_order.length-1] === "solicitada" 
-                              && "Quedan " + (-Math.floor((new Date()-new Date(c.contrataciones.docs[0].createdAt))/3600000)+48) + " horas"
-                              }
-                            </Text>
+                                {
+                                  c.contrataciones.docs[0].state_in_order[
+                                    c.contrataciones.docs[0].state_in_order
+                                      .length - 1
+                                  ]
+                                }
+                              </Text>
+                              <Text>
+                                {c.contrataciones.docs[0].state_in_order[
+                                  c.contrataciones.docs[0].state_in_order
+                                    .length - 1
+                                ] === "solicitada" &&
+                                  "Quedan " +
+                                    (-Math.floor(
+                                      (new Date() -
+                                        new Date(
+                                          c.contrataciones.docs[0].createdAt
+                                        )) /
+                                        3600000
+                                    ) +
+                                      48) +
+                                    " horas"}
+                              </Text>
                             </Box>
-                            
                           }
                       >
                           <Icon
                             mr={"1em"}
-                            as={iconByStatus(c.contrataciones.docs[0].state_in_order[c.contrataciones.docs[0].state_in_order.length-1])}
+                            as={iconByStatus(
+                              c.contrataciones.docs[0].state_in_order[
+                                c.contrataciones.docs[0].state_in_order.length -
+                                  1
+                              ]
+                            )}
                             size="xs"
                             alignSelf="left"
                             color="teal.500"
@@ -185,7 +225,9 @@ const TablaMaterias = (props) => {
                   <Td display={{ sm: "none", md: "inline-block" }}>{c.date}</Td>
                   <Td>
                     <HStack>
-                      {c.contrataciones.docs[0].state_in_order[c.contrataciones.docs[0].state_in_order.length-1] === "aceptada" && (
+                      {c.contrataciones.docs[0].state_in_order[
+                        c.contrataciones.docs[0].state_in_order.length - 1
+                      ] === "aceptada" && (
                         <Tooltip label={"Finalizar Contratacion"}>
                           <IconButton
                             colorScheme="teal"
@@ -195,18 +237,25 @@ const TablaMaterias = (props) => {
                           />
                         </Tooltip>
                       )}
-                      {c.contrataciones.docs[0].state_in_order[c.contrataciones.docs[0].state_in_order.length-1] === "solicitada" && (
+                      {c.contrataciones.docs[0].state_in_order[
+                        c.contrataciones.docs[0].state_in_order.length - 1
+                      ] === "solicitada" && (
                         <Tooltip label={"Cancelar"}>
-                      <IconButton
-                        colorScheme="teal"
-                        aria-label="Call Segun"
-                        size="xs"
-                        icon={<DeleteIcon />}
-                      />
+                          <IconButton
+                            onClick={() => {props.handleOnOpenCancelar({clase_id: c._id, profile_id: props.userState.user.profile})}}
+                            new_state="cancelada"
+                            colorScheme="teal"
+                            aria-label="Call Segun"
+                            size="xs"
+                            icon={<DeleteIcon />}
+                          />
+
                         </Tooltip>
                       )}
 
-                      {c.contrataciones.docs[0].state_in_order[c.contrataciones.docs[0].state_in_order.length-1] === "finalizada" && (
+                      {c.contrataciones.docs[0].state_in_order[
+                        c.contrataciones.docs[0].state_in_order.length - 1
+                      ] === "finalizada" && (
                         <Tooltip label={"Agregar Review"}>
                       <IconButton
                         colorScheme="teal"
@@ -281,6 +330,135 @@ const TablaMaterias = (props) => {
   );
 };
 
+const ProfileComponent = (props) => {
+  let navigate = useNavigate();
+  let toast = useToast();
+
+  const initialRef = useRef(null);
+  const finalRef = useRef(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  
+
+  const [formData, setFormData] = useState({
+    clase_id: "",
+    profile_id: undefined,
+    new_state: undefined,
+    new_reason: undefined,
+  });
+
+  const isErrorReason = formData.new_reason === "";
+
+  const handleChange = (e) => {
+    console.log(e.target.value);
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    try {
+      let result = await claseService.patchContratacion(formData);
+      if (result.status === "ok") {
+        updateMessage("Clase " + result.data.patchedContratacion.state_in_order[result.data.patchedContratacion.state_in_order.length-1] + " con exito", "success");
+        navigate("/profile");
+      } else {
+        throw new Error(result.msg);
+      }
+    } catch (err) {
+      updateMessage(err.message, "error");
+    }
+  };
+
+  const updateMessage = (msg, status) => {
+    if (msg && (msg !== "" || msg[0] !== "")) {
+      toast({
+        title: status === "success" ? "Success!" : "Error!",
+        description: msg,
+        status: status,
+        position: "top-right",
+        duration: 6000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const handleOnOpenCancelar = ({clase_id, profile_id}) => {
+    onOpen()
+    setFormData({ ...formData,
+      clase_id: clase_id,
+      profile_id: profile_id,
+      new_state: "cancelada",
+    });
+  }
+
+  return (
+    <Container maxW={"7xl"}>
+      <FittedTab
+        userState={props.userState}
+        clases={props.clases}
+        pagination={props.pagination}
+        handleOnOpenCancelar={handleOnOpenCancelar}
+      />
+      <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Cancelando la clase</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <form onSubmit={handleSubmit}>
+              <FormControl
+                mt={4}
+                id="new_reason"
+                isInvalid={isErrorReason}
+                isRequired
+              >
+                <FormLabel>Razon de cancelamiento</FormLabel>
+                <Textarea
+                  id="new_reason"
+                  placeholder="Razon del cambio de estado"
+                  value={formData.new_reason}
+                  onChange={handleChange}
+                  resize={"vertical"}
+                  mt={1}
+                  rows={3}
+                  minLength={10}
+                  shadow="sm"
+                  focusBorderColor="brand.400"
+                  fontSize={{
+                    sm: "sm",
+                  }}
+                />
+                <FormHelperText>Ingresa la razon por la cual cancelas la clase</FormHelperText>
+                {isErrorReason && (
+                  <FormErrorMessage>
+                    La razon de actualizacion requerida.
+                  </FormErrorMessage>
+                )}
+              </FormControl>
+
+              <Center>
+                <HStack>
+                  <Button type="submit" colorScheme="teal" m={"1em"}>
+                    Cancelar Clase
+                  </Button>
+                  <Button onClick={onClose} m={"1em"}>
+                    Regresar
+                  </Button>
+                </HStack>
+              </Center>
+            </form>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </Container>
+  );
+};
+
 const Profile = (props) => {
   let { page } = useParams();
 
@@ -315,7 +493,7 @@ const Profile = (props) => {
     <>
       <BackgroundLayout
         component={
-          <FittedTab
+          <ProfileComponent
             userState={props.userState}
             clases={clases}
             pagination={pagination}
