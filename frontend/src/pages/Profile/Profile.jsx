@@ -37,17 +37,27 @@ import {
   Select,
 } from "@chakra-ui/react";
 
+
+
 import Pagination from "../../components/Pagination/Pagination";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
+
+
 
 import { BsFillPersonFill } from "react-icons/bs";
 import { FaComment } from "react-icons/fa";
 import { useState, React, useEffect } from "react";
 import * as claseService from "../../services/claseService";
 
+
+
 import { Heading } from "@chakra-ui/react";
 
+
+
 import { Link, useParams, useNavigate } from "react-router-dom";
+
+
 
 import { useToast } from "@chakra-ui/react";
 import EditProfileFrm from "./EditProfileFrm";
@@ -120,6 +130,7 @@ const FittedTab = (props) => {
   );
 };
 
+// TABLA DE MATERIAS DEL PERFIL
 const TablaMaterias = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const OverlayOne = () => (
@@ -133,7 +144,9 @@ const TablaMaterias = (props) => {
       <Table variant="unstyled">
         {/* TODO: remover estos captions eran de prueba nomas */}
         <Thead>
+          {/* Encabezados */}
           <Tr>
+            {/* Encabezado ALUMNO */}
             {props.userState.role === "student" ? (
               <>
                 <Th>Titulo</Th>
@@ -142,6 +155,7 @@ const TablaMaterias = (props) => {
                 <Th>Acciones</Th>
               </>
             ) : (
+            // Encabezado PROFESOR  
               <>
                 <Th>Titulo</Th>
                 <Th display={{ sm: "none", md: "flex" }}>Fecha</Th>
@@ -150,7 +164,9 @@ const TablaMaterias = (props) => {
             )}
           </Tr>
         </Thead>
+        {/* Cuerpos */}
         <Tbody>
+          {/* Cuerpo ALUMNO */}
           {props.clases.map((c, idx) => (
             <Tr key={idx}>
               {props.userState.role === "student" ? (
@@ -271,6 +287,7 @@ const TablaMaterias = (props) => {
                 </>
               ) : (
                 <>
+                {/* Cuerpo PROFESOR */}
                   <Td>
                     <Link to={"/clase/" + c._id}>
                       <HStack>
@@ -287,12 +304,14 @@ const TablaMaterias = (props) => {
                   <Td display={{ sm: "none", md: "flex" }}>{c.date}</Td>
                   <Td>
                     <HStack>
+                      {/* Boton Eliminar clase*/}
                       <IconButton
                         colorScheme="teal"
                         aria-label="Call Segun"
                         size="xs"
                         icon={<DeleteIcon />}
                       />
+                      {/* Boton listado de alumnos */}
                       <IconButton
                         colorScheme="teal"
                         aria-label="Call Segun"
@@ -300,13 +319,113 @@ const TablaMaterias = (props) => {
                         icon={<BsFillPersonFill />}
                         onClick={onOpen}
                       />
-
-                      <Modal isOpen={isOpen} onClose={onClose}>
+                      {/* Modal del listado de alumnos */}
+                      <Modal
+                        isOpen={isOpen}
+                        onClose={onClose}
+                        isCentered
+                        size="xl"
+                        >
                         <ModalOverlay />
                         <ModalContent>
                           <ModalHeader>Listado de Alumnos</ModalHeader>
                           <ModalCloseButton />
-                          <ModalBody pb={6}></ModalBody>
+                          <ModalBody pb={6}>
+                            <TableContainer>
+                              <Table variant="unstyled" >
+                                <Thead>
+                                  <Tr>
+                                    <Th>Estado</Th>
+                                    <Th>Alumno</Th>
+                                    <Th>Fecha</Th>
+                                    <Th>Acciones</Th>
+                                  </Tr>
+                                </Thead>
+                                <Tbody>
+                                  <Tr>
+                                    <Td>
+                                      <IconButton
+                                        colorScheme="teal"
+                                        aria-label="Call Segun"
+                                        size="xs"
+                                        icon={<TimeIcon />}
+                                      />
+                                    </Td>
+                                    <Td>Carlos Stefano</Td>
+                                    <Td>20/11/2022</Td>
+                                    <Td>
+                                      <HStack>
+                                        <IconButton
+                                          colorScheme="teal"
+                                          aria-label="Call Segun"
+                                          size="xs"
+                                          icon={<TimeIcon />}
+                                        />
+                                        <IconButton
+                                          colorScheme="teal"
+                                          aria-label="Call Segun"
+                                          size="xs"
+                                          icon={<SmallCloseIcon />}
+                                        />
+                                        <IconButton
+                                          colorScheme="teal"
+                                          aria-label="Call Segun"
+                                          size="xs"
+                                          icon={<CheckIcon />}
+                                        />
+                                        <IconButton
+                                          colorScheme="teal"
+                                          aria-label="Call Segun"
+                                          size="xs"
+                                          icon={<SpinnerIcon />}
+                                        />
+                                      </HStack>
+                                    </Td>
+                                  </Tr>
+                                  <Tr>
+                                    <Td>
+                                      <IconButton
+                                        colorScheme="teal"
+                                        aria-label="Call Segun"
+                                        size="xs"
+                                        icon={<CheckIcon />}
+                                      />
+                                    </Td>
+                                    <Td>Roberto Carlos</Td>
+                                    <Td>20/11/2022</Td>
+                                    <Td>
+                                    <HStack>
+                                      <IconButton
+                                        colorScheme="teal"
+                                        aria-label="Call Segun"
+                                        size="xs"
+                                        icon={<TimeIcon />}
+                                      />
+                                      <IconButton
+                                        colorScheme="teal"
+                                        aria-label="Call Segun"
+                                        size="xs"
+                                        icon={<SmallCloseIcon />}
+                                      />
+                                      <IconButton
+                                        colorScheme="teal"
+                                        aria-label="Call Segun"
+                                        size="xs"
+                                        icon={<CheckIcon />}
+                                      />
+                                      <IconButton
+                                        colorScheme="teal"
+                                        aria-label="Call Segun"
+                                        size="xs"
+                                        icon={<SpinnerIcon />}
+                                      />
+                                    </HStack>
+                                    </Td>
+                                  </Tr>
+                                </Tbody>
+                              </Table>
+                            </TableContainer>
+                          </ModalBody>
 
                           <ModalFooter>
                             <Button onClick={onClose}>Cerrar</Button>
