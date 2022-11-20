@@ -89,6 +89,9 @@ async function getClasesByProfileId(body, page, limit) {
         cloneResult.docs.map(async (clase, idx) => {
           query = { clase_id: clase._id };
           if (profile.role === "student") {
+            // El estudiante solo puede tener una contratacion por clase
+            page = 1;
+            limit = 1;
             query["profile_id"] = profile._id;
           }
   
