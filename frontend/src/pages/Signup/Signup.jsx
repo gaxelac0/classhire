@@ -18,6 +18,7 @@ import {
   Text,
   useColorModeValue,
   Link,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
@@ -44,12 +45,16 @@ const SignupCard = (props) => {
   };
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
+    firstName: undefined,
+    lastName: undefined,
+    email: undefined,
+    password: undefined,
   });
-  //const [photoData, setPhotoData] = useState({})
+  
+  const isErrorFirstName = formData.firstName === "";
+  const isErrorLastName = formData.lastName === "";
+  const isErrorEmail = formData.email === "";
+  const isErrorPassword = formData.password === "";
 
   const handleChange = (e) => {
     //console.log(e)
@@ -75,10 +80,10 @@ const SignupCard = (props) => {
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
-            Sign up
+            Registrate
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool features ✌️
+            para disfrutar de todas las funcionalidades ✌️
           </Text>
         </Stack>
 
@@ -92,35 +97,50 @@ const SignupCard = (props) => {
             <Stack spacing={4}>
               <HStack>
                 <Box>
-                  <FormControl id="firstName" isRequired>
-                    <FormLabel>First Name</FormLabel>
+                  <FormControl id="firstName" isInvalid={isErrorFirstName} isRequired>
+                    <FormLabel>Nombre</FormLabel>
                     <Input
                       type="text"
                       value={formData.firstName}
                       onChange={handleChange}
                     />
+                    {isErrorFirstName && (
+                    <FormErrorMessage>
+                      Ingresa tu nombre
+                    </FormErrorMessage>
+                  )}
                   </FormControl>
                 </Box>
                 <Box>
-                  <FormControl id="lastName">
+                  <FormControl id="lastName" isInvalid={isErrorLastName}  isRequired>
                     <FormLabel>Last Name</FormLabel>
                     <Input
                       type="text"
                       value={formData.lastName}
                       onChange={handleChange}
                     />
+                                      {isErrorLastName && (
+                    <FormErrorMessage>
+                      Ingresa tu apellido
+                    </FormErrorMessage>
+                  )}
                   </FormControl>
                 </Box>
               </HStack>
-              <FormControl id="email" isRequired>
+              <FormControl id="email" isInvalid={isErrorEmail} isRequired>
                 <FormLabel>Email address</FormLabel>
                 <Input
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
                 />
+                                                      {isErrorEmail && (
+                    <FormErrorMessage>
+                      Ingresa tu email
+                    </FormErrorMessage>
+                  )}
               </FormControl>
-              <FormControl id="password" isRequired>
+              <FormControl id="password" isInvalid={isErrorPassword} isRequired>
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
                   <Input
@@ -139,6 +159,11 @@ const SignupCard = (props) => {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
+                {isErrorPassword && (
+                    <FormErrorMessage>
+                      Ingresa tu password
+                    </FormErrorMessage>
+                  )}
               </FormControl>
               <Stack spacing={10} pt={2}>
                 <Button
@@ -156,7 +181,7 @@ const SignupCard = (props) => {
               </Stack>
               <Stack pt={6}>
                 <Text align={"center"}>
-                  Already a user?{" "}
+                  Ya tienes cuenta?{" "}
                   <Link color={"teal.400"} href="/login">
                     Login
                   </Link>

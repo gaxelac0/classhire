@@ -99,7 +99,8 @@ const CrearClaseComponent = (props) => {
             md: "grid",
           }}
           columns={{
-            md: 3,
+            base: 2,
+            sm: 3,
           }}
           spacing={{
             md: 6,
@@ -121,7 +122,10 @@ const CrearClaseComponent = (props) => {
               </Text>
             </Box>
             <Box display="flex" boxShadow="inner" px={[4, 0]} marginTop="1em">
-              <Image borderRadius="5" src="/img/class-company.jpg" />
+              <Image
+              loading="lazy"
+              borderRadius="5" src="/img/class-company.jpg" 
+              />
             </Box>
           </GridItem>
           <GridItem
@@ -397,7 +401,6 @@ const CrearClaseComponent = (props) => {
                     size="sm"
                     w="full"
                     rounded="md"
-                    s
                   >
                     <option id="once" value={"once"}>
                       Unica vez
@@ -439,7 +442,6 @@ const CrearClaseComponent = (props) => {
                     size="sm"
                     w="full"
                     rounded="md"
-                    s
                   >
                     <option id="individual" value={"individual"}>
                       Individual

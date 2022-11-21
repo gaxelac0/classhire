@@ -24,7 +24,7 @@ const Pagination = (props) => {
     if (i == props.pagination.page) {
       //console.log("added button " + i)
       buttons.push(
-        <PagButton key={"pagButtonActive"} active>
+        <PagButton key={"pagButtonActive"} active={"true"}>
           {i}
         </PagButton>
       );

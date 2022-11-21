@@ -24,9 +24,13 @@ const LoginComponent = (props) => {
   const navigate = useNavigate();
   const toast = useToast();
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: undefined,
+    password: undefined,
   });
+
+
+  const isErrorEmail = formData.email === "";
+  const isErrorPassword = formData.password === "";
 
   const updateMessage = (msg) => {
     if (msg && (msg !== "" || msg[0] !== "")) {
@@ -61,15 +65,15 @@ const LoginComponent = (props) => {
     <Flex align={"center"} justify={"center"}>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
-          <Heading fontSize={"4xl"}>Sign in to your account</Heading>
+          <Heading fontSize={"4xl"}>Ingresa tu cuenta</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool <Link color={"blue.400"}>features</Link> ✌️
+            y disfruta de todas las funcionalidades ✌️
           </Text>
         </Stack>
         <Box rounded={"lg"} boxShadow={"lg"} p={8}>
           <form onSubmit={handleSubmit}>
             <Stack spacing={4}>
-              <FormControl id="email">
+              <FormControl id="email" isInvalid={isErrorEmail} isRequired>
                 <FormLabel>Email address</FormLabel>
                 <Input
                   type="email"
@@ -77,7 +81,7 @@ const LoginComponent = (props) => {
                   onChange={handleChange}
                 />
               </FormControl>
-              <FormControl id="password">
+              <FormControl id="password" isInvalid={isErrorPassword} isRequired>
                 <FormLabel>Password</FormLabel>
                 <Input
                   type="password"
@@ -91,7 +95,7 @@ const LoginComponent = (props) => {
                   align={"start"}
                   justify={"space-between"}
                 >
-                  <Checkbox>Remember me</Checkbox>
+                  <Checkbox>Recordarme</Checkbox>
                   <Link color={"teal.400"}>Forgot password?</Link>
                 </Stack>
                 <Button

@@ -47,10 +47,19 @@ const EditProfileFrm = (props) => {
   const [formData, setFormData] = useState({
     role: props.roleSelection,
     fecha_nacimiento: new Date().toDateString(),
-    titulo: undefined,
+    firstName: "",
+    lastName: "",
+    titulo: "",
     experiencias: [{ firstName: "", lastName: "", nivel: "", descr: "", completed: false }],
     description: "",
   });
+
+
+  const isErrorFechaNacimiento = formData.fecha_nacimiento === "";
+  const isErrorTitulo = formData.titulo === "";
+  const isErrorFirstName = formData.firstName === "";
+  const isErrorLastName = formData.lastName === "";
+  const isErrorDescription = formData.description === "";
 
   // Agrega para completar un estudio mas
   const handleExperienciaAdd = () => { 
@@ -144,12 +153,6 @@ const EditProfileFrm = (props) => {
       updateMessage(err.message, "error");
     }
   };
-
-  const isErrorFechaNacimiento = formData.fecha_nacimiento === "";
-  const isErrorTitulo = formData.titulo === "";
-  const isErrorFirstName = formData.firstName === "";
-  const isErrorLastName = formData.lastName === "";
-  const isErrorDescription = formData.description === "";
 
   useEffect(() => {
     const fetchProfile = async () => {

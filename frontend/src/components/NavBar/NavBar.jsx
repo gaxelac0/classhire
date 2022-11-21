@@ -13,12 +13,14 @@ import {
   DrawerOverlay,
   Link,
   Text,
+  Box,
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 import { ArrowForwardIcon, SearchIcon, PlusSquareIcon } from "@chakra-ui/icons";
 
 import SidebarContent from "../../components/SideBar/SideBar";
 import ClasshireLogo from "../Logo/ClasshireLogo";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const NavBar = (props) => {
   const bg = useColorModeValue("white", "gray.800");
@@ -89,32 +91,37 @@ const NavBar = (props) => {
   }
 
   function NotLoggedMenuItems(props) {
+
+    let navigate = useNavigate()
     return (
       <>
         <HStack spacing={1} mr={1} color="brand.500" display={"inline-flex"}>
           <Button
+            onClick={() => {navigate("/search")}}
             colorScheme="teal"
             variant="ghost"
             display={{ base: "none", md: "inline-flex" }}
           >
-            <Link href="/search">Buscar Clases</Link>
+            Buscar Clases
           </Button>
           <Button
+           onClick={() => {navigate("/login")}}
             colorScheme="teal"
             variant="outline"
             display={{ base: "inline-flex", md: "inline-flex" }}
           >
-            <Link href="/login">Log In</Link>
+            Log In
           </Button>
 
           {/* El Registro lo mando a la pagina de landing donde elige que tipo de registro es */}
           <Button
+            onClick={() => {navigate("/signup")}}
             colorScheme="teal"
             rightIcon={<ArrowForwardIcon />}
             variant="solid"
             display={{ base: "inline-flex", md: "inline-flex" }}
           >
-            <Link href="/signup">Registrate</Link>
+            Registrate
           </Button>
           {/* <Button colorScheme="teal" rightIcon={<ArrowForwardIcon />} variant="solid">Registrate</Button> */}
         </HStack>
@@ -134,7 +141,7 @@ const NavBar = (props) => {
 
   return (
     <React.Fragment>
-      <chakra.header
+      <Box
         bg={bg}
         w="full"
         px={{ base: 2, sm: 4 }}
@@ -176,8 +183,8 @@ const NavBar = (props) => {
             />
           </HStack>
         </Flex>
-      </chakra.header>
-      <chakra.body>
+      </Box>
+      <Box>
         <Drawer
           isOpen={sidebar.isOpen}
           onClose={sidebar.onClose}
@@ -185,10 +192,10 @@ const NavBar = (props) => {
         >
           <DrawerOverlay />
           <DrawerContent>
-            <SidebarContent w="full" borderRight="none" />
+            <SidebarContent w="full" borderRight="none" onOpen={sidebar.onOpen} onClose={sidebar.onClose} isOpen={sidebar.isOpen} />
           </DrawerContent>
         </Drawer>
-      </chakra.body>
+      </Box>
     </React.Fragment>
   );
 };

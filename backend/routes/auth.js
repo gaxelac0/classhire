@@ -13,6 +13,8 @@ router.post(
   "/signup",
   [
     check("email", "Un mail valido es obligatorio").isEmail(),
+    check("firstName", "El nombre es obligatorio").not().isEmpty(),
+    check("lastName", "El apellido es obligatorio").not().isEmpty(),
     check("password", "La contrasena es obligatoria").not().isEmpty(),
     validateField,
   ],

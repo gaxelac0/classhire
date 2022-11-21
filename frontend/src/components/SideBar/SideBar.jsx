@@ -6,6 +6,7 @@ import { MdHome } from "react-icons/md";
 
 import ClasshireLogo from "../Logo/ClasshireLogo";
 import { AddIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 const NavItem = (props) => {
   const { icon, children, ...rest } = props;
@@ -43,7 +44,14 @@ const NavItem = (props) => {
 };
 
 const SidebarContent = (props) => {
-  // TODO: Agregar opciones de Login, Sign Up
+  let navigate = useNavigate();
+
+
+  const handleNavigate = (destination) => {
+    props.onClose();
+    navigate(destination);
+  }
+
   return (
     <>
       <Box
@@ -68,19 +76,28 @@ const SidebarContent = (props) => {
           aria-label="Main Navigation"
         >
           <ClasshireLogo></ClasshireLogo>
-          <NavItem icon={MdHome}>
-            <Link href="/"> Home</Link>
+          <NavItem icon={MdHome}
+          onClick={() => {handleNavigate("/")}}
+          >
+            Home
           </NavItem>
-          <NavItem icon={FaRss}>
-            <Link href="/profile"> Perfil</Link>
+          <NavItem icon={FaRss}
+          onClick={() => {handleNavigate("/profile")}}
+          >
+            Perfil
           </NavItem>
-          <NavItem icon={HiCollection}>
-            <Link href="/search"> Buscar Clases</Link>
+          <NavItem icon={HiCollection}
+          onClick={() => {handleNavigate("/search")}}
+          >
+            Buscar Clases
           </NavItem>
-          <NavItem icon={AddIcon}>
-            <Link href="/search"> Publicar Clase</Link>
+          <NavItem icon={AddIcon}
+          onClick={() => {handleNavigate("/clase/add")}}
+          >
+            Publicar Clase
           </NavItem>
-          <NavItem icon={FaClipboardCheck}>
+          <NavItem icon={FaClipboardCheck}
+          >
             <Text fontSize="sm">
               Busca Profesores
               <Text color="red.700" as="sup" fontSize="xs">
