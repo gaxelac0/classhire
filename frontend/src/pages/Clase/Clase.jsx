@@ -31,7 +31,7 @@ import {
 } from "@chakra-ui/react";
 import { MdCall } from "react-icons/md";
 
-import { useState, useRef, React, useEffect } from "react";
+import { useState, React, useEffect } from "react";
 
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 import { useParams, useNavigate } from "react-router-dom";
@@ -52,36 +52,81 @@ const ClaseComponent = (props) => {
 
   let toast = useToast();
 
-  const initialRef = useRef(null);
-  const finalRef = useRef(null);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [clase, setClase] = useState({});
-  const [teacher, setTeacher] = useState({});
-  const [profile, setProfile] = useState({});
-
-  const [formData, setFormData] = useState({
+  const [formDataContratacion, setFormDataContratacion] = useState({
     clase_id: "",
     telefono: undefined,
     horario: undefined,
     descr_contratacion: undefined,
   });
 
-  const isErrorTelefono = formData.telefono === "";
-  const isErrorHorario = formData.horario === "";
-  const isErrorDescrContratacion = formData.descr_contratacion === "";
+  const isErrorTelefono = formDataContratacion.telefono === "";
+  const isErrorHorario = formDataContratacion.horario === "";
+  const isErrorDescrContratacion =
+    formDataContratacion.descr_contratacion === "";
 
-  const handleChange = (e) => {
+  const [formDataReviewEdit, setFormDataReviewEdit] = useState({
+    clase_id: "",
+    comment_id: "",
+    new_state: undefined,
+    state_reason: undefined,
+  });
+
+  const isErrorStateReason = formDataReviewEdit.state_reason === "";
+
+  const {
+    isOpen: isOpenContratacion,
+    onOpen: onOpenContratacion,
+    onClose: onCloseContratacion,
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenReviewEdit,
+    onOpen: onOpenReviewEdit,
+    onClose: onCloseReviewEdit,
+  } = useDisclosure();
+
+  const [clase, setClase] = useState({});
+  const [teacher, setTeacher] = useState({});
+  const [profile, setProfile] = useState({});
+
+  const handleChangeContratacion = (e) => {
     //console.log(e.target.value);
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+    setFormDataContratacion({
+      ...formDataContratacion,
+      [e.target.id]: e.target.value,
+    });
   };
 
-  const handleSubmit = async (evt) => {
+  const handleChangeReviewEdit = (e) => {
+    //console.log(e.target.value);
+    setFormDataReviewEdit({
+      ...formDataReviewEdit,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const handleSubmitContratacion = async (evt) => {
     evt.preventDefault();
     try {
-      let result = await claseService.contratar(formData);
+      let result = await claseService.contratar(formDataContratacion);
       if (result.status === "ok") {
         updateMessage(result.msg, "success");
         navigate("/profile/1");
+      } else {
+        throw new Error(result.msg);
+      }
+    } catch (err) {
+      updateMessage(err.message, "error");
+    }
+  };
+
+  const handleSubmitReviewEdit = async (evt) => {
+    evt.preventDefault();
+    try {
+      let result = await claseService.patchReview(formDataReviewEdit);
+      if (result.status === "ok") {
+        updateMessage(result.msg, "success");
+        navigate("/clase/"+formDataReviewEdit.clase_id);
       } else {
         throw new Error(result.msg);
       }
@@ -124,8 +169,8 @@ const ClaseComponent = (props) => {
   };
 
   useEffect(() => {
-    setFormData({
-      ...formData,
+    setFormDataContratacion({
+      ...formDataContratacion,
       clase_id: id,
     });
     //console.log("id " + id);
@@ -295,21 +340,48 @@ const ClaseComponent = (props) => {
               </List>
             </Box>
 
+            {clase &&
+              clase.comments &&
+              clase.comments.filter((c) => c.state === "aceptada").length >
+                0 && (
+                <Box>
+                  <Text
+                    fontSize={{ base: "16px", lg: "18px" }}
+                    color={"yellow.500"}
+                    fontWeight={"500"}
+                    textTransform={"uppercase"}
+                  >
+                    Reviews
+                  </Text>
+                </Box>
+              )}
             {clase && clase.comments && clase.comments.length > 0 && (
               <Box>
-                <Text
-                  fontSize={{ base: "16px", lg: "18px" }}
-                  color={"yellow.500"}
-                  fontWeight={"500"}
-                  textTransform={"uppercase"}
-                  mb={"4"}
-                >
-                  Reviews
-                </Text>
-
                 <SimpleGrid columns={{ base: 1, md: 2 }}>
                   {clase.comments.map((review, index) => (
-                    <ReviewCard key={"reviewCard_" + index} review={review} />
+                    <Box key={"box" + index}>
+                      {/* // Si es estudiante, solo ver los comentarios aceptados. Si es profesor ver ambos */}
+                      {review.state === "aceptada" ? (
+                        <ReviewCard
+                          review={review}
+                        />
+                      ) : (
+                        props.userState &&
+                        clase.teacher_profile_id ===
+                          props.userState.user.profile && (
+                          <ReviewCard
+                            clase={clase}
+                            review={review}
+                            handler={"true"}
+                            userState={props.userState}
+                            handleSubmitReviewEdit={handleSubmitReviewEdit}
+                            formDataReviewEdit={formDataReviewEdit}
+                            setFormDataReviewEdit={setFormDataReviewEdit}
+                            onOpenReviewEdit={onOpenReviewEdit}
+                          />
+                        )
+                      )}
+                    </Box>
                   ))}
                 </SimpleGrid>
               </Box>
@@ -367,7 +439,9 @@ const ClaseComponent = (props) => {
               {teacher &&
                 teacher.experiencias &&
                 teacher.experiencias.map((e, i) => (
-                  <Text key={"textExperiencies_"+i}>{e.descr + " de nivel " + e.nivel}</Text>
+                  <Text key={"textExperiencies_" + i}>
+                    {e.descr + " de nivel " + e.nivel}
+                  </Text>
                 ))}
 
               {/* Se oculta el boton de Contratar si no es estudiante o si ya la tiene contratada */}
@@ -384,7 +458,7 @@ const ClaseComponent = (props) => {
                       mt={8}
                       size={"lg"}
                       py={"7"}
-                      onClick={onOpen}
+                      onClick={onOpenContratacion}
                       bg={"gray.900"}
                       color={"white"}
                       textTransform={"uppercase"}
@@ -417,26 +491,21 @@ const ClaseComponent = (props) => {
         </Flex>
       </SimpleGrid>
 
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-      >
+      {/* Modal de Contratacion - solo estudiantes*/}
+      <Modal isOpen={isOpenContratacion} onClose={onCloseContratacion}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Contratando la clase</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmitContratacion}>
               <FormControl id="telefono" isInvalid={isErrorTelefono} isRequired>
                 <FormLabel>Telefono</FormLabel>
                 <Input
-                  ref={initialRef}
                   name="telefono"
                   placeholder="Telefono"
-                  value={formData.telefono}
-                  onChange={handleChange}
+                  value={formDataContratacion.telefono}
+                  onChange={handleChangeContratacion}
                 />
                 {isErrorTelefono && (
                   <FormErrorMessage>
@@ -455,8 +524,8 @@ const ClaseComponent = (props) => {
                 <Input
                   placeholder="Horario"
                   name="horario"
-                  value={formData.horario}
-                  onChange={handleChange}
+                  value={formDataContratacion.horario}
+                  onChange={handleChangeContratacion}
                 />
                 {isErrorHorario && (
                   <FormErrorMessage>
@@ -475,8 +544,8 @@ const ClaseComponent = (props) => {
                 <Textarea
                   id="descr_contratacion"
                   placeholder="Descripcion de la contratacion"
-                  value={formData.descr_contratacion}
-                  onChange={handleChange}
+                  value={formDataContratacion.descr_contratacion}
+                  onChange={handleChangeContratacion}
                   resize={"vertical"}
                   mt={1}
                   rows={3}
@@ -503,7 +572,7 @@ const ClaseComponent = (props) => {
                   <Button type="submit" colorScheme="teal" m={"1em"}>
                     Contratar
                   </Button>
-                  <Button onClick={onClose} m={"1em"}>
+                  <Button onClick={onCloseContratacion} m={"1em"}>
                     Cancelar
                   </Button>
                 </HStack>
@@ -512,6 +581,44 @@ const ClaseComponent = (props) => {
           </ModalBody>
         </ModalContent>
       </Modal>
+
+      {/* Modal de bloqueo de review - solo profesores */}
+      <Modal isOpen={isOpenReviewEdit} onClose={onCloseReviewEdit}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Bloqueando Review</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <form onSubmit={handleSubmitReviewEdit}>
+              <FormControl id="state_reason" isInvalid={isErrorStateReason} isRequired>
+                <FormLabel>Razon de bloqueo</FormLabel>
+                <Input
+                  name="state_reason"
+                  placeholder="Lo bloqueo porque...."
+                  value={formDataReviewEdit.state_reason}
+                  onChange={handleChangeReviewEdit}
+                />
+                {isErrorStateReason && (
+                  <FormErrorMessage>
+                    El campo de razon de bloqueo es obligatorio.
+                  </FormErrorMessage>
+                )}
+              </FormControl>
+              <Center>
+                <HStack>
+                  <Button type="submit" colorScheme="teal" m={"1em"}>
+                    Bloquear
+                  </Button>
+                  <Button onClick={onCloseReviewEdit} m={"1em"}>
+                    Cancelar
+                  </Button>
+                </HStack>
+              </Center>
+            </form>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
     </Container>
   );
 };

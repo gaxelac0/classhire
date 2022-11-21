@@ -38,6 +38,8 @@ var tipoClaseSchema = new mongoose.Schema({
 
 var commentSchema = new mongoose.Schema(
   {
+    state: {type: String, required: true, default: "enviado"},
+    state_reason: {type: String, required: true, default: "usuario envio review"},
     type: {
       type: String,
       required: true,

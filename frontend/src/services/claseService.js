@@ -140,4 +140,27 @@ async function addReview(body) {
   return await res.json();
 }
 
-export { addClase, patchClase, getClases, getClasesByUser, contratar, patchContratacion, addReview };
+async function patchReview(fields) {
+  try {
+    let token = tokenService.getToken();
+    const res = await fetch(BASE_URL + "/review", {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(fields),
+    });
+
+    const json = await res.json();
+    if (json.err) {
+      throw new Error(json.err);
+    }
+
+    return json;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export { addClase, patchClase, getClases, getClasesByUser, contratar, patchContratacion, addReview, patchReview };
