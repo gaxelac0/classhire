@@ -53,6 +53,8 @@ import { useToast } from "@chakra-ui/react";
 import EditProfileFrm from "./EditProfileFrm";
 
 import {
+  AddIcon,
+  ArrowUpIcon,
   CheckIcon,
   DeleteIcon,
   LockIcon,
@@ -101,6 +103,7 @@ const FittedTab = (props) => {
                   handleOnOpenAceptar={props.handleOnOpenAceptar}
                   handleOnOpenAddReview={props.handleOnOpenAddReview}
                   handleOnOpenAlumnos={props.handleOnOpenAlumnos}
+                  handleSubmitClase={props.handleSubmitClase}
                 />
                 <Pagination pagination={props.pagination} route={"profile"} />
               </>
@@ -130,6 +133,8 @@ const FittedTab = (props) => {
   /* Componente que almacena la tabla de materias */
 }
 const TablaMaterias = (props) => {
+  
+
   return (
     <TableContainer>
       <Table variant="unstyled">
@@ -299,6 +304,7 @@ const TablaMaterias = (props) => {
                           }
                         >
                           <Icon
+                            
                             mr={"1em"}
                             as={iconByStatus(c.state)}
                             size="xs"
@@ -320,14 +326,31 @@ const TablaMaterias = (props) => {
                   <Td>
                     <HStack>
                       {/* Boton Eliminar clase*/}
+
+                      {c && c.state === "publicada" && 
                       <Tooltip label={"Despublicar"}>
                          <IconButton
+                         onClick={() => {props.handleSubmitClase({clase_id: c._id, state: "despublicada"})}}
                         colorScheme="teal"
                         aria-label="Call Segun"
                         size="xs"
                         icon={<DeleteIcon />}
                       />
                       </Tooltip>
+                      }
+
+              {c && c.state === "despublicada" && 
+                      <Tooltip label={"Volver a publicar"}>
+                         <IconButton
+                         onClick={() => {props.handleSubmitClase({clase_id: c._id, state: "publicada"})}}
+                        colorScheme="teal"
+                        aria-label="Call Segun"
+                        size="xs"
+                        icon={<ArrowUpIcon />}
+                      />
+                      </Tooltip>
+                      }
+                      
                      
                       {/* Boton listado de alumnos */}
                       <Tooltip label={"Listado Alumnos"}>
@@ -424,7 +447,7 @@ const ProfileComponent = (props) => {
     //console.log(formDataReview);
   };
 
-  const handleSubmit = async (evt) => {
+  const handleSubmitContratacion = async (evt) => {
     evt.preventDefault();
     try {
       let result = await claseService.patchContratacion(formData);
@@ -438,6 +461,28 @@ const ProfileComponent = (props) => {
           "success"
         );
         navigate("/profile");
+      } else {
+        throw new Error(result.msg);
+      }
+    } catch (err) {
+      updateMessage(err.message, "error");
+    }
+  };
+
+  const handleSubmitClase = async ({clase_id, state}) => {
+    try {
+      let result = await claseService.patchClase({clase_id, state});
+      if (result.status === "ok") {
+        updateMessage(
+          "Clase " + state + " con exito",
+          "success"
+        );
+        if (props.page > 1) {
+          navigate(`/profile/${props.page}`);
+        } else {
+          navigate(`/profile`);
+        }
+        
       } else {
         throw new Error(result.msg);
       }
@@ -543,6 +588,7 @@ const ProfileComponent = (props) => {
         handleOnOpenAceptar={handleOnOpenAceptar}
         handleOnOpenAddReview={handleOnOpenAddReview}
         handleOnOpenAlumnos={handleOnOpenAlumnos}
+        handleSubmitClase={handleSubmitClase}
       />
 
       {/* Modal de Cancelar Contratacion - profesor y estudiante*/}
@@ -552,7 +598,7 @@ const ProfileComponent = (props) => {
           <ModalHeader>Cancelando la clase</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmitContratacion}>
               <FormControl
                 mt={4}
                 id="new_reason"
@@ -607,7 +653,7 @@ const ProfileComponent = (props) => {
           <ModalHeader>Finalizando la Clase</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmitContratacion}>
               <FormControl
                 mt={4}
                 id="new_reason"
@@ -662,7 +708,7 @@ const ProfileComponent = (props) => {
           <ModalHeader>Aceptando la contratacion</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmitContratacion}>
               <FormControl
                 mt={4}
                 id="new_reason"
@@ -996,6 +1042,7 @@ const Profile = (props) => {
             userState={props.userState}
             clases={clases}
             pagination={pagination}
+            page={page}
           />
         }
       />

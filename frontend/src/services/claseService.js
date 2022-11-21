@@ -25,6 +25,29 @@ async function addClase(body) {
   }
 }
 
+async function patchClase(fields) {
+  try {
+    let token = tokenService.getToken();
+    const res = await fetch(BASE_URL + "/", {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(fields),
+    });
+
+    const json = await res.json();
+    if (json.err) {
+      throw new Error(json.err);
+    }
+
+    return json;
+  } catch (err) {
+    throw err;
+  }
+}
+
 async function getClases(filters, page, limit) {
   const res = await fetch(
     BASE_URL +
@@ -117,4 +140,4 @@ async function addReview(body) {
   return await res.json();
 }
 
-export { addClase, getClases, getClasesByUser, contratar, patchContratacion, addReview };
+export { addClase, patchClase, getClases, getClasesByUser, contratar, patchContratacion, addReview };
