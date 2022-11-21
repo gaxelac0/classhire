@@ -31,10 +31,12 @@ router.post(
   authCtrl.login
 );
 
-router.post("/forgotPassword", checkAuth, authCtrl.forgotPassword);
+router.post("/forgotPassword", authCtrl.forgotPassword);
+router.post("/changePassword/:token", authCtrl.changePassword);
+
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken);
-router.post("/changePassword", checkAuth, authCtrl.changePassword);
+
 
 module.exports = router;

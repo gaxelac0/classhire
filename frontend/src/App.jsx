@@ -107,11 +107,9 @@ const App = () => {
         <Route
           path="/changePassword/:token"
           element={
-            userState ? (
+
               <ChangePassword handleSignupOrLogin={handleSignupOrLogin} />
-            ) : (
-              <Navigate to="/login" />
-            )
+
           }
         />
 
