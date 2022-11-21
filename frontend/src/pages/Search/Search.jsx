@@ -20,7 +20,7 @@ import {
   Icon
 } from "@chakra-ui/react";
 import { WarningTwoIcon } from '@chakra-ui/icons'
-import ClaseCard from "../../components/ClaseCard/ClaseCard";
+import ClaseCard from "../../components/Card/ClaseCard";
 import Pagination from "../../components/Pagination/Pagination";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 import { useState } from "react";

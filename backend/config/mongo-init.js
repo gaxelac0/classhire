@@ -1,3 +1,9 @@
+let hunder = 100;
+let cantPos = 2;
+let cantNeg = 1;
+let varReviewCount = 3;
+let point = ((100 * cantPos)/varReviewCount) / 20;
+
 
 db.createUser({
   user: "service",
@@ -35,14 +41,29 @@ db.profiles.insertOne({
   role: "teacher",
   titulo: "Ingeniero en Informatica",
   fecha_nacimiento: "14/01/1964",
-  description: "Joe Fathree es un author ganador de diversos premios al merito educativo, incluyendo ser nombrado como uno de los mejores profesores del mundo en 2016",
+  description:
+    "Joe Fathree es un author ganador de diversos premios al merito educativo, incluyendo ser nombrado como uno de los mejores profesores del mundo en 2016",
   experiencias: [
     {
       nivel: "primaria",
-      descr: "Profesor de primaria",
+      descr: "Profesor de programacion",
     },
+    {
+      nivel: "secundaria",
+      descr: "Profesor de programacion",
+    },
+    {
+      nivel: "universitario",
+      descr: "Profesor de Programacion III",
+    },
+    {
+      nivel: "seminario",
+      descr: "Charlas de programacion",
+    },
+    
   ],
-  photo: "http://res.cloudinary.com/dvjdc3ssy/image/upload/v1668944647/jej6zfcgvfjqikxrdaxt.png"
+  photo:
+    "http://res.cloudinary.com/dvjdc3ssy/image/upload/v1668944647/jej6zfcgvfjqikxrdaxt.png",
 });
 
 db.users.insertOne({
@@ -81,9 +102,36 @@ db.clases.insertMany([
     tags: ["ruby", "ruby on rails", "poo"],
 
     teacher_profile_id: ObjectId("demoteacher0"),
-    comments: [],
-    rating: 4,
-    reviewCount: 5,
+    comments: [
+      {
+        type: "positive",
+        comment: "muy buena la clase",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fa6f5b164eec0481c7",
+        createdAt: "2022-11-21T15:32:10.128Z",
+        updatedAt: "2022-11-21T15:32:10.128Z",
+      },
+      {
+        type: "negative",
+        comment: "se dicto sin ganas",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+      {
+        type: "positive",
+        comment: "test",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+    ],
+    rating: point,
+    reviewCount: varReviewCount,
+    reviewNegative: cantNeg,
+    reviewPositive: cantPos,
   },
   {
     _id: ObjectId("clase0000002"),
@@ -111,9 +159,36 @@ db.clases.insertMany([
     tags: ["programacion", "java", "poo"],
 
     teacher_profile_id: ObjectId("demoteacher0"),
-    comments: [],
-    rating: 2,
-    reviewCount: 5,
+    comments: [
+      {
+        type: "positive",
+        comment: "muy buena la clase",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fa6f5b164eec0481c7",
+        createdAt: "2022-11-21T15:32:10.128Z",
+        updatedAt: "2022-11-21T15:32:10.128Z",
+      },
+      {
+        type: "negative",
+        comment: "se dicto sin ganas",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+      {
+        type: "positive",
+        comment: "test",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+    ],
+    rating: point,
+    reviewCount: varReviewCount,
+    reviewNegative: cantNeg,
+    reviewPositive: cantPos,
   },
   {
     _id: ObjectId("clase0000003"),
@@ -146,9 +221,36 @@ db.clases.insertMany([
     tags: ["programacion", "java", "poo"],
 
     teacher_profile_id: ObjectId("demoteacher0"),
-    comments: [],
-    rating: 5,
-    reviewCount: 5,
+    comments: [
+      {
+        type: "positive",
+        comment: "muy buena la clase",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fa6f5b164eec0481c7",
+        createdAt: "2022-11-21T15:32:10.128Z",
+        updatedAt: "2022-11-21T15:32:10.128Z",
+      },
+      {
+        type: "negative",
+        comment: "se dicto sin ganas",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+      {
+        type: "positive",
+        comment: "test",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+    ],
+    rating: point,
+    reviewCount: varReviewCount,
+    reviewNegative: cantNeg,
+    reviewPositive: cantPos,
   },
   {
     _id: ObjectId("clase0000004"),
@@ -176,9 +278,36 @@ db.clases.insertMany([
     tags: ["programacion", "java", "poo"],
 
     teacher_profile_id: ObjectId("demoteacher0"),
-    comments: [],
-    rating: 5,
-    reviewCount: 5,
+    comments: [
+      {
+        type: "positive",
+        comment: "muy buena la clase",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fa6f5b164eec0481c7",
+        createdAt: "2022-11-21T15:32:10.128Z",
+        updatedAt: "2022-11-21T15:32:10.128Z",
+      },
+      {
+        type: "negative",
+        comment: "se dicto sin ganas",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+      {
+        type: "positive",
+        comment: "test",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+    ],
+    rating: point,
+    reviewCount: varReviewCount,
+    reviewNegative: cantNeg,
+    reviewPositive: cantPos,
   },
   {
     _id: ObjectId("clase0000005"),
@@ -206,9 +335,36 @@ db.clases.insertMany([
     tags: ["programacion", "java", "poo"],
 
     teacher_profile_id: ObjectId("demoteacher0"),
-    comments: [],
-    rating: 5,
-    reviewCount: 5,
+    comments: [
+      {
+        type: "positive",
+        comment: "muy buena la clase",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fa6f5b164eec0481c7",
+        createdAt: "2022-11-21T15:32:10.128Z",
+        updatedAt: "2022-11-21T15:32:10.128Z",
+      },
+      {
+        type: "negative",
+        comment: "se dicto sin ganas",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+      {
+        type: "positive",
+        comment: "test",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+    ],
+    rating: point,
+    reviewCount: varReviewCount,
+    reviewNegative: cantNeg,
+    reviewPositive: cantPos,
   },
   {
     _id: ObjectId("clase0000006"),
@@ -236,9 +392,36 @@ db.clases.insertMany([
     tags: ["programacion", "java", "poo"],
 
     teacher_profile_id: ObjectId("demoteacher0"),
-    comments: [],
-    rating: 4,
-    reviewCount: 5,
+    comments: [
+      {
+        type: "positive",
+        comment: "muy buena la clase",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fa6f5b164eec0481c7",
+        createdAt: "2022-11-21T15:32:10.128Z",
+        updatedAt: "2022-11-21T15:32:10.128Z",
+      },
+      {
+        type: "negative",
+        comment: "se dicto sin ganas",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+      {
+        type: "positive",
+        comment: "test",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+    ],
+    rating: point,
+    reviewCount: varReviewCount,
+    reviewNegative: cantNeg,
+    reviewPositive: cantPos,
   },
   {
     _id: ObjectId("clase0000007"),
@@ -263,9 +446,36 @@ db.clases.insertMany([
     tags: ["programacion", "ruby", "poo"],
 
     teacher_profile_id: ObjectId("demoteacher0"),
-    comments: [],
-    rating: 3,
-    reviewCount: 5,
+    comments: [
+      {
+        type: "positive",
+        comment: "muy buena la clase",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fa6f5b164eec0481c7",
+        createdAt: "2022-11-21T15:32:10.128Z",
+        updatedAt: "2022-11-21T15:32:10.128Z",
+      },
+      {
+        type: "negative",
+        comment: "se dicto sin ganas",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+      {
+        type: "positive",
+        comment: "test",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+    ],
+    rating: point,
+    reviewCount: varReviewCount,
+    reviewNegative: cantNeg,
+    reviewPositive: cantPos,
   },
   {
     _id: ObjectId("clase0000008"),
@@ -292,9 +502,36 @@ db.clases.insertMany([
     tags: ["programacion", "java", "poo"],
 
     teacher_profile_id: ObjectId("demoteacher0"),
-    comments: [],
-    rating: 2,
-    reviewCount: 3,
+    comments: [
+      {
+        type: "positive",
+        comment: "muy buena la clase",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fa6f5b164eec0481c7",
+        createdAt: "2022-11-21T15:32:10.128Z",
+        updatedAt: "2022-11-21T15:32:10.128Z",
+      },
+      {
+        type: "negative",
+        comment: "se dicto sin ganas",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+      {
+        type: "positive",
+        comment: "test",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+    ],
+    rating: point,
+    reviewCount: varReviewCount,
+    reviewNegative: cantNeg,
+    reviewPositive: cantPos,
   },
   {
     _id: ObjectId("clase0000009"),
@@ -322,9 +559,44 @@ db.clases.insertMany([
     tags: ["stats", "python", "pandas"],
 
     teacher_profile_id: ObjectId("demoteacher0"),
-    comments: [],
-    rating: 5,
-    reviewCount: 25,
+    comments: [
+      {
+        type: "positive",
+        comment: "muy buena la clase",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fa6f5b164eec0481c7",
+        createdAt: "2022-11-21T15:32:10.128Z",
+        updatedAt: "2022-11-21T15:32:10.128Z",
+      },
+      {
+        type: "negative",
+        comment: "se dicto sin ganas",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+      {
+        type: "positive",
+        comment: "test",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+      {
+        type: "positive",
+        comment: "muy buena la clase",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fa6f5b164eec0481c7",
+        createdAt: "2022-11-21T15:32:10.128Z",
+        updatedAt: "2022-11-21T15:32:10.128Z",
+      },
+    ],
+    rating: point,
+    reviewCount: varReviewCount,
+    reviewNegative: cantNeg,
+    reviewPositive: cantPos,
   },
   {
     _id: ObjectId("clase0000010"),
@@ -357,9 +629,36 @@ db.clases.insertMany([
     tags: ["programacion", "go", "poo", "goroutines"],
 
     teacher_profile_id: ObjectId("demoteacher0"),
-    comments: [],
-    rating: 5,
-    reviewCount: 500,
+    comments: [
+      {
+        type: "positive",
+        comment: "muy buena la clase",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fa6f5b164eec0481c7",
+        createdAt: "2022-11-21T15:32:10.128Z",
+        updatedAt: "2022-11-21T15:32:10.128Z",
+      },
+      {
+        type: "negative",
+        comment: "se dicto sin ganas",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+      {
+        type: "positive",
+        comment: "test",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+    ],
+    rating: point,
+    reviewCount: varReviewCount,
+    reviewNegative: cantNeg,
+    reviewPositive: cantPos,
   },
   {
     _id: ObjectId("clase0000011"),
@@ -386,9 +685,36 @@ db.clases.insertMany([
     tags: ["programacion", "javascript", "poo"],
 
     teacher_profile_id: ObjectId("demoteacher0"),
-    comments: [],
-    rating: 1,
-    reviewCount: 5,
+    comments: [
+      {
+        type: "positive",
+        comment: "muy buena la clase",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fa6f5b164eec0481c7",
+        createdAt: "2022-11-21T15:32:10.128Z",
+        updatedAt: "2022-11-21T15:32:10.128Z",
+      },
+      {
+        type: "negative",
+        comment: "se dicto sin ganas",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+      {
+        type: "positive",
+        comment: "test",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+    ],
+    rating: point,
+    reviewCount: varReviewCount,
+    reviewNegative: cantNeg,
+    reviewPositive: cantPos,
   },
   {
     _id: ObjectId("clase0000012"),
@@ -416,9 +742,36 @@ db.clases.insertMany([
     tags: ["programacion", "java", "poo"],
 
     teacher_profile_id: ObjectId("demoteacher0"),
-    comments: [],
-    rating: 0,
-    reviewCount: 0,
+    comments: [
+      {
+        type: "positive",
+        comment: "muy buena la clase",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fa6f5b164eec0481c7",
+        createdAt: "2022-11-21T15:32:10.128Z",
+        updatedAt: "2022-11-21T15:32:10.128Z",
+      },
+      {
+        type: "negative",
+        comment: "se dicto sin ganas",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+      {
+        type: "positive",
+        comment: "test",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+    ],
+    rating: point,
+    reviewCount: varReviewCount,
+    reviewNegative: cantNeg,
+    reviewPositive: cantPos,
   },
   {
     _id: ObjectId("clase0000013"),
@@ -446,9 +799,36 @@ db.clases.insertMany([
     tags: ["programacion", "java", "poo"],
 
     teacher_profile_id: ObjectId("demoteacher0"),
-    comments: [],
-    rating: 1,
-    reviewCount: 25,
+    comments: [
+      {
+        type: "positive",
+        comment: "muy buena la clase",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fa6f5b164eec0481c7",
+        createdAt: "2022-11-21T15:32:10.128Z",
+        updatedAt: "2022-11-21T15:32:10.128Z",
+      },
+      {
+        type: "negative",
+        comment: "se dicto sin ganas",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+      {
+        type: "positive",
+        comment: "test",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+    ],
+    rating: point,
+    reviewCount: varReviewCount,
+    reviewNegative: cantNeg,
+    reviewPositive: cantPos,
   },
   {
     _id: ObjectId("clase0000014"),
@@ -476,9 +856,36 @@ db.clases.insertMany([
     tags: ["programacion", "java", "poo"],
 
     teacher_profile_id: ObjectId("demoteacher0"),
-    comments: [],
-    rating: 2,
-    reviewCount: 15,
+    comments: [
+      {
+        type: "positive",
+        comment: "muy buena la clase",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fa6f5b164eec0481c7",
+        createdAt: "2022-11-21T15:32:10.128Z",
+        updatedAt: "2022-11-21T15:32:10.128Z",
+      },
+      {
+        type: "negative",
+        comment: "se dicto sin ganas",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+      {
+        type: "positive",
+        comment: "test",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+    ],
+    rating: point,
+    reviewCount: varReviewCount,
+    reviewNegative: cantNeg,
+    reviewPositive: cantPos,
   },
 
   {
@@ -507,9 +914,36 @@ db.clases.insertMany([
     tags: ["programacion", "java", "poo"],
 
     teacher_profile_id: ObjectId("demoteacher0"),
-    comments: [],
-    rating: 3,
-    reviewCount: 5,
+    comments: [
+      {
+        type: "positive",
+        comment: "muy buena la clase",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fa6f5b164eec0481c7",
+        createdAt: "2022-11-21T15:32:10.128Z",
+        updatedAt: "2022-11-21T15:32:10.128Z",
+      },
+      {
+        type: "negative",
+        comment: "se dicto sin ganas",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+      {
+        type: "positive",
+        comment: "test",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+    ],
+    rating: point,
+    reviewCount: varReviewCount,
+    reviewNegative: cantNeg,
+    reviewPositive: cantPos,
   },
   {
     _id: ObjectId("clase0000016"),
@@ -537,13 +971,38 @@ db.clases.insertMany([
     tags: ["ruby", "ruby on rails", "poo"],
 
     teacher_profile_id: ObjectId("demoteacher0"),
-    comments: [],
-    rating: 4,
-    reviewCount: 5,
+    comments: [
+      {
+        type: "positive",
+        comment: "muy buena la clase",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fa6f5b164eec0481c7",
+        createdAt: "2022-11-21T15:32:10.128Z",
+        updatedAt: "2022-11-21T15:32:10.128Z",
+      },
+      {
+        type: "negative",
+        comment: "se dicto sin ganas",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+      {
+        type: "positive",
+        comment: "test",
+        profile_author_id: "64656d6f73747564656e7430",
+        _id: "637b99fe6f5b164eec04821e",
+        createdAt: "2022-11-21T15:32:14.539Z",
+        updatedAt: "2022-11-21T15:32:14.539Z",
+      },
+    ],
+    rating: point,
+    reviewCount: varReviewCount,
+    reviewNegative: cantNeg,
+    reviewPositive: cantPos,
   },
 ]);
-
-
 
 db.profiles.insertOne({
   _id: ObjectId("demostudent0"),
@@ -577,7 +1036,8 @@ db.profiles.insertOne({
       completed: false,
     },
   ],
-  photo: "https://res.cloudinary.com/dvjdc3ssy/image/upload/v1668894850/rjhj017czkwubzqiw9uu.png",
+  photo:
+    "https://res.cloudinary.com/dvjdc3ssy/image/upload/v1668894850/rjhj017czkwubzqiw9uu.png",
 });
 
 db.users.insertOne({
@@ -589,13 +1049,14 @@ db.users.insertOne({
   password: "$2b$06$T8qZKC8v28SC2SfcVRWLgOgaEwwDy.DXlI2BbnOjpLTm9ApOE67Ru",
 });
 
-
 db.contratacions.insertOne({
   profile_id: ObjectId("demostudent0"),
   clase_id: ObjectId("clase0000001"),
   name: "Armando Barreda",
   state_in_order: ["solicitada"],
-  reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?"],
+  reasons_in_order: [
+    "hola me gustaria tomar clases particulares, sabes de los temas del CBC?",
+  ],
   createdAt: new Date(),
   updatedAt: new Date(),
 });
@@ -605,7 +1066,10 @@ db.contratacions.insertOne({
   clase_id: ObjectId("clase0000002"),
   name: "Armando Barreda",
   state_in_order: ["solicitada", "cancelada"],
-  reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?", "no doy para CBC"],
+  reasons_in_order: [
+    "hola me gustaria tomar clases particulares, sabes de los temas del CBC?",
+    "no doy para CBC",
+  ],
   createdAt: new Date(),
   updatedAt: new Date(),
 });
@@ -615,7 +1079,11 @@ db.contratacions.insertOne({
   clase_id: ObjectId("clase0000003"),
   name: "Armando Barreda",
   state_in_order: ["solicitada", "aceptada", "finalizada"],
-  reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?", "bienvenido a las clases...", "todo bien"],
+  reasons_in_order: [
+    "hola me gustaria tomar clases particulares, sabes de los temas del CBC?",
+    "bienvenido a las clases...",
+    "todo bien",
+  ],
   createdAt: new Date(),
   updatedAt: new Date(),
 });
@@ -625,7 +1093,10 @@ db.contratacions.insertOne({
   clase_id: ObjectId("clase0000004"),
   name: "Armando Barreda",
   state_in_order: ["solicitada", "aceptada"],
-  reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?", "bienvenido a las clases..."],
+  reasons_in_order: [
+    "hola me gustaria tomar clases particulares, sabes de los temas del CBC?",
+    "bienvenido a las clases...",
+  ],
   createdAt: new Date(),
   updatedAt: new Date(),
 });
@@ -635,7 +1106,9 @@ db.contratacions.insertOne({
   clase_id: ObjectId("clase0000005"),
   name: "Armando Barreda",
   state_in_order: ["solicitada"],
-  reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?"],
+  reasons_in_order: [
+    "hola me gustaria tomar clases particulares, sabes de los temas del CBC?",
+  ],
   createdAt: new Date(),
   updatedAt: new Date(),
 });
@@ -645,8 +1118,10 @@ db.contratacions.insertOne({
   clase_id: ObjectId("clase0000006"),
   name: "Armando Barreda",
   state_in_order: ["solicitada", "aceptada"],
-  reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?", "bienvenido a las clases..."],
+  reasons_in_order: [
+    "hola me gustaria tomar clases particulares, sabes de los temas del CBC?",
+    "bienvenido a las clases...",
+  ],
   createdAt: new Date(),
   updatedAt: new Date(),
 });
-

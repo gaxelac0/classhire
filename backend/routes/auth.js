@@ -31,6 +31,8 @@ router.post(
   authCtrl.login
 );
 
+router.post("/forgotPassword", checkAuth, authCtrl.forgotPassword);
+
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken);
 router.post("/changePassword", checkAuth, authCtrl.changePassword);

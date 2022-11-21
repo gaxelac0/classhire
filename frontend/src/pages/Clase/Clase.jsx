@@ -41,7 +41,9 @@ import { useToast } from "@chakra-ui/react";
 import * as claseService from "../../services/claseService";
 
 import * as profileService from "../../services/profileService";
-import { CheckIcon } from "@chakra-ui/icons";
+import { CheckIcon, StarIcon } from "@chakra-ui/icons";
+
+import ReviewCard from "../../components/Card/ReviewCard";
 
 const ClaseComponent = (props) => {
   let { id } = useParams();
@@ -175,51 +177,6 @@ const ClaseComponent = (props) => {
         spacing={{ base: 8, md: 10 }}
         py={{ base: 18, md: 24 }}
       >
-        <Flex>
-          <Flex>
-            <VStack spacing={{ base: 4, sm: 6 }}>
-              <Image
-                rounded={"md"}
-                alt={"product image"}
-                src="/img/matematicas.jpg"
-                fit={"cover"}
-                align={"center"}
-                w={"100%"}
-                h={{ base: "150%", sm: "200px", lg: "250px" }}
-              />
-              <StackDivider borderColor={"gray.200"} />
-              <Text
-                fontSize={{ base: "16px", lg: "18px" }}
-                color={"yellow.500"}
-                fontWeight={"500"}
-                textTransform={"uppercase"}
-                mb={"4"}
-              >
-                Sobre el profe
-              </Text>
-
-              <Image
-                borderRadius="full"
-                boxSize={"200px"}
-                src={teacher.photo}
-              />
-
-              <Heading as="h3">
-                {teacher.firstName} {teacher.lastName}
-              </Heading>
-              <StackDivider borderColor={"gray.200"} />
-              <Text
-                fontSize={{ base: "12px", lg: "16px" }}
-                color={"yellow.500"}
-                fontWeight={"250"}
-                mb={"4"}
-              >
-                {teacher && teacher.description}
-              </Text>
-            </VStack>
-          </Flex>
-          <StackDivider borderColor={"gray.200"} />
-        </Flex>
         <Stack spacing={{ base: 6, md: 10 }}>
           <Box as={"header"}>
             <Heading
@@ -232,6 +189,31 @@ const ClaseComponent = (props) => {
             <Text color={"gray.900"} fontWeight={300} fontSize={"2xl"}>
               ${clase.price} ARS p/clase
             </Text>
+          </Box>
+
+          <Box display="flex" mt="2">
+            {Array(5)
+              .fill("")
+              .map((_, i) => (
+                <StarIcon
+                  key={i}
+                  boxSize={"30px"}
+                  color={i < clase.rating ? "teal.500" : "gray.300"}
+                />
+              ))}
+            <Box
+              as="span"
+              ml="2"
+              mt={"5px"}
+              color="gray.600"
+              fontSize="md"
+              fontWeight={"bold"}
+            >
+              <HStack>
+                <Text ml={"5px"}>{clase.reviewCount}</Text>
+                <Text>reviews</Text>
+              </HStack>
+            </Box>
           </Box>
 
           <Stack
@@ -312,53 +294,127 @@ const ClaseComponent = (props) => {
                 </ListItem>
               </List>
             </Box>
-          </Stack>
-          {/* Se oculta el boton de Contratar si no es estudiante o si ya la tiene contratada */}
-          {props.userState &&
-            props.userState.role === "student" &&
-            (profile &&
-            profile.clases &&
-            clase &&
-            !profile.clases.includes(clase._id) ? (
-              <Box>
-                <Button
-                  rounded={"none"}
-                  w={"full"}
-                  mt={8}
-                  size={"lg"}
-                  py={"7"}
-                  onClick={onOpen}
-                  bg={"gray.900"}
-                  color={"white"}
-                  textTransform={"uppercase"}
-                  _hover={{
-                    transform: "translateY(2px)",
-                    boxShadow: "lg",
-                  }}
-                >
-                  Contratar
-                </Button>
 
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  justifyContent={"center"}
+            {clase && clase.comments && clase.comments.length > 0 && (
+              <Box>
+                <Text
+                  fontSize={{ base: "16px", lg: "18px" }}
+                  color={"yellow.500"}
+                  fontWeight={"500"}
+                  textTransform={"uppercase"}
+                  mb={"4"}
                 >
-                  <MdCall />
-                  <Text>Contacto garantizado en menos de 48 horas</Text>
-                </Stack>
+                  Reviews
+                </Text>
+
+                <SimpleGrid columns={{ base: 1, md: 2 }}>
+                  {clase.comments.map((review, index) => (
+                    <ReviewCard key={"reviewCard_" + index} review={review} />
+                  ))}
+                </SimpleGrid>
               </Box>
-            ) : (
-              <>
-                <Center>
-                  <VStack mt="1em">
-                    <Icon as={CheckIcon} color="green" boxSize="100"></Icon>
-                    <Text>Ya contrataste esta clase</Text>
-                  </VStack>
-                </Center>
-              </>
-            ))}
+            )}
+          </Stack>
         </Stack>
+        <Flex>
+          <Flex>
+            <VStack spacing={{ base: 4, sm: 6 }}>
+              <Text
+                fontSize={{ base: "16px", lg: "18px" }}
+                color={"yellow.500"}
+                fontWeight={"500"}
+                textTransform={"uppercase"}
+                mb={"4"}
+              >
+                Sobre el profe
+              </Text>
+
+              <Image
+                borderRadius="full"
+                boxSize={"200px"}
+                src={teacher.photo}
+              />
+
+              <Heading as="h3">
+                {teacher.firstName} {teacher.lastName}
+              </Heading>
+              <StackDivider borderColor={"gray.200"} />
+              <Box mx={"5em"}>
+                <Text
+                  fontWeight={"bold"}
+                  fontSize={{ base: "12px", lg: "16px" }}
+                  mb={"4"}
+                >
+                  {teacher && teacher.description}
+                </Text>
+              </Box>
+
+              {/* "completed": true,
+                        "nivel": "primaria",
+                        "descr": "Profesor de primaria",
+                        "createdAt": "2022-11-21T16:59:48.500Z",
+                        "updatedAt": "2022-11-21T16:59:48.500Z" */}
+
+              <Text
+                fontSize={{ base: "16px", lg: "18px" }}
+                color={"yellow.500"}
+                fontWeight={"500"}
+                textTransform={"uppercase"}
+                mb={"4"}
+              >
+                experiencias
+              </Text>
+              {teacher &&
+                teacher.experiencias &&
+                teacher.experiencias.map((e, i) => (
+                  <Text key={"textExperiencies_"+i}>{e.descr + " de nivel " + e.nivel}</Text>
+                ))}
+
+              {/* Se oculta el boton de Contratar si no es estudiante o si ya la tiene contratada */}
+              {props.userState &&
+                props.userState.role === "student" &&
+                (profile &&
+                profile.clases &&
+                clase &&
+                !profile.clases.includes(clase._id) ? (
+                  <Box>
+                    <Button
+                      rounded={"none"}
+                      w={"full"}
+                      mt={8}
+                      size={"lg"}
+                      py={"7"}
+                      onClick={onOpen}
+                      bg={"gray.900"}
+                      color={"white"}
+                      textTransform={"uppercase"}
+                      _hover={{
+                        transform: "translateY(2px)",
+                        boxShadow: "lg",
+                      }}
+                    >
+                      Contratar
+                    </Button>
+
+                    <Stack direction="row">
+                      <MdCall />
+                      <Text>Contacto garantizado en menos de 48 horas</Text>
+                    </Stack>
+                  </Box>
+                ) : (
+                  <>
+                    <Center>
+                      <VStack mt="1em">
+                        <Icon as={CheckIcon} color="green" boxSize="100"></Icon>
+                        <Text>Ya contrataste esta clase</Text>
+                      </VStack>
+                    </Center>
+                  </>
+                ))}
+            </VStack>
+          </Flex>
+          <StackDivider borderColor={"gray.200"} />
+        </Flex>
       </SimpleGrid>
 
       <Modal
@@ -389,7 +445,12 @@ const ClaseComponent = (props) => {
                 )}
               </FormControl>
 
-              <FormControl mt={4} id="horario" isInvalid={isErrorHorario} isRequired>
+              <FormControl
+                mt={4}
+                id="horario"
+                isInvalid={isErrorHorario}
+                isRequired
+              >
                 <FormLabel>Horario</FormLabel>
                 <Input
                   placeholder="Horario"
@@ -397,38 +458,44 @@ const ClaseComponent = (props) => {
                   value={formData.horario}
                   onChange={handleChange}
                 />
-                           {isErrorHorario && (
+                {isErrorHorario && (
                   <FormErrorMessage>
                     El campo de horario es obligatorio
                   </FormErrorMessage>
                 )}
               </FormControl>
 
-              <FormControl mt={4} id="descr_contratacion" isInvalid={isErrorDescrContratacion} isRequired>
+              <FormControl
+                mt={4}
+                id="descr_contratacion"
+                isInvalid={isErrorDescrContratacion}
+                isRequired
+              >
                 <FormLabel>Descripcion de contratacion</FormLabel>
                 <Textarea
-                      id="descr_contratacion"
-                      placeholder="Descripcion de la contratacion"
-                      value={formData.descr_contratacion}
-                      onChange={handleChange}
-                      resize={"vertical"}
-                      mt={1}
-                      rows={3}
-                      minLength={60}
-                      shadow="sm"
-                      focusBorderColor="brand.400"
-                      fontSize={{
-                        sm: "sm",
-                      }}
-                    />
-                    <FormHelperText>
-                      Razon por la que quieres tomar la clase, preguntas sobre contenido, etc
-                    </FormHelperText>
-                    {isErrorDescrContratacion && (
-                      <FormErrorMessage>
-                        La descripcion de contratacion es requerida.
-                      </FormErrorMessage>
-                    )}
+                  id="descr_contratacion"
+                  placeholder="Descripcion de la contratacion"
+                  value={formData.descr_contratacion}
+                  onChange={handleChange}
+                  resize={"vertical"}
+                  mt={1}
+                  rows={3}
+                  minLength={60}
+                  shadow="sm"
+                  focusBorderColor="brand.400"
+                  fontSize={{
+                    sm: "sm",
+                  }}
+                />
+                <FormHelperText>
+                  Razon por la que quieres tomar la clase, preguntas sobre
+                  contenido, etc
+                </FormHelperText>
+                {isErrorDescrContratacion && (
+                  <FormErrorMessage>
+                    La descripcion de contratacion es requerida.
+                  </FormErrorMessage>
+                )}
               </FormControl>
 
               <Center>

@@ -37,8 +37,14 @@ exports.getClases = async function getClases(req, res) {
     query["nivel.value"] = req.body.nivel;
   }
 
+  if (req.body.state) {
+    query["state"] = req.body.state
+  } else {
+    query["state"] = "publicada"
+  }
+
   try {
-    let clases = await claseService.getClases(query, page, limit);
+    let clases = await claseService.getClases(query, {page: page, limit: limit, sort: { updatedAt: 'desc' }});
     return res.status(200).json({ status: "ok", data: clases });
   } catch (e) {
     return res.status(400).json({ status: "err", message: e.message });

@@ -15,6 +15,7 @@ import CompleteOnboardTeacherFrm from "./pages/Onboard/CompleteOnboardTeacherFrm
 import NotFound from "./pages/NotFound/NotFound";
 import Footer from "./components/Footer/Footer";
 import CrearClase from "./pages/Clase/CrearClase";
+import ForgotPassword from "./pages/ChangePassword/ForgotPassword";
 
 const App = () => {
   const [userState, setUserState] = useState(authService.getUser());
@@ -104,7 +105,7 @@ const App = () => {
         />
 
         <Route
-          path="/changePassword"
+          path="/changePassword/:token"
           element={
             userState ? (
               <ChangePassword handleSignupOrLogin={handleSignupOrLogin} />
@@ -113,6 +114,17 @@ const App = () => {
             )
           }
         />
+
+
+<Route
+          path="/forgot"
+          element={
+  
+              <ForgotPassword  />
+
+          }
+        />
+
         <Route path="/" element={<Principal userState={userState} />} />
         <Route path="*" element={<NotFound userState={userState} />} />
       </Routes>

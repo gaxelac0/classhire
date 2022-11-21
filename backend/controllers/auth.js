@@ -60,3 +60,20 @@ exports.changePassword = async function changePassword(req, res) {
     });
   });
 };
+
+exports.forgotPassword = async function forgotPassword(req, res) {
+  User.findById(req.body.email).then((user) => {
+    if (!user)
+      return res.status(401).json({ err: "Credenciales incorrectas o inexistentes" });
+
+
+      const token = authService.createJWT({
+         user_id: user._id
+      });
+
+      // enviar por mail
+
+      // responder success siempre
+      res.json({ status: "ok", msg:" processed without errors" });
+  });
+};

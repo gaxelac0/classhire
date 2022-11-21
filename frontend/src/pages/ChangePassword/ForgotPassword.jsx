@@ -12,7 +12,7 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as authService from "../../services/authService";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 
@@ -20,24 +20,22 @@ import { useToast } from "@chakra-ui/react";
 
 import {} from "@chakra-ui/react";
 
-const LoginComponent = (props) => {
-  const navigate = useNavigate();
+const ForgotPasswordComponent = (props) => {
+
   const toast = useToast();
   const [formData, setFormData] = useState({
     email: undefined,
-    password: undefined,
   });
 
 
   const isErrorEmail = formData.email === "";
-  const isErrorPassword = formData.password === "";
 
-  const updateMessage = (msg) => {
+  const updateMessage = (msg, status) => {
     if (msg && (msg !== "" || msg[0] !== "")) {
       toast({
-        title: "Error!",
+        title: status ==="error" ? "Error!" : "Success!",
         description: msg,
-        status: "error",
+        status: status,
         position: "top-right",
         duration: 6000,
         isClosable: true,
@@ -53,11 +51,15 @@ const LoginComponent = (props) => {
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     try {
-      await authService.login(formData);
-      props.handleSignupOrLogin();
-      navigate("/profile/1");
+
+
+      // generate email with token
+      await authService.forgotPassword(formData);
+      
+      updateMessage("Correo enviado, revisa tu casilla por un link de cambio de contrasena", "success")
+      //navigate("/profile/1");
     } catch (err) {
-      updateMessage(err.message);
+      updateMessage(err.message, "error");
     }
   };
 
@@ -65,41 +67,23 @@ const LoginComponent = (props) => {
     <Flex align={"center"} justify={"center"}>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
-          <Heading fontSize={"4xl"}>Ingresa tu cuenta</Heading>
-          <Text fontSize={"lg"} color={"gray.600"}>
-            y disfruta de todas las funcionalidades ✌️
+          <Heading fontSize={"4xl"}>Recuperacion de cuenta</Heading>
+          <Text>
+            Si existe una cuenta, te enviaremos un correo para actualizar tu contrasena 
           </Text>
         </Stack>
         <Box rounded={"lg"} boxShadow={"lg"} p={8}>
           <form onSubmit={handleSubmit}>
             <Stack spacing={4}>
               <FormControl id="email" isInvalid={isErrorEmail} isRequired>
-                <FormLabel>Email address</FormLabel>
+                <FormLabel>Tu email</FormLabel>
                 <Input
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
                 />
               </FormControl>
-              <FormControl id="password" isInvalid={isErrorPassword} isRequired>
-                <FormLabel>Password</FormLabel>
-                <Input
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
-              </FormControl>
               <Stack spacing={10}>
-                <Stack
-                  direction={{ base: "column", sm: "row" }}
-                  align={"start"}
-                  justify={"space-between"}
-                >
-                  <Checkbox>Recordarme</Checkbox>
-                  <Link href="/forgot" color={"teal.400"}>
-                    Forgot password?
-                    </Link>
-                </Stack>
                 <Button
                   type="submit"
                   bg={"teal.400"}
@@ -108,7 +92,7 @@ const LoginComponent = (props) => {
                     bg: "teal.500",
                   }}
                 >
-                  Sign in
+                  Enviar Mail
                 </Button>
               </Stack>
             </Stack>
@@ -119,14 +103,14 @@ const LoginComponent = (props) => {
   );
 };
 
-const Login = (props) => {
+const ForgotPassword = (props) => {
   return (
     <BackgroundLayout
       component={
-        <LoginComponent handleSignupOrLogin={props.handleSignupOrLogin} />
+        <ForgotPasswordComponent />
       }
     />
   );
 };
 
-export default Login;
+export default ForgotPassword;

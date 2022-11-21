@@ -50,13 +50,13 @@ async function login(credentials) {
   }
 }
 
-async function changePassword(credentials) {
+async function changePassword(credentials, token) {
   try {
     const res = await fetch(`${BASE_URL}/changePassword`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${tokenService.getToken()}`,
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify(credentials),
     })
@@ -73,4 +73,27 @@ async function changePassword(credentials) {
   }
 }
 
-export { signup, getUser, logout, login, changePassword }
+
+async function forgotPassword(fields) {
+  try {
+    const res = await fetch(`${BASE_URL}/forgotPassword`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(fields),
+    })
+    const json = await res.json()
+    if (json.token) {
+      tokenService.removeToken()
+      tokenService.setToken(json.token)
+    }
+    if (json.err) {
+      throw new Error(json.err)
+    }
+  } catch (err) {
+    throw err
+  }
+}
+
+export { signup, getUser, logout, login, changePassword, forgotPassword}

@@ -52,7 +52,7 @@ var commentSchema = new mongoose.Schema(
 
 var claseSchema = new mongoose.Schema(
   {
-    state: {type: String, required: true, defaullt: "publicada"},
+    state: {type: String, required: true, default: "publicada"},
     title: { type: String, required: true },
     materia: materiaSchema,
     description: { type: String, required: true },

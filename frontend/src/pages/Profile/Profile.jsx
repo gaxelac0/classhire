@@ -239,6 +239,12 @@ const TablaMaterias = (props) => {
                       ] === "aceptada" && (
                         <Tooltip label={"Finalizar Contratacion"}>
                           <IconButton
+                              onClick={() => {
+                              props.handleOnOpenFinalizar({
+                                clase_id: c._id,
+                                profile_id: props.userState.user.profile,
+                              });
+                            }}
                             colorScheme="teal"
                             aria-label="Call Segun"
                             size="xs"
@@ -477,12 +483,7 @@ const ProfileComponent = (props) => {
           "Clase " + state + " con exito",
           "success"
         );
-        if (props.page > 1) {
-          navigate(`/profile/${props.page}`);
-        } else {
-          navigate(`/profile`);
-        }
-        
+        navigate(`/profile`);        
       } else {
         throw new Error(result.msg);
       }

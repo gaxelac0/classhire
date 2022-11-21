@@ -302,7 +302,7 @@ const CrearClaseComponent = (props) => {
                   isRequired
                 >
                   <FormLabel fontSize="sm" fontWeight="md" color="teal.700">
-                    Duracion (horas incl.)
+                    Duracion (horas p/clase)
                   </FormLabel>
 
                   <InputGroup>

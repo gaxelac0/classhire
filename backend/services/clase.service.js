@@ -11,12 +11,8 @@ const Contratacion = require("../models/contratacion.model");
 // Saving the context of this module inside the _the variable
 _this = this;
 
-async function getClases(query, page, limit) {
-  // Options setup for the mongoose paginate
-  var options = {
-    page,
-    limit,
-  };
+async function getClases(query, options) {
+
   // Try Catch the awaited promise to handle the error
   try {
     //console.log("Query", query);
@@ -47,12 +43,8 @@ async function getClases(query, page, limit) {
 }
 exports.getClases = getClases;
 
-async function getContrataciones(query, page, limit) {
-  // Options setup for the mongoose paginate
-  var options = {
-    page,
-    limit,
-  };
+async function getContrataciones(query, options) {
+
 
   try {
     var contrataciones = await Contratacion.paginate(query, options);
@@ -73,7 +65,7 @@ exports.getContrataciones = getContrataciones;
 
 async function getClasesByProfileId(body, page, limit) {
   try {
-    let profile = await Profile.findOne({ _id: body.profile_id }).lean().exec();
+    let profile = await Profile.findOne({ _id: body.user.profile }).lean().exec();
 
     // console.log(`getClasesByProfileId  - retrieving clases(${profile.clases.length}) for profileId ${profile_id}`)
     // console.log(profile.clases);
@@ -82,7 +74,13 @@ async function getClasesByProfileId(body, page, limit) {
     if (profile.clases.length > 0) {
       query = {};
       query["_id"] = { $in: profile.clases };
-      var result = await getClases(query, page, limit);
+      var result = await getClases(query, {page: page, limit: limit, sort: { updatedAt: 'desc' } });
+
+
+      // limite y pagina de contrataciones
+      let pageContrataciones = 1;
+      let limitContrataciones = 50;
+
 
       var cloneResult = { ...result };
       await Promise.all(
@@ -90,13 +88,12 @@ async function getClasesByProfileId(body, page, limit) {
           query = { clase_id: clase._id };
           if (profile.role === "student") {
             // El estudiante solo puede tener una contratacion por clase
-            page = 1;
-            limit = 1;
+            limitContrataciones = 1;
             query["profile_id"] = profile._id;
           }
   
           // obtener contrataciones de la clase
-          let contrataciones = await getContrataciones(query, page, limit);
+          let contrataciones = await getContrataciones(query, {page: pageContrataciones, limit: limitContrataciones});
   
           result.docs[idx]["contrataciones"] = contrataciones;
         })

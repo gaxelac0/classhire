@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 
-import ClaseCard from "../../components/ClaseCard/ClaseCard";
+import ClaseCard from "../../components/Card/ClaseCard";
 
 import { useState, useEffect } from "react";
 
