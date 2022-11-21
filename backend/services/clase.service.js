@@ -304,6 +304,7 @@ exports.contratar = async function (body) {
       telefono: body.telefono,
       state_in_order: ["solicitada"],
       reasons_in_order: [body.descr_contratacion],
+      name: profile.firstName + " " + profile.lastName
     });
   } catch (e) {
     // return a Error message describing the reason

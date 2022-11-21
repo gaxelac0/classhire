@@ -68,9 +68,9 @@ const CrearClaseComponent = (props) => {
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     try {
-      console.log("formData: " + formData);
+     // console.log("formData: " + formData);
       let res = await claseService.addClase(formData);
-      console.log("addClase res:" + res);
+     // console.log("addClase res:" + res);
       navigate("/clase/" + res.data._id);
     } catch (err) {
       updateMessage(err.message);

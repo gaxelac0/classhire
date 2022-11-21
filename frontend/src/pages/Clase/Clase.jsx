@@ -69,7 +69,7 @@ const ClaseComponent = (props) => {
   const isErrorDescrContratacion = formData.descr_contratacion === "";
 
   const handleChange = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
@@ -126,7 +126,7 @@ const ClaseComponent = (props) => {
       ...formData,
       clase_id: id,
     });
-    console.log("id " + id);
+    //console.log("id " + id);
 
     const fetchClaseInformation = async () => {
       console.log("ejecuta fetchClaseInformation at ClaseComponent");

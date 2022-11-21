@@ -37,27 +37,17 @@ import {
   Select,
 } from "@chakra-ui/react";
 
-
-
 import Pagination from "../../components/Pagination/Pagination";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
-
-
 
 import { BsFillPersonFill } from "react-icons/bs";
 import { FaComment } from "react-icons/fa";
 import { useState, React, useEffect } from "react";
 import * as claseService from "../../services/claseService";
 
-
-
 import { Heading } from "@chakra-ui/react";
 
-
-
 import { Link, useParams, useNavigate } from "react-router-dom";
-
-
 
 import { useToast } from "@chakra-ui/react";
 import EditProfileFrm from "./EditProfileFrm";
@@ -105,6 +95,7 @@ const FittedTab = (props) => {
                   pagination={props.pagination}
                   handleOnOpenCancelar={props.handleOnOpenCancelar}
                   handleOnOpenAddReview={props.handleOnOpenAddReview}
+                  handleOnOpenAlumnos={props.handleOnOpenAlumnos}
                 />
                 <Pagination pagination={props.pagination} route={"profile"} />
               </>
@@ -133,12 +124,7 @@ const FittedTab = (props) => {
 // TABLA DE MATERIAS DEL PERFIL
 const TablaMaterias = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const OverlayOne = () => (
-    <ModalOverlay
-      bg="blackAlpha.300"
-      backdropFilter="blur(10px) hue-rotate(90deg)"
-    />
-  );
+
   return (
     <TableContainer>
       <Table variant="unstyled">
@@ -155,7 +141,7 @@ const TablaMaterias = (props) => {
                 <Th>Acciones</Th>
               </>
             ) : (
-            // Encabezado PROFESOR  
+              // Encabezado PROFESOR
               <>
                 <Th>Titulo</Th>
                 <Th display={{ sm: "none", md: "flex" }}>Fecha</Th>
@@ -287,7 +273,7 @@ const TablaMaterias = (props) => {
                 </>
               ) : (
                 <>
-                {/* Cuerpo PROFESOR */}
+                  {/* Cuerpo PROFESOR */}
                   <Td>
                     <Link to={"/clase/" + c._id}>
                       <HStack>
@@ -313,125 +299,14 @@ const TablaMaterias = (props) => {
                       />
                       {/* Boton listado de alumnos */}
                       <IconButton
+                        onClick={() => {
+                          props.handleOnOpenAlumnos({ clase: c });
+                        }}
                         colorScheme="teal"
                         aria-label="Call Segun"
                         size="xs"
                         icon={<BsFillPersonFill />}
-                        onClick={onOpen}
                       />
-                      {/* Modal del listado de alumnos */}
-                      <Modal
-                        isOpen={isOpen}
-                        onClose={onClose}
-                        isCentered
-                        size="xl"
-                        >
-                        <ModalOverlay />
-                        <ModalContent>
-                          <ModalHeader>Listado de Alumnos</ModalHeader>
-                          <ModalCloseButton />
-                          <ModalBody pb={6}>
-                            <TableContainer>
-                              <Table variant="unstyled" >
-                                <Thead>
-                                  <Tr>
-                                    <Th>Estado</Th>
-                                    <Th>Alumno</Th>
-                                    <Th>Fecha</Th>
-                                    <Th>Acciones</Th>
-                                  </Tr>
-                                </Thead>
-                                <Tbody>
-                                  <Tr>
-                                    <Td>
-                                      <IconButton
-                                        colorScheme="teal"
-                                        aria-label="Call Segun"
-                                        size="xs"
-                                        icon={<TimeIcon />}
-                                      />
-                                    </Td>
-                                    <Td>Carlos Stefano</Td>
-                                    <Td>20/11/2022</Td>
-                                    <Td>
-                                      <HStack>
-                                        <IconButton
-                                          colorScheme="teal"
-                                          aria-label="Call Segun"
-                                          size="xs"
-                                          icon={<TimeIcon />}
-                                        />
-                                        <IconButton
-                                          colorScheme="teal"
-                                          aria-label="Call Segun"
-                                          size="xs"
-                                          icon={<SmallCloseIcon />}
-                                        />
-                                        <IconButton
-                                          colorScheme="teal"
-                                          aria-label="Call Segun"
-                                          size="xs"
-                                          icon={<CheckIcon />}
-                                        />
-                                        <IconButton
-                                          colorScheme="teal"
-                                          aria-label="Call Segun"
-                                          size="xs"
-                                          icon={<SpinnerIcon />}
-                                        />
-                                      </HStack>
-                                    </Td>
-                                  </Tr>
-                                  <Tr>
-                                    <Td>
-                                      <IconButton
-                                        colorScheme="teal"
-                                        aria-label="Call Segun"
-                                        size="xs"
-                                        icon={<CheckIcon />}
-                                      />
-                                    </Td>
-                                    <Td>Roberto Carlos</Td>
-                                    <Td>20/11/2022</Td>
-                                    <Td>
-                                    <HStack>
-                                      <IconButton
-                                        colorScheme="teal"
-                                        aria-label="Call Segun"
-                                        size="xs"
-                                        icon={<TimeIcon />}
-                                      />
-                                      <IconButton
-                                        colorScheme="teal"
-                                        aria-label="Call Segun"
-                                        size="xs"
-                                        icon={<SmallCloseIcon />}
-                                      />
-                                      <IconButton
-                                        colorScheme="teal"
-                                        aria-label="Call Segun"
-                                        size="xs"
-                                        icon={<CheckIcon />}
-                                      />
-                                      <IconButton
-                                        colorScheme="teal"
-                                        aria-label="Call Segun"
-                                        size="xs"
-                                        icon={<SpinnerIcon />}
-                                      />
-                                    </HStack>
-                                    </Td>
-                                  </Tr>
-                                </Tbody>
-                              </Table>
-                            </TableContainer>
-                          </ModalBody>
-
-                          <ModalFooter>
-                            <Button onClick={onClose}>Cerrar</Button>
-                          </ModalFooter>
-                        </ModalContent>
-                      </Modal>
                     </HStack>
                   </Td>
                 </>
@@ -448,6 +323,8 @@ const ProfileComponent = (props) => {
   let navigate = useNavigate();
   let toast = useToast();
 
+  let [selectedClase, setSelectedClase] = useState({});
+
   const {
     isOpen: isOpenCancelar,
     onOpen: onOpenCancelar,
@@ -458,6 +335,12 @@ const ProfileComponent = (props) => {
     isOpen: isOpenAddReview,
     onOpen: onOpenAddReview,
     onClose: onCloseAddReview,
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenAlumnos,
+    onOpen: onOpenAlumnos,
+    onClose: onCloseAlumnos,
   } = useDisclosure();
 
   const [formData, setFormData] = useState({
@@ -480,14 +363,14 @@ const ProfileComponent = (props) => {
   const isErrorComment = formDataReview.comment === "";
 
   const handleChange = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
   const handleChangeReview = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
     setFormDataReview({ ...formDataReview, [e.target.name]: e.target.value });
-    console.log(formDataReview)
+    //console.log(formDataReview);
   };
 
   const handleSubmit = async (evt) => {
@@ -515,18 +398,28 @@ const ProfileComponent = (props) => {
   const handleSubmitAddReview = async (evt) => {
     evt.preventDefault();
     try {
-
-      
-
       let result = await claseService.addReview(formDataReview);
       if (result.status === "ok") {
-        updateMessage( result.msg,
-          "success"
-        );
+        updateMessage(result.msg, "success");
         navigate("/profile");
       } else {
         throw new Error(result.msg);
       }
+    } catch (err) {
+      updateMessage(err.message, "error");
+    }
+  };
+
+  const handleSubmitAlumnos = async (evt) => {
+    evt.preventDefault();
+    try {
+      /* let result = await claseService.addReview(formDataReview);
+      if (result.status === "ok") {
+        updateMessage(result.msg, "success");
+        navigate("/profile");
+      } else {
+        throw new Error(result.msg);
+      } */
     } catch (err) {
       updateMessage(err.message, "error");
     }
@@ -559,8 +452,13 @@ const ProfileComponent = (props) => {
     onOpenAddReview();
     setFormDataReview({
       ...formDataReview,
-      clase_id: clase_id
+      clase_id: clase_id,
     });
+  };
+
+  const handleOnOpenAlumnos = ({ clase }) => {
+    setSelectedClase(clase);
+    onOpenAlumnos();
   };
 
   return (
@@ -571,8 +469,10 @@ const ProfileComponent = (props) => {
         pagination={props.pagination}
         handleOnOpenCancelar={handleOnOpenCancelar}
         handleOnOpenAddReview={handleOnOpenAddReview}
+        handleOnOpenAlumnos={handleOnOpenAlumnos}
       />
 
+      {/* Modal de Cancelar Contratacion */}
       <Modal isOpen={isOpenCancelar} onClose={onCloseCancelar}>
         <ModalOverlay />
         <ModalContent>
@@ -627,6 +527,7 @@ const ProfileComponent = (props) => {
         </ModalContent>
       </Modal>
 
+      {/* Modal de Agregar Review */}
       <Modal isOpen={isOpenAddReview} onClose={onCloseAddReview}>
         <ModalOverlay />
         <ModalContent>
@@ -667,29 +568,30 @@ const ProfileComponent = (props) => {
               <FormControl mt={4} isInvalid={isErrorComment} isRequired>
                 <FormLabel>Comentario / Review</FormLabel>
                 <Textarea
-                      id="comment"
-                      name="comment"
-                      placeholder="Escribe aqui tu comentario o feedback sobre la clase"
-                      value={formDataReview.comment}
-                      onChange={handleChangeReview}
-                      resize={"vertical"}
-                      mt={1}
-                      rows={3}
-                      minLength={10}
-                      shadow="sm"
-                      focusBorderColor="brand.400"
-                      fontSize={{
-                        sm: "sm",
-                      }}
-                    />
-                    <FormHelperText>
-                      Razon por la que quieres tomar la clase, preguntas sobre contenido, etc
-                    </FormHelperText>
-                    {isErrorComment && (
-                      <FormErrorMessage>
-                        La descripcion de contratacion es requerida.
-                      </FormErrorMessage>
-                    )}
+                  id="comment"
+                  name="comment"
+                  placeholder="Escribe aqui tu comentario o feedback sobre la clase"
+                  value={formDataReview.comment}
+                  onChange={handleChangeReview}
+                  resize={"vertical"}
+                  mt={1}
+                  rows={3}
+                  minLength={10}
+                  shadow="sm"
+                  focusBorderColor="brand.400"
+                  fontSize={{
+                    sm: "sm",
+                  }}
+                />
+                <FormHelperText>
+                  Razon por la que quieres tomar la clase, preguntas sobre
+                  contenido, etc
+                </FormHelperText>
+                {isErrorComment && (
+                  <FormErrorMessage>
+                    La descripcion de contratacion es requerida.
+                  </FormErrorMessage>
+                )}
               </FormControl>
 
               <Center>
@@ -704,6 +606,121 @@ const ProfileComponent = (props) => {
               </Center>
             </form>
           </ModalBody>
+        </ModalContent>
+      </Modal>
+
+      {/* Modal del listado de alumnos */}
+      <Modal size={"xl"} isOpen={isOpenAlumnos} onClose={onCloseAlumnos} >
+        <ModalOverlay />
+        <ModalContent >
+          <ModalHeader>Listado de Alumnos</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={1}>
+            <TableContainer>
+              <Table variant="unstyled">
+                <Thead>
+                  <Tr>
+                    <Th>Contratacion</Th>
+                    <Th>Fecha</Th>
+                    <Th>Acciones</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {selectedClase &&
+                    selectedClase.contrataciones &&
+                    selectedClase.contrataciones.docs &&
+                    selectedClase.contrataciones.docs.map((ct, index) => (
+                      <Tr key={index}>
+                        <Td>
+                          <Tooltip
+                            label={
+                              <Text textTransform={"uppercase"}>
+                                {
+                                  ct.state_in_order[
+                                    ct.state_in_order.length - 1
+                                  ]
+                                }
+                              </Text>
+                            }
+                          >
+                            <HStack>
+                              <Icon
+                              as={iconByStatus(
+                                ct.state_in_order[ct.state_in_order.length - 1]
+                              )}
+                              size="xs"
+                              alignSelf="left"
+                              color="teal.500"
+                            />
+                            <Text fontSize={{base: "xs", md: "md"}}>
+                            {ct.name}
+                            </Text>
+                            </HStack>
+                            
+                          </Tooltip>
+                        </Td>
+                        <Td>
+                          <Text fontSize={{base: "xs", md: "md"}}>
+                          {new Date(ct.createdAt).toDateString()}
+                          </Text>
+                        </Td>
+                        <Td>
+                          <HStack>
+                            {ct.state_in_order[ct.state_in_order.length - 1] ===
+                              "solicitada" && (
+                              <>
+                                <IconButton
+                                onClick={() => {
+                                  handleOnOpenCancelar({
+                                    clase_id: ct.clase_id,
+                                    profile_id: ct.profile_id,
+                                  });
+                                }}
+                                  colorScheme="teal"
+                                  aria-label="Call Segun"
+                                  size="xs"
+                                  icon={<SmallCloseIcon />}
+                                />
+                                <IconButton
+                                  colorScheme="teal"
+                                  aria-label="Call Segun"
+                                  size="xs"
+                                  icon={<CheckIcon />}
+                                />
+                              </>
+                            )}
+
+                            {ct.state_in_order[ct.state_in_order.length - 1] ===
+                              "aceptada" && (
+                              <IconButton
+                                colorScheme="teal"
+                                aria-label="Call Segun"
+                                size="xs"
+                                icon={<SmallCloseIcon />}
+                              />
+                            )}
+
+                            {ct.state_in_order[ct.state_in_order.length - 1] ===
+                              "finalizada" && (
+                              <IconButton
+                                colorScheme="teal"
+                                aria-label="Call Segun"
+                                size="xs"
+                                icon={<SmallCloseIcon />}
+                              />
+                            )}
+                          </HStack>
+                        </Td>
+                      </Tr>
+                    ))}
+                </Tbody>
+              </Table>
+            </TableContainer>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button onClick={onCloseAlumnos}>Cerrar</Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </Container>
@@ -756,6 +773,7 @@ const Profile = (props) => {
 };
 
 const iconByStatus = (state) => {
+  //console.log(state);
   switch (state) {
     case "solicitada": {
       return TimeIcon;

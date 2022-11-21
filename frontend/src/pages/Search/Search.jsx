@@ -210,7 +210,7 @@ const SearchComponent = (props) => {
                     step={20}
                     onChange={(val) => {
                       setRating(val / 20);
-                      console.log(val / 20);
+                     // console.log(val / 20);
                     }}
                   >
                     <SliderMark

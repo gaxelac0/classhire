@@ -548,6 +548,7 @@ db.users.insertOne({
 db.contratacions.insertOne({
   profile_id: ObjectId("demostudent0"),
   clase_id: ObjectId("clase0000001"),
+  name: "Armando Barreda",
   state_in_order: ["solicitada"],
   reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?"],
   createdAt: new Date(),
@@ -557,6 +558,7 @@ db.contratacions.insertOne({
 db.contratacions.insertOne({
   profile_id: ObjectId("demostudent0"),
   clase_id: ObjectId("clase0000002"),
+  name: "Armando Barreda",
   state_in_order: ["solicitada", "cancelada"],
   reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?", "no doy para CBC"],
   createdAt: new Date(),
@@ -566,6 +568,7 @@ db.contratacions.insertOne({
 db.contratacions.insertOne({
   profile_id: ObjectId("demostudent0"),
   clase_id: ObjectId("clase0000003"),
+  name: "Armando Barreda",
   state_in_order: ["solicitada", "aceptada", "finalizada"],
   reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?", "bienvenido a las clases...", "todo bien"],
   createdAt: new Date(),
@@ -575,6 +578,7 @@ db.contratacions.insertOne({
 db.contratacions.insertOne({
   profile_id: ObjectId("demostudent0"),
   clase_id: ObjectId("clase0000004"),
+  name: "Armando Barreda",
   state_in_order: ["solicitada", "aceptada"],
   reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?", "bienvenido a las clases..."],
   createdAt: new Date(),
@@ -584,6 +588,7 @@ db.contratacions.insertOne({
 db.contratacions.insertOne({
   profile_id: ObjectId("demostudent0"),
   clase_id: ObjectId("clase0000005"),
+  name: "Armando Barreda",
   state_in_order: ["solicitada"],
   reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?"],
   createdAt: new Date(),
@@ -593,6 +598,7 @@ db.contratacions.insertOne({
 db.contratacions.insertOne({
   profile_id: ObjectId("demostudent0"),
   clase_id: ObjectId("clase0000006"),
+  name: "Armando Barreda",
   state_in_order: ["solicitada", "aceptada"],
   reasons_in_order: ["hola me gustaria tomar clases particulares, sabes de los temas del CBC?", "bienvenido a las clases..."],
   createdAt: new Date(),

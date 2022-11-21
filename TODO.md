@@ -9,3 +9,6 @@
 - logica de add review contra el back... 
 - cuando profesor finaliza la publicacion todas las contrataciones van a finalizado 
 - arreglar registro, crear publicacion validation
+
+
+- cambiar base de datos a mongo atlas 
