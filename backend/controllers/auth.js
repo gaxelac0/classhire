@@ -139,10 +139,12 @@ exports.forgotPassword = async function forgotPassword(req, res) {
 
     const mailOptions = {
       ...constants.mailoptions,
+      from: "classhire",
+      to: req.body.email,
       text:
-        "Alguien ha solicitado una actualizacion de contrasena para esta cuenta, si no fuiste tu ignora este mail. Sigue este link: " +
-        "http://localhost:3000/changePassword/" +
-        token,
+        `Hola! Te escribimos de Classhire. \n
+        Alguien ha solicitado una actualizacion de contrasena para esta cuenta, si no fuiste tu ignora este mail. \n
+        Sigue este link: http://localhost:3000/changePassword/` +     token,
     };
 
     try {

@@ -120,7 +120,7 @@ exports.addReview = async function addReview(req, res) {
     let clase = await claseService.addReview(body);
     return res
       .status(200)
-      .json({ status: "ok", msg: "Review posteada", data: clase });
+      .json({ status: "ok", msg: "Calificado con exito!", data: clase });
   } catch (e) {
     return res.status(e.statusCode).json({ status: e.name, msg: e.message });
   }

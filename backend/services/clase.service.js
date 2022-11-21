@@ -128,22 +128,69 @@ exports.addReview = async function (body) {
         "La clase no existe"
       );
     }
+
+    var profile = await Profile.findOne({ _id: body.user.profile });
+    if (!profile) {
+      throw new NotFoundError(
+        "err",
+        HttpStatusCodes.NOT_FOUND,
+        true,
+        "El profile no existe"
+      );
+    }
+
+
+    // validar que no haya una review ya para el que envia esta nueva review
+    let existingReview, existingIdx;
+    clase.comments.map((review, idx) =>{
+      if(profile._id.toString() === review.profile_author_id.toString()) {
+        existingReview = review;
+        existingIdx = idx;
+        console.log("found review for user! " + JSON.stringify(review))
+      }
+    })
+
+
+
     // TODO: validar que el usuario haciendo la review tenga contratada la clase
     // TODO: validar que no sea el autor el que la postea
 
-    clase.comments.push({
-      type: body.type,
-      comment: body.comment,
-      profile_author_id: body.user.profile,
-    });
-    clase.reviewCount = clase.reviewCount + 1;
-
+    // ya hay una review, modifico
     let cantNeg = clase.reviewNegative;
     let cantPos = clase.reviewPositive;
-    if (body.type === "positive") {
-      cantPos = cantPos + 1;
-    } else {
-      cantNeg = cantNeg + 1;
+
+    if (existingReview) {
+
+      if (body.type === "positive") {
+        if(existingReview.type === "negative") {
+          cantPos = cantPos + 1;
+          cantNeg = cantNeg - 1;
+        } 
+      } else {
+        if(existingReview.type === "positive") {
+          cantPos = cantPos - 1;
+          cantNeg = cantNeg + 1;
+        } 
+      }
+
+      existingReview.type = body.type;
+      existingReview.comment = body.comment;
+      clase.comments[existingIdx] = existingReview;
+    }
+    // nueva review
+    else {
+      clase.comments.push({
+        type: body.type,
+        comment: body.comment,
+        profile_author_id: body.user.profile,
+      });
+      clase.reviewCount = clase.reviewCount + 1;
+
+      if (body.type === "positive") {
+          cantPos = cantPos + 1;
+      } else {
+          cantNeg = cantNeg + 1;
+      }
     }
     clase.reviewPositive = cantPos;
     clase.reviewNegative = cantNeg;

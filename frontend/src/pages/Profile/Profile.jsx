@@ -272,10 +272,8 @@ const TablaMaterias = (props) => {
                         </Tooltip>
                       )}
 
-                      {c.contrataciones.docs[0].state_in_order[
-                        c.contrataciones.docs[0].state_in_order.length - 1
-                      ] === "finalizada" && (
-                        <Tooltip label={"Agregar Review"}>
+                      { (["finalizada", "aceptada"].includes(c.contrataciones.docs[0].state_in_order[c.contrataciones.docs[0].state_in_order.length - 1])) && (
+                        <Tooltip label={"Calificar"}>
                           <IconButton
                             onClick={() => {
                               props.handleOnOpenAddReview({
@@ -761,7 +759,7 @@ const ProfileComponent = (props) => {
       <Modal isOpen={isOpenAddReview} onClose={onCloseAddReview}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Agregando review</ModalHeader>
+          <ModalHeader>Calificando</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <form onSubmit={handleSubmitAddReview}>
@@ -827,7 +825,7 @@ const ProfileComponent = (props) => {
               <Center>
                 <HStack>
                   <Button type="submit" colorScheme="teal" m={"1em"}>
-                    Agregar Review
+                    Calificar
                   </Button>
                   <Button onClick={onCloseAddReview} m={"1em"}>
                     Regresar
