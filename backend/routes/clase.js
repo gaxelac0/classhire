@@ -23,6 +23,14 @@ router.post(
 
 router.delete("/", checkAuth, claseCtrl.deleteClase);
 
+router.patch(
+  "/",
+  checkAuth,
+  body("clase_id").exists().notEmpty(),
+  body("state").exists().notEmpty(),
+  claseCtrl.patchClase
+);
+
 router.post("/byprofile", checkAuth, claseCtrl.getClasesByProfileId);
 
 router.post(

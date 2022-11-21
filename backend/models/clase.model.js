@@ -52,6 +52,7 @@ var commentSchema = new mongoose.Schema(
 
 var claseSchema = new mongoose.Schema(
   {
+    state: {type: String, required: true, defaullt: "publicada"},
     title: { type: String, required: true },
     materia: materiaSchema,
     description: { type: String, required: true },
@@ -60,9 +61,7 @@ var claseSchema = new mongoose.Schema(
     nivel: nivelSchema,
     frecuencia: frecuenciaSchema,
     tipo_clase: tipoClaseSchema,
-    tags: [],
-    type: String,
-
+    tags: [], type: String,
     teacher_profile_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Profile",

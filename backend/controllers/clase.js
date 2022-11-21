@@ -94,6 +94,19 @@ exports.deleteClase = async function deleteClase(req, res) {
   }
 };
 
+exports.patchClase = async function patchClase(req, res) {
+  try {
+    req.body.user = req.user;
+    let data = await claseService.patchClase(req.body);
+    if (!data) return res.status(304).json({status:"ok", msg: "Not Modified"}) 
+    return res.status(200).json({ status: "ok", data: data});
+  } catch (e) {
+    return res
+      .status(e.statusCode)
+      .json({ status: e.name, message: e.message });
+  }
+};
+
 exports.addReview = async function addReview(req, res) {
   try {
     const body = req.body;

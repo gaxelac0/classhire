@@ -211,6 +211,64 @@ exports.addClase = async function (body) {
   }
 };
 
+async function patchClase(body) {
+  try {
+    let profile = await Profile.findOne({ _id: body.user.profile });
+
+    if (!profile) {
+      throw new BaseError(
+        "err",
+        HttpStatusCodes.NOT_FOUND,
+        true,
+        "Profile not found"
+      );
+    }
+
+    let clase = await Clase.findOne({ _id: body.clase_id });
+    if (!clase) {
+      throw new NotFoundError(
+        "err",
+        HttpStatusCodes.NOT_FOUND,
+        true,
+        "La clase no existe"
+      );
+    }
+
+    if (!clase.teacher_profile_id == profile._id) {
+      throw new BaseError(
+        "err",
+        HttpStatusCodes.UNAUTHORIZED,
+        true,
+        "Solo el profesor de la clase puede modificar la misma"
+      );
+    }
+
+    let objCount = 0;
+
+    if (body.state && body.state != "") {
+      objCount = objCount+1;
+      clase.state = body.state;
+    }
+
+    if (objCount === 0) {
+      return null
+    }
+
+    let patchedClase = await clase.save();
+    return {patchedClase};
+
+  } catch (e) {
+    throw new BaseError(
+      "err",
+      HttpStatusCodes.INTERNAL_SERVER,
+      true,
+      e.message
+    );
+  }
+}
+exports.patchClase = patchClase;
+
+
 exports.deleteClase = async function (body) {
   let clase = await Clase.findOne({ _id: body.clase_id });
   //let profile = await Profile.findOne({_id: body.user.profile});

@@ -59,6 +59,7 @@ db.clases.insertMany([
     _id: ObjectId("clase0000001"),
 
     title: "Ruby",
+    state: "publicada",
     materia: {
       value: "ruby",
     },
@@ -88,6 +89,7 @@ db.clases.insertMany([
     _id: ObjectId("clase0000002"),
 
     title: "Java",
+    state: "publicada",
     materia: {
       value: "java",
     },
@@ -117,6 +119,7 @@ db.clases.insertMany([
     _id: ObjectId("clase0000003"),
 
     title: "Golang",
+    state: "publicada",
     materia: {
       value: "golang",
     },
@@ -151,6 +154,7 @@ db.clases.insertMany([
     _id: ObjectId("clase0000004"),
 
     title: "C++",
+    state: "publicada",
     materia: {
       value: "cplusplus",
     },
@@ -180,6 +184,7 @@ db.clases.insertMany([
     _id: ObjectId("clase0000005"),
 
     title: "Python",
+    state: "publicada",
     materia: {
       value: "python",
     },
@@ -209,6 +214,7 @@ db.clases.insertMany([
     _id: ObjectId("clase0000006"),
 
     title: "JavaScript",
+    state: "publicada",
     materia: {
       value: "javascript",
     },
@@ -238,6 +244,7 @@ db.clases.insertMany([
     _id: ObjectId("clase0000007"),
 
     title: "Ruby On Rails",
+    state: "publicada",
     materia: {
       value: "javascript",
     },
@@ -264,6 +271,7 @@ db.clases.insertMany([
     _id: ObjectId("clase0000008"),
 
     title: "JavaScript",
+    state: "publicada",
     materia: {
       value: "javascript",
     },
@@ -292,6 +300,7 @@ db.clases.insertMany([
     _id: ObjectId("clase0000009"),
 
     title: "Python y Pandas",
+    state: "publicada",
     materia: {
       value: "python",
     },
@@ -321,6 +330,7 @@ db.clases.insertMany([
     _id: ObjectId("clase0000010"),
 
     title: "Golang y las go rutinas",
+    state: "publicada",
     materia: {
       value: "golang",
     },
@@ -355,6 +365,7 @@ db.clases.insertMany([
     _id: ObjectId("clase0000011"),
 
     title: "JavaScript",
+    state: "publicada",
     materia: {
       value: "javascript",
     },
@@ -383,6 +394,7 @@ db.clases.insertMany([
     _id: ObjectId("clase0000012"),
 
     title: "JavaScript",
+    state: "publicada",
     materia: {
       value: "javascript",
     },
@@ -412,6 +424,7 @@ db.clases.insertMany([
     _id: ObjectId("clase0000013"),
 
     title: "JavaScript",
+    state: "publicada",
     materia: {
       value: "javascript",
     },
@@ -441,6 +454,7 @@ db.clases.insertMany([
     _id: ObjectId("clase0000014"),
 
     title: "JavaScript",
+    state: "publicada",
     materia: {
       value: "javascript",
     },
@@ -471,6 +485,7 @@ db.clases.insertMany([
     _id: ObjectId("clase0000015"),
 
     title: "JavaScript",
+    state: "publicada",
     materia: {
       value: "javascript",
     },
@@ -494,6 +509,36 @@ db.clases.insertMany([
     teacher_profile_id: ObjectId("demoteacher0"),
     comments: [],
     rating: 3,
+    reviewCount: 5,
+  },
+  {
+    _id: ObjectId("clase0000016"),
+
+    title: "Clase despublicada",
+    state: "despublicada",
+    materia: {
+      value: "ruby",
+    },
+    description:
+      "Despublicada - Ruby es un lenguaje de programación interpretado, reflexivo y orientado a objetos, \
+		 creado por el programador japonés Yukihiro Matz Matsumoto, quien comenzó a trabajar en Ruby en 1993, \
+		 y lo presentó públicamente en 1995. ",
+    price: 10,
+    duration: 4,
+    nivel: {
+      value: "seminario",
+    },
+    frecuencia: {
+      value: "once",
+    },
+    tipo_clase: {
+      value: "grupal",
+    },
+    tags: ["ruby", "ruby on rails", "poo"],
+
+    teacher_profile_id: ObjectId("demoteacher0"),
+    comments: [],
+    rating: 4,
     reviewCount: 5,
   },
 ]);
