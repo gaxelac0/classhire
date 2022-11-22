@@ -59,4 +59,14 @@ router.patch(
   claseCtrl.patchContratacion
 );
 
+router.patch(
+  "/review",
+  checkAuth,
+  body("clase_id").exists().notEmpty(),
+  body("comment_id").exists().notEmpty(),
+  body("new_state").exists().notEmpty(),
+  body("state_reason").exists().notEmpty(),
+  claseCtrl.patchReview
+);
+
 module.exports = router;

@@ -133,7 +133,7 @@ exports.contratar = async function contratar(req, res) {
     let contratacion = await claseService.contratar(body);
     return res
       .status(200)
-      .json({ status: "ok", msg: "Contratacion solicitada. El profesor aceptara o rechazara la contratacion en base a sus terminos.", data: contratacion });
+      .json({ status: "ok", msg: `Solicitud de contratacion enviada.\n El profesor tiene 48 horas para contactarse contigo.`, data: contratacion });
   } catch (e) {
     return res.status(e.statusCode).json({ status: e.name, msg: e.message });
   }
@@ -143,6 +143,19 @@ exports.patchContratacion = async function patchContratacion(req, res) {
   try {
     req.body.user = req.user;
     let data = await claseService.patchContratacion(req.body);
+    if (!data) return res.status(304).json({status:"ok", msg: "Not Modified"}) 
+    return res.status(200).json({ status: "ok", data: data});
+  } catch (e) {
+    return res
+      .status(e.statusCode)
+      .json({ status: e.name, message: e.message });
+  }
+};
+
+exports.patchReview = async function patchReview(req, res) {
+  try {
+    req.body.user = req.user;
+    let data = await claseService.patchReview(req.body);
     if (!data) return res.status(304).json({status:"ok", msg: "Not Modified"}) 
     return res.status(200).json({ status: "ok", data: data});
   } catch (e) {

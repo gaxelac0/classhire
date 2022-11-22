@@ -23,18 +23,19 @@ import {
 
 const ReviewCard = (props) => {
 
-  const handleOnClickAceptarReview = () => {
-    props.setFormDataReviewEdit({
+  const handleOnClickAceptarReview = async () => {
+    await props.onOpenReviewEdit();
+    await props.setFormDataReviewEdit({
       clase_id: props.clase._id,
       comment_id: props.review._id,
       new_state: "aceptada",
-      state_reason: "Aceptada por el profe",
-    })
+      state_reason: "",
+    });
   }
 
-  const handleOnClickBlockReview = () => {
-    props.onOpenReviewEdit();
-    props.setFormDataReviewEdit({
+  const handleOnClickBlockReview = async () => {
+    await props.onOpenReviewEdit();
+    await props.setFormDataReviewEdit({
       clase_id: props.clase._id,
       comment_id: props.review._id,
       new_state: "bloqueada",

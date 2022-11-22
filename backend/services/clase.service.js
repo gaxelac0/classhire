@@ -8,6 +8,20 @@ var constants = require("../utils/constants");
 var mongoose = require("mongoose");
 const Contratacion = require("../models/contratacion.model");
 
+var nodemailer = require('nodemailer')
+
+const { google } = require("googleapis");
+
+const oAuth2Client = new google.auth.OAuth2(
+  process.env.GMAIL_API_KEY,
+  process.env.GMAIL_API_SECRET,
+  process.env.GMAIL_API_REDIRECT_URI
+);
+
+oAuth2Client.setCredentials({
+  refresh_token: process.env.GMAIL_API_REFRESH_TOKEN,
+});
+
 // Saving the context of this module inside the _the variable
 _this = this;
 
@@ -485,3 +499,119 @@ async function patchContratacion(body) {
   }
 }
 exports.patchContratacion = patchContratacion;
+
+async function patchReview(body) {
+  try {
+    let profile = await Profile.findOne({ _id: body.user.profile });
+
+    if (!profile) {
+      throw new BaseError(
+        "err",
+        HttpStatusCodes.NOT_FOUND,
+        true,
+        "Profile not found"
+      );
+    }
+
+    let user = await User.findOne({ profile: profile._id });
+
+    if (!user) {
+      throw new BaseError(
+        "err",
+        HttpStatusCodes.NOT_FOUND,
+        true,
+        "user not found"
+      );
+    }
+
+    var clase = await Clase.findOne({ _id: body.clase_id });
+    if (!clase) {
+      throw new NotFoundError(
+        "err",
+        HttpStatusCodes.NOT_FOUND,
+        true,
+        "La clase no existe"
+      );
+    }
+
+    if (!clase.teacher_profile_id.equals(profile._id)) {
+      throw new BaseError(
+        "err",
+        HttpStatusCodes.UNAUTHORIZED,
+        true,
+        "Unauthorized: solo el profesor de la clase puede modificar las reviews."
+      );
+    }
+
+    // encontrar la review
+    let existingReview, existingIdx;
+    clase.comments.map((review, idx) =>{
+      if(body.comment_id === review._id.toString()) {
+        existingReview = review;
+        existingIdx = idx;
+        console.log("found review for user! " + JSON.stringify(review))
+      }
+    })
+
+    if (!existingReview) {
+      throw new NotFoundError(
+        "err",
+        HttpStatusCodes.NOT_FOUND,
+        true,
+        "La review no existe"
+      );
+    }
+
+    let objCount = 0;
+
+    if (body.new_state && body.new_state != "") {
+      objCount = objCount+1;
+      existingReview.state = body.new_state      
+    }
+
+    if (body.state_reason && body.state_reason != "") {
+      objCount = objCount+1;
+      existingReview.state_reason = body.state_reason
+    }
+
+    if (objCount === 0) {
+      return null
+    }
+
+    if (body.new_state === "bloqueada") {
+      const accessToken = await oAuth2Client.getAccessToken();
+      const transport = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          ...constants.auth,
+          accessToken: accessToken,
+        },
+      });
+  
+      const mailOptions = {
+        ...constants.mailoptions,
+        from: "classhire",
+        to: user.email,
+        text:
+          `Hola el profesor borro tu review por xxxx razon`,
+      };
+  
+      // descargo al alumno
+      transport.sendMail(mailOptions);
+    }
+
+    clase.comments[existingIdx] = existingReview;
+
+    clase.save();
+    return {existingReview};
+
+  } catch (e) {
+    throw new BaseError(
+      "err",
+      HttpStatusCodes.INTERNAL_SERVER,
+      true,
+      e.message
+    );
+  }
+}
+exports.patchReview = patchReview;

@@ -8,7 +8,6 @@ var nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 
 const { google } = require("googleapis");
-const BaseError = require("../utils/error/BaseError");
 
 const oAuth2Client = new google.auth.OAuth2(
   process.env.GMAIL_API_KEY,

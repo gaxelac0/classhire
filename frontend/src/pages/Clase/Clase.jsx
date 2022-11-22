@@ -125,7 +125,10 @@ const ClaseComponent = (props) => {
     try {
       let result = await claseService.patchReview(formDataReviewEdit);
       if (result.status === "ok") {
-        updateMessage(result.msg, "success");
+        if(isOpenReviewEdit) {
+          onCloseReviewEdit();
+        }
+        updateMessage("Review " + formDataReviewEdit.new_state + " exitosamente", "success");
         navigate("/clase/"+formDataReviewEdit.clase_id);
       } else {
         throw new Error(result.msg);
@@ -365,7 +368,7 @@ const ClaseComponent = (props) => {
                         <ReviewCard
                           review={review}
                         />
-                      ) : (
+                      ) : (review.state !== "bloqueada") && (
                         props.userState &&
                         clase.teacher_profile_id ===
                           props.userState.user.profile && (
@@ -374,8 +377,6 @@ const ClaseComponent = (props) => {
                             review={review}
                             handler={"true"}
                             userState={props.userState}
-                            handleSubmitReviewEdit={handleSubmitReviewEdit}
-                            formDataReviewEdit={formDataReviewEdit}
                             setFormDataReviewEdit={setFormDataReviewEdit}
                             onOpenReviewEdit={onOpenReviewEdit}
                           />
@@ -586,28 +587,28 @@ const ClaseComponent = (props) => {
       <Modal isOpen={isOpenReviewEdit} onClose={onCloseReviewEdit}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Bloqueando Review</ModalHeader>
+          <ModalHeader>Gestionando review</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <form onSubmit={handleSubmitReviewEdit}>
               <FormControl id="state_reason" isInvalid={isErrorStateReason} isRequired>
-                <FormLabel>Razon de bloqueo</FormLabel>
+                <FormLabel>Descargo</FormLabel>
                 <Input
                   name="state_reason"
-                  placeholder="Lo bloqueo porque...."
+                  placeholder="Lo bloqueo/acepto porque...."
                   value={formDataReviewEdit.state_reason}
                   onChange={handleChangeReviewEdit}
                 />
                 {isErrorStateReason && (
                   <FormErrorMessage>
-                    El campo de razon de bloqueo es obligatorio.
+                    El campo de descargo es obligatorio.
                   </FormErrorMessage>
                 )}
               </FormControl>
               <Center>
                 <HStack>
                   <Button type="submit" colorScheme="teal" m={"1em"}>
-                    Bloquear
+                    Procesar
                   </Button>
                   <Button onClick={onCloseReviewEdit} m={"1em"}>
                     Cancelar
