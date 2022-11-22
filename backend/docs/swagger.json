@@ -1,0 +1,820 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "classhire",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://http"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Account / Auth"
+    },
+    {
+      "name": "Clases"
+    },
+    {
+      "name": "Profiles"
+    }
+  ],
+  "paths": {
+    "//localhost:{be_port}/api/auth/login": {
+      "post": {
+        "tags": [
+          "Account / Auth"
+        ],
+        "summary": "Login - /api/auth/login",
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "type": "string",
+                "example": "\"{\\n    \\\"email\\\":  \\\"teacher@uade.edu.ar\\\",\\n    \\\"password\\\": \\\"123456\\\"\\n}\""
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer {{access_token}}"
+          },
+          {
+            "name": "be_port",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "//localhost:{be_port}/api/auth/signup": {
+      "post": {
+        "tags": [
+          "Account / Auth"
+        ],
+        "summary": "Sign Up - /api/auth/signup",
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "type": "string",
+                "example": "\"{\\n    \\\"firstName\\\": \\\"test\\\",\\n    \\\"lastName\\\": \\\"test\\\",\\n    \\\"email\\\":  \\\"student@uade.edu.ar\\\",\\n    \\\"password\\\": \\\"123456\\\"\\n}\""
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer {{access_token}}"
+          },
+          {
+            "name": "be_port",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "//localhost:{be_port}/api/clase": {
+      "post": {
+        "tags": [
+          "Clases"
+        ],
+        "summary": "Get  - /clase",
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "type": "string",
+                "example": "\"{\\n    \\\"profile_id\\\": \\\"\\\",\\n    \\\"materia\\\": \\\"\\\",\\n    \\\"tipo_clase\\\": \\\"\\\",\\n    \\\"frecuencia\\\": \\\"\\\",\\n    \\\"rating_min\\\": 0,\\n    \\\"ids\\\": [\\n        \\\"636c61736530303030303034\\\"\\n    ]\\n}\""
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer {{access_token}}"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "example": "20"
+          },
+          {
+            "name": "be_port",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Clases"
+        ],
+        "summary": "Delete - /clase",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer {{access_token}}"
+          },
+          {
+            "name": "be_port",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "//localhost:{be_port}/api/clase/": {
+      "patch": {
+        "tags": [
+          "Clases"
+        ],
+        "summary": "Patch - /clase",
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "type": "string",
+                "example": "\"{\\n    \\\"clase_id\\\": \\\"636c61736530303030303031\\\",\\n    \\\"state\\\": \\\"despublicada\\\"\\n}\""
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer {{access_token}}"
+          },
+          {
+            "name": "be_port",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "//localhost:{be_port}/api/clase/byprofile": {
+      "post": {
+        "tags": [
+          "Clases"
+        ],
+        "summary": "GetByProfileId  - /clase/byprofile",
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "type": "string",
+                "example": "\"{\\n}\""
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer {{access_token}}"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "example": "10"
+          },
+          {
+            "name": "be_port",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "//localhost:{be_port}/api/clase/add": {
+      "post": {
+        "tags": [
+          "Clases"
+        ],
+        "summary": "Add  - /clase/add",
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "type": "string",
+                "example": "\"{\\n    \\\"title\\\": \\\"acartest\\\",\\n    \\\"materia\\\": \\\"java\\\",\\n    \\\"description\\\": \\\"test sin value\\\",\\n    \\\"price\\\": 99999,\\n    \\\"duration\\\": 128,\\n    \\\"nivel\\\": \\\"primaria\\\",\\n    \\\"frecuencia\\\": \\\"once\\\",\\n    \\\"tipo_clase\\\": \\\"individual\\\",\\n    \\\"tags\\\" : [\\\"analisis matematico\\\", \\\"individual\\\"]\\n}\""
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer {{access_token}}"
+          },
+          {
+            "name": "be_port",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "//localhost:{be_port}/api/clase/contratacion": {
+      "post": {
+        "tags": [
+          "Clases"
+        ],
+        "summary": "Post Contratacion  - /clase/contratacion Copy",
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "type": "string",
+                "example": "\"{\\n    \\\"clase_id\\\":\\\"636c61736530303030303031\\\"\\n}\""
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer {{access_token}}"
+          },
+          {
+            "name": "be_port",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Clases"
+        ],
+        "summary": "Patch Contratacion  - /clase/contratacion",
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "type": "string",
+                "example": "\"{\\n    \\\"clase_id\\\":\\\"636c61736530303030303031\\\",\\n    \\\"profile_id\\\": \\\"64656d6f73747564656e7430\\\",\\n    \\\"new_state\\\": \\\"cancelada\\\", \\n    \\\"new_reason\\\": \\\"consegui otro profesor\\\" \\n}\""
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer {{access_token}}"
+          },
+          {
+            "name": "be_port",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "//localhost:{be_port}/api/clase/review": {
+      "post": {
+        "tags": [
+          "Clases"
+        ],
+        "summary": "Review - /clase/review",
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "type": "string",
+                "example": "\"{\\n   \\\"clase_id\\\": \\\"6370ef7560b0238a0ce79f00\\\",\\n   \\\"type\\\": \\\"positive\\\", \\n   \\\"comment\\\": \\\"asdasda\\\"\\n}\""
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer {{access_token}}"
+          },
+          {
+            "name": "be_port",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Clases"
+        ],
+        "summary": "Review - /clase/review",
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "type": "string",
+                "example": "\"{\\n   \\\"clase_id\\\": \\\"636c61736530303030303034\\\",\\n   \\\"comment_id\\\": \\\"637b99fe6f5b164eec04821e\\\",\\n   \\\"new_state\\\": \\\"bloqueada\\\", \\n   \\\"state_reason\\\": \\\"comentario ofensivo!\\\"\\n}\""
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer {{access_token}}"
+          },
+          {
+            "name": "be_port",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "//localhost:{be_port}/api/profile": {
+      "get": {
+        "tags": [
+          "Profiles"
+        ],
+        "summary": "Get Profile - /api/profile",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer {{access_token}}"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "example": "20"
+          },
+          {
+            "name": "be_port",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Profiles"
+        ],
+        "summary": "Patch Profile - /api/profile",
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "type": "string",
+                "example": "\"{\\n    \\\"role\\\": \\\"teacher\\\",\\n    \\\"fecha_nacimiento\\\": \\\"\\\",\\n    \\\"experiencias\\\" : [\\n    ]\\n}\""
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer {{access_token}}"
+          },
+          {
+            "name": "be_port",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "//localhost:{be_port}/api/profile/63757f9d6f083bc24bd274ea": {
+      "get": {
+        "tags": [
+          "Profiles"
+        ],
+        "summary": "Get Profile Id - /api/profile/:id",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer {{access_token}}"
+          },
+          {
+            "name": "be_port",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "//localhost:{be_port}/api/profile/64656d6f7465616368657230/add-photo": {
+      "put": {
+        "tags": [
+          "Profiles"
+        ],
+        "summary": "Add Photo - /api//profile/add-photo",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "photo": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer {{access_token}}"
+          },
+          {
+            "name": "be_port",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}

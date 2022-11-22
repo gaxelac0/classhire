@@ -1,0 +1,779 @@
+{
+	"info": {
+		"_postman_id": "79dfd399-abdb-4fa7-b9ce-9f2bf44fa4a5",
+		"name": "classhire",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21308291"
+	},
+	"item": [
+		{
+			"name": "Account / Auth",
+			"item": [
+				{
+					"name": "Login - /api/auth/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('access_token', JSON.parse(responseBody).token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":  \"teacher@uade.edu.ar\",\n    \"password\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{be_port}}/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{be_port}}",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign Up - /api/auth/signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('access_token', JSON.parse(responseBody).token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"test\",\n    \"lastName\": \"test\",\n    \"email\":  \"student@uade.edu.ar\",\n    \"password\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{be_port}}/api/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{be_port}}",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clases",
+			"item": [
+				{
+					"name": "Get  - /clase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('token', JSON.parse(responseBody).token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"profile_id\": \"\",\n    \"materia\": \"\",\n    \"tipo_clase\": \"\",\n    \"frecuencia\": \"\",\n    \"rating_min\": 0,\n    \"ids\": [\n        \"636c61736530303030303034\"\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{be_port}}/api/clase?page=1&limit=20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{be_port}}",
+							"path": [
+								"api",
+								"clase"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch - /clase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('token', JSON.parse(responseBody).token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clase_id\": \"636c61736530303030303031\",\n    \"state\": \"despublicada\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{be_port}}/api/clase/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{be_port}}",
+							"path": [
+								"api",
+								"clase",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetByProfileId  - /clase/byprofile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('token', JSON.parse(responseBody).token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{be_port}}/api/clase/byprofile?page=1&limit=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{be_port}}",
+							"path": [
+								"api",
+								"clase",
+								"byprofile"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add  - /clase/add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"acartest\",\n    \"materia\": \"java\",\n    \"description\": \"test sin value\",\n    \"price\": 99999,\n    \"duration\": 128,\n    \"nivel\": \"primaria\",\n    \"frecuencia\": \"once\",\n    \"tipo_clase\": \"individual\",\n    \"tags\" : [\"analisis matematico\", \"individual\"]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{be_port}}/api/clase/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{be_port}}",
+							"path": [
+								"api",
+								"clase",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Contratacion  - /clase/contratacion Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clase_id\":\"636c61736530303030303031\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{be_port}}/api/clase/contratacion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{be_port}}",
+							"path": [
+								"api",
+								"clase",
+								"contratacion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Contratacion  - /clase/contratacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clase_id\":\"636c61736530303030303031\",\n    \"profile_id\": \"64656d6f73747564656e7430\",\n    \"new_state\": \"cancelada\", \n    \"new_reason\": \"consegui otro profesor\" \n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{be_port}}/api/clase/contratacion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{be_port}}",
+							"path": [
+								"api",
+								"clase",
+								"contratacion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete - /clase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('token', JSON.parse(responseBody).token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clase_id\": \"635332c98dbefa94815c1a85\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{be_port}}/api/clase",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{be_port}}",
+							"path": [
+								"api",
+								"clase"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Review - /clase/review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('token', JSON.parse(responseBody).token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"clase_id\": \"6370ef7560b0238a0ce79f00\",\n   \"type\": \"positive\", \n   \"comment\": \"asdasda\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{be_port}}/api/clase/review",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{be_port}}",
+							"path": [
+								"api",
+								"clase",
+								"review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Review - /clase/review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('token', JSON.parse(responseBody).token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"clase_id\": \"636c61736530303030303034\",\n   \"comment_id\": \"637b99fe6f5b164eec04821e\",\n   \"new_state\": \"bloqueada\", \n   \"state_reason\": \"comentario ofensivo!\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{be_port}}/api/clase/review",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{be_port}}",
+							"path": [
+								"api",
+								"clase",
+								"review"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profiles",
+			"item": [
+				{
+					"name": "Get Profile - /api/profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('token', JSON.parse(responseBody).token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ids\": [\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{be_port}}/api/profile?page=1&limit=20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{be_port}}",
+							"path": [
+								"api",
+								"profile"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Profile - /api/profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var current_timestamp = new Date();",
+									"postman.setEnvironmentVariable(\"current_timestamp\", current_timestamp.toISOString());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"role\": \"teacher\",\n    \"fecha_nacimiento\": \"\",\n    \"experiencias\" : [\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{be_port}}/api/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{be_port}}",
+							"path": [
+								"api",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile Id - /api/profile/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('token', JSON.parse(responseBody).token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ids\": [\n        \"64656d6f7465616368657230\"\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{be_port}}/api/profile/63757f9d6f083bc24bd274ea",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{be_port}}",
+							"path": [
+								"api",
+								"profile",
+								"63757f9d6f083bc24bd274ea"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Photo - /api//profile/add-photo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/home/ubu-dev-env/development/repos/classhire/frontend/public/img/teacher-icon.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:{{be_port}}/api/profile/64656d6f7465616368657230/add-photo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{be_port}}",
+							"path": [
+								"api",
+								"profile",
+								"64656d6f7465616368657230",
+								"add-photo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
