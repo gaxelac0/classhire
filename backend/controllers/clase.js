@@ -8,11 +8,14 @@ var constants = require("../utils/constants");
 
 var claseService = require("../services/clase.service");
 
+// Metodo general que es utilizado en dos endpoints distintos ya que es configurable el metodo de ordenamiento, por cuales campos filtrar
+// y el paginado que se desea.
 exports.getClases = async function getClases(req, res) {
   var page = req.query.page ? req.query.page : 1;
   var limit = req.query.limit ? req.query.limit : 10;
 
-  query = {};
+  // Se filtra por los campos recibidos en el body.
+  let query = {};
   if (req.body.ids && req.body.ids.length > 0) {
     query["_id"] = { $in: req.body.ids };
   }
@@ -37,14 +40,15 @@ exports.getClases = async function getClases(req, res) {
     query["nivel.value"] = req.body.nivel;
   }
 
+  // Si se indica la lista de  estados, busco por dicho estados
   if (req.body.state) {
-    query["state"] = req.body.state
+    query["state"] = { $in: req.body.state}
   } else {
     query["state"] = "publicada"
   }
 
   try {
-    let clases = await claseService.getClases(query, {page: page, limit: limit, sort: { updatedAt: 'desc' }});
+    let clases = await claseService.getClases(query, {page: page, limit: limit, sort: { rating: -1 }});
     return res.status(200).json({ status: "ok", data: clases });
   } catch (e) {
     return res.status(400).json({ status: "err", message: e.message });

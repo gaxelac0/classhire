@@ -109,14 +109,14 @@ const FittedTab = (props) => {
               </>
             )}
           </Box>
-          <Text color="red">
+ {/*          <Text color="red">
             Name:{" "}
             {props.userState.user.firstName +
               " " +
               props.userState.user.lastName}
           </Text>
           <Text color="red">page: {props.pagination.page}</Text>
-          <Text color="red">totalPages: {props.pagination.totalPages}</Text>
+          <Text color="red">totalPages: {props.pagination.totalPages}</Text> */}
         </TabPanel>
         <TabPanel>
           <EditProfileFrm

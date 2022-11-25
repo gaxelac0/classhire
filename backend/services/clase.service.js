@@ -22,8 +22,6 @@ oAuth2Client.setCredentials({
   refresh_token: process.env.GMAIL_API_REFRESH_TOKEN,
 });
 
-// Saving the context of this module inside the _the variable
-_this = this;
 
 async function getClases(query, options) {
 
@@ -86,9 +84,9 @@ async function getClasesByProfileId(body, page, limit) {
 
     var result = profile.clases;
     if (profile.clases.length > 0) {
-      query = {};
+      let query = {};
       query["_id"] = { $in: profile.clases };
-      var result = await getClases(query, {page: page, limit: limit, sort: { updatedAt: 'desc' } });
+      var result = await getClases(query, {page: page, limit: limit, sort: { timestamp: -1 }});
 
 
       // limite y pagina de contrataciones
@@ -187,6 +185,8 @@ exports.addReview = async function (body) {
         } 
       }
 
+      // debe ser enviada para evitar que el alumno cambie la review sin que el profe la pueda volver a aceptar
+      existingReview.state = "enviada";
       existingReview.type = body.type;
       existingReview.comment = body.comment;
       clase.comments[existingIdx] = existingReview;
@@ -213,6 +213,8 @@ exports.addReview = async function (body) {
 
     clase.rating = percentage / 20;
 
+    clase.updatedAt = new Date();
+    clase.timestamp = new Date().valueOf();
     await clase.save();
   } catch (e) {
     // return a Error message describing the reason
@@ -311,7 +313,8 @@ async function patchClase(body) {
     if (objCount === 0) {
       return null
     }
-
+    clase.updatedAt = new Date();
+    clase.timestamp = new Date().valueOf();
     let patchedClase = await clase.save();
     return {patchedClase};
 
@@ -410,6 +413,9 @@ exports.contratar = async function (body) {
       );
     }
 
+    clase.updatedAt = new Date();
+    clase.timestamp = new Date().valueOf();
+    clase.save();
     profile.clases.push(clase._id);
 
     await profile.save();
@@ -462,6 +468,17 @@ async function patchContratacion(body) {
       );
     }
 
+    let clase = await Clase.findOne({ _id: body.clase_id });
+
+    if (!clase) {
+      throw new BaseError(
+        "err",
+        HttpStatusCodes.NOT_FOUND,
+        true,
+        "clase not found"
+      );
+    }
+
     let contratacion = await Contratacion.findOne({ clase_id: body.clase_id, profile_id: body.profile_id });
 
     let objCount = 0;
@@ -485,6 +502,10 @@ async function patchContratacion(body) {
     if (objCount === 0) {
       return null
     }
+
+    clase.updatedAt = new Date();
+    clase.timestamp = new Date().valueOf();
+    await clase.save();
 
     let patchedContratacion = await contratacion.save();
     return {patchedContratacion};
@@ -602,6 +623,8 @@ async function patchReview(body) {
 
     clase.comments[existingIdx] = existingReview;
 
+    clase.updatedAt = new Date();
+    clase.timestamp = new Date().valueOf();
     clase.save();
     return {existingReview};
 

@@ -129,7 +129,7 @@ const ClaseComponent = (props) => {
           onCloseReviewEdit();
         }
         updateMessage("Review " + formDataReviewEdit.new_state + " exitosamente", "success");
-        navigate("/clase/"+formDataReviewEdit.clase_id);
+        navigate("/profile/");
       } else {
         throw new Error(result.msg);
       }
@@ -183,6 +183,7 @@ const ClaseComponent = (props) => {
 
       let query = {};
       query["ids"] = [id];
+      query["state"] = ["publicada", "despublicada"]
 
       const clasesData = await claseService.getClases(query, 1, 1);
       if (clasesData.data.docs.length !== 1) {
@@ -503,6 +504,7 @@ const ClaseComponent = (props) => {
               <FormControl id="telefono" isInvalid={isErrorTelefono} isRequired>
                 <FormLabel>Telefono</FormLabel>
                 <Input
+                type={"number"}
                   name="telefono"
                   placeholder="Telefono"
                   value={formDataContratacion.telefono}

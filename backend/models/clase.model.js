@@ -77,6 +77,7 @@ var claseSchema = new mongoose.Schema(
     // contrataciones: [Contratacion],
 
     date: { type: String, default: moment().format("DD/MM/YYYY") },
+    timestamp: {type: Number, default: 0},
   },
   {
     timestamps: true,

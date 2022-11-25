@@ -85,7 +85,6 @@ const ClaseCard = (props) => {
                   colorScheme="teal"
                 >
                   <TagLabel>{t}</TagLabel>
-                  <TagCloseButton />
                 </Tag>
               ))}
             </HStack>

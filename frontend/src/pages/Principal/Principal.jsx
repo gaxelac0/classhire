@@ -17,6 +17,7 @@ import ClaseCard from "../../components/Card/ClaseCard";
 import { useState, useEffect } from "react";
 
 import * as claseService from "../../services/claseService";
+import { useNavigate } from "react-router-dom";
 
 const Feature = ({ heading, text }) => {
   return (
@@ -30,6 +31,8 @@ const Feature = ({ heading, text }) => {
 };
 
 const PrincipalComponent = () => {
+
+  let navigate = useNavigate()
   const [clases, setClases] = useState([]);
   const [materia, setMateria] = useState("");
 
@@ -151,10 +154,14 @@ const PrincipalComponent = () => {
             }}
             gap={{ base: "8", sm: "12", md: "16" }}
           >
-            <Button colorScheme="teal" size="lg" variant="outline">
+            <Button
+            onClick={() => navigate("/search")}
+            colorScheme="teal" size="lg" variant="outline">
               Aprender
             </Button>
-            <Button colorScheme="teal" size="lg" variant="outline">
+            <Button 
+             onClick={() => navigate("/clase/add")}
+            colorScheme="teal" size="lg" variant="outline">
               Dar clases
             </Button>
           </Grid>

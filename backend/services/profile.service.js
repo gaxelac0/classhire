@@ -11,9 +11,6 @@ const moment = require("moment");
 
 const authService = require("./auth.service")
 
-// Saving the context of this module inside the _the variable
-_this = this;
-
 async function getProfiles(query, page, limit) {
   // Options setup for the mongoose paginate
   var options = {

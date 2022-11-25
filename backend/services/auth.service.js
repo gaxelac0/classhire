@@ -7,9 +7,8 @@ const HttpStatusCodes = require("../utils/HttpStatusCodes");
 var constants = require("../utils/constants");
 var jwt = require("jsonwebtoken");
 
-// Saving the context of this module inside the _the variable
-_this = this;
-
+// Metodo de registro, recibe los campos y genera un User con un Perfil asociado.
+// El user mantiene la informacion sensible mientras que el Perfil la informacion publica. 
 exports.signUp = async function (body) {
   let user = await User.findOne({ email: body.email });
   if (user) {
@@ -61,7 +60,8 @@ exports.signUp = async function (body) {
 };
 
 /* --== Helper Functions ==-- */
-
+// Crea el JWT con los detalles indicasdos en el parametro
+// usa el secreto de las variables de entorno para cifrar y expira en 24 horas por defecto.
 function createJWT(userDetails) {
   return jwt.sign(userDetails, process.env.SECRET, { expiresIn: "24h" });
 }

@@ -5,8 +5,9 @@ import { HiCollection } from "react-icons/hi";
 import { MdHome } from "react-icons/md";
 
 import ClasshireLogo from "../Logo/ClasshireLogo";
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, SearchIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
+import { BsPersonLinesFill } from "react-icons/bs";
 
 const NavItem = (props) => {
   const { icon, children, ...rest } = props;
@@ -81,21 +82,23 @@ const SidebarContent = (props) => {
           >
             Home
           </NavItem>
-          <NavItem icon={FaRss}
+          <NavItem icon={BsPersonLinesFill}
           onClick={() => {handleNavigate("/profile")}}
           >
             Perfil
           </NavItem>
-          <NavItem icon={HiCollection}
+          <NavItem icon={SearchIcon}
           onClick={() => {handleNavigate("/search")}}
           >
             Buscar Clases
           </NavItem>
-          <NavItem icon={AddIcon}
-          onClick={() => {handleNavigate("/clase/add")}}
-          >
-            Publicar Clase
-          </NavItem>
+          {props.userState.role !== "student" &&
+            <NavItem icon={AddIcon}
+              onClick={() => {handleNavigate("/clase/add")}}
+              >
+                Publicar Clase
+              </NavItem>
+          }
           <NavItem icon={FaClipboardCheck}
           >
             <Text fontSize="sm">

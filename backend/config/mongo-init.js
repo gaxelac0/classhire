@@ -2,7 +2,7 @@ let hunder = 100;
 let cantPos = 2;
 let cantNeg = 1;
 let varReviewCount = 3;
-let point = ((100 * cantPos)/varReviewCount) / 20;
+let point = (100 * cantPos) / varReviewCount / 20;
 
 const crypto = require("crypto");
 
@@ -71,7 +71,6 @@ db.profiles.insertOne({
       nivel: "seminario",
       descr: "Charlas de programacion",
     },
-    
   ],
   photo:
     "http://res.cloudinary.com/dvjdc3ssy/image/upload/v1668944647/jej6zfcgvfjqikxrdaxt.png",
@@ -85,7 +84,7 @@ db.users.insertOne({
   email: "teacher@uade.edu.ar",
   password: "$2b$06$T8qZKC8v28SC2SfcVRWLgOgaEwwDy.DXlI2BbnOjpLTm9ApOE67Ru",
 });
-
+db.clases.createIndex({ updateAt: -1 });
 db.clases.insertMany([
   {
     _id: ObjectId("clase0000001"),
@@ -93,6 +92,7 @@ db.clases.insertMany([
     title: "Ruby",
     state: "publicada",
     materia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "ruby",
     },
     description:
@@ -102,16 +102,18 @@ db.clases.insertMany([
     price: 10,
     duration: 4,
     nivel: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "seminario",
     },
     frecuencia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "once",
     },
     tipo_clase: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "grupal",
     },
     tags: ["ruby", "ruby on rails", "poo"],
-
     teacher_profile_id: ObjectId("demoteacher0"),
     comments: [
       {
@@ -146,6 +148,9 @@ db.clases.insertMany([
     reviewCount: varReviewCount,
     reviewNegative: cantNeg,
     reviewPositive: cantPos,
+    timestamp: new Date().valueOf(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     _id: ObjectId("clase0000002"),
@@ -153,6 +158,7 @@ db.clases.insertMany([
     title: "Java",
     state: "publicada",
     materia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "java",
     },
     description:
@@ -162,12 +168,15 @@ db.clases.insertMany([
     price: 5,
     duration: 5,
     nivel: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "universitario",
     },
     frecuencia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "diaria",
     },
     tipo_clase: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "grupal",
     },
     tags: ["programacion", "java", "poo"],
@@ -206,6 +215,9 @@ db.clases.insertMany([
     reviewCount: varReviewCount,
     reviewNegative: cantNeg,
     reviewPositive: cantPos,
+    timestamp: new Date().valueOf(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     _id: ObjectId("clase0000003"),
@@ -213,6 +225,7 @@ db.clases.insertMany([
     title: "Golang",
     state: "publicada",
     materia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "golang",
     },
     description:
@@ -227,12 +240,15 @@ db.clases.insertMany([
     price: 5,
     duration: 5,
     nivel: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "secundaria",
     },
     frecuencia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "semanal",
     },
     tipo_clase: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "individual",
     },
     tags: ["programacion", "java", "poo"],
@@ -271,6 +287,9 @@ db.clases.insertMany([
     reviewCount: varReviewCount,
     reviewNegative: cantNeg,
     reviewPositive: cantPos,
+    timestamp: new Date().valueOf(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     _id: ObjectId("clase0000004"),
@@ -278,6 +297,7 @@ db.clases.insertMany([
     title: "C++",
     state: "publicada",
     materia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "cplusplus",
     },
     description:
@@ -287,12 +307,15 @@ db.clases.insertMany([
     price: 5,
     duration: 5,
     nivel: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "universitario",
     },
     frecuencia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "once",
     },
     tipo_clase: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "consulta",
     },
     tags: ["programacion", "java", "poo"],
@@ -331,6 +354,9 @@ db.clases.insertMany([
     reviewCount: varReviewCount,
     reviewNegative: cantNeg,
     reviewPositive: cantPos,
+    timestamp: new Date().valueOf(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     _id: ObjectId("clase0000005"),
@@ -338,6 +364,7 @@ db.clases.insertMany([
     title: "Python",
     state: "publicada",
     materia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "python",
     },
     description:
@@ -347,12 +374,15 @@ db.clases.insertMany([
     price: 5,
     duration: 5,
     nivel: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "secundaria",
     },
     frecuencia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "diaria",
     },
     tipo_clase: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "individual",
     },
     tags: ["programacion", "java", "poo"],
@@ -391,13 +421,17 @@ db.clases.insertMany([
     reviewCount: varReviewCount,
     reviewNegative: cantNeg,
     reviewPositive: cantPos,
+    timestamp: new Date().valueOf(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     _id: ObjectId("clase0000006"),
 
-    title: "JavaScript",
+    title: "JavaScript 1",
     state: "publicada",
     materia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "javascript",
     },
     description:
@@ -407,12 +441,15 @@ db.clases.insertMany([
     price: 5,
     duration: 5,
     nivel: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "primaria",
     },
     frecuencia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "diaria",
     },
     tipo_clase: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "grupal",
     },
     tags: ["programacion", "java", "poo"],
@@ -451,6 +488,9 @@ db.clases.insertMany([
     reviewCount: varReviewCount,
     reviewNegative: cantNeg,
     reviewPositive: cantPos,
+    timestamp: new Date().valueOf(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     _id: ObjectId("clase0000007"),
@@ -458,18 +498,22 @@ db.clases.insertMany([
     title: "Ruby On Rails",
     state: "publicada",
     materia: {
-      value: "javascript",
+      _id: crypto.randomBytes(12).toString("hex"),
+      value: "ruby",
     },
     description: "Ruby",
     price: 2,
     duration: 1,
     nivel: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "universitario",
     },
     frecuencia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "semanal",
     },
     tipo_clase: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "grupal",
     },
     tags: ["programacion", "ruby", "poo"],
@@ -508,13 +552,17 @@ db.clases.insertMany([
     reviewCount: varReviewCount,
     reviewNegative: cantNeg,
     reviewPositive: cantPos,
+    timestamp: new Date().valueOf(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     _id: ObjectId("clase0000008"),
 
-    title: "JavaScript",
+    title: "JavaScript 2",
     state: "publicada",
     materia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "javascript",
     },
     description:
@@ -523,12 +571,15 @@ db.clases.insertMany([
     price: 15,
     duration: 68,
     nivel: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "universitario",
     },
     frecuencia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "semanal",
     },
     tipo_clase: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "individual",
     },
     tags: ["programacion", "java", "poo"],
@@ -567,6 +618,9 @@ db.clases.insertMany([
     reviewCount: varReviewCount,
     reviewNegative: cantNeg,
     reviewPositive: cantPos,
+    timestamp: new Date().valueOf(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     _id: ObjectId("clase0000009"),
@@ -574,6 +628,7 @@ db.clases.insertMany([
     title: "Python y Pandas",
     state: "publicada",
     materia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "python",
     },
     description:
@@ -583,12 +638,15 @@ db.clases.insertMany([
     price: 1,
     duration: 1,
     nivel: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "seminario",
     },
     frecuencia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "once",
     },
     tipo_clase: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "grupal",
     },
     tags: ["stats", "python", "pandas"],
@@ -636,6 +694,9 @@ db.clases.insertMany([
     reviewCount: varReviewCount,
     reviewNegative: cantNeg,
     reviewPositive: cantPos,
+    timestamp: new Date().valueOf(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     _id: ObjectId("clase0000010"),
@@ -643,6 +704,7 @@ db.clases.insertMany([
     title: "Golang y las go rutinas",
     state: "publicada",
     materia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "golang",
     },
     description:
@@ -657,12 +719,15 @@ db.clases.insertMany([
     price: 25,
     duration: 68,
     nivel: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "universitario",
     },
     frecuencia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "semanal",
     },
     tipo_clase: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "individual",
     },
     tags: ["programacion", "go", "poo", "goroutines"],
@@ -701,13 +766,17 @@ db.clases.insertMany([
     reviewCount: varReviewCount,
     reviewNegative: cantNeg,
     reviewPositive: cantPos,
+    timestamp: new Date().valueOf(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     _id: ObjectId("clase0000011"),
 
-    title: "JavaScript",
+    title: "JavaScript 3",
     state: "publicada",
     materia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "javascript",
     },
     description:
@@ -716,12 +785,15 @@ db.clases.insertMany([
     price: 5,
     duration: 5,
     nivel: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "primaria",
     },
     frecuencia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "diaria",
     },
     tipo_clase: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "grupal",
     },
     tags: ["programacion", "javascript", "poo"],
@@ -760,13 +832,17 @@ db.clases.insertMany([
     reviewCount: varReviewCount,
     reviewNegative: cantNeg,
     reviewPositive: cantPos,
+    timestamp: new Date().valueOf(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     _id: ObjectId("clase0000012"),
 
-    title: "JavaScript",
+    title: "JavaScript 4",
     state: "publicada",
     materia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "javascript",
     },
     description:
@@ -776,12 +852,15 @@ db.clases.insertMany([
     price: 5,
     duration: 5,
     nivel: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "primaria",
     },
     frecuencia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "diaria",
     },
     tipo_clase: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "grupal",
     },
     tags: ["programacion", "java", "poo"],
@@ -820,13 +899,17 @@ db.clases.insertMany([
     reviewCount: varReviewCount,
     reviewNegative: cantNeg,
     reviewPositive: cantPos,
+    timestamp: new Date().valueOf(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     _id: ObjectId("clase0000013"),
 
-    title: "JavaScript",
+    title: "JavaScript 5",
     state: "publicada",
     materia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "javascript",
     },
     description:
@@ -836,12 +919,15 @@ db.clases.insertMany([
     price: 5,
     duration: 5,
     nivel: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "primaria",
     },
     frecuencia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "diaria",
     },
     tipo_clase: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "grupal",
     },
     tags: ["programacion", "java", "poo"],
@@ -880,13 +966,17 @@ db.clases.insertMany([
     reviewCount: varReviewCount,
     reviewNegative: cantNeg,
     reviewPositive: cantPos,
+    timestamp: new Date().valueOf(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     _id: ObjectId("clase0000014"),
 
-    title: "JavaScript",
+    title: "JavaScript 6",
     state: "publicada",
     materia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "javascript",
     },
     description:
@@ -896,12 +986,15 @@ db.clases.insertMany([
     price: 5,
     duration: 5,
     nivel: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "primaria",
     },
     frecuencia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "diaria",
     },
     tipo_clase: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "grupal",
     },
     tags: ["programacion", "java", "poo"],
@@ -940,14 +1033,18 @@ db.clases.insertMany([
     reviewCount: varReviewCount,
     reviewNegative: cantNeg,
     reviewPositive: cantPos,
+    timestamp: new Date().valueOf(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
 
   {
     _id: ObjectId("clase0000015"),
 
-    title: "JavaScript",
+    title: "JavaScript 7",
     state: "publicada",
     materia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "javascript",
     },
     description:
@@ -957,16 +1054,18 @@ db.clases.insertMany([
     price: 5,
     duration: 5,
     nivel: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "primaria",
     },
     frecuencia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "diaria",
     },
     tipo_clase: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "grupal",
     },
     tags: ["programacion", "java", "poo"],
-
     teacher_profile_id: ObjectId("demoteacher0"),
     comments: [
       {
@@ -1001,13 +1100,17 @@ db.clases.insertMany([
     reviewCount: varReviewCount,
     reviewNegative: cantNeg,
     reviewPositive: cantPos,
+    timestamp: new Date().valueOf(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     _id: ObjectId("clase0000016"),
 
-    title: "Clase despublicada",
+    title: "Ruby 2021",
     state: "despublicada",
     materia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "ruby",
     },
     description:
@@ -1017,12 +1120,15 @@ db.clases.insertMany([
     price: 10,
     duration: 4,
     nivel: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "seminario",
     },
     frecuencia: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "once",
     },
     tipo_clase: {
+      _id: crypto.randomBytes(12).toString("hex"),
       value: "grupal",
     },
     tags: ["ruby", "ruby on rails", "poo"],
@@ -1061,6 +1167,9 @@ db.clases.insertMany([
     reviewCount: varReviewCount,
     reviewNegative: cantNeg,
     reviewPositive: cantPos,
+    timestamp: new Date().valueOf(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
 ]);
 

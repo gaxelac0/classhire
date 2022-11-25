@@ -67,14 +67,17 @@ const NavBar = (props) => {
               Clases
             </Button>
           </Link>
-          <Button
-            colorScheme="teal"
-            leftIcon={<PlusSquareIcon />}
-            variant="outline"
-            display={{ base: "none", md: "inline-flex" }}
-          >
-            <Link href="/clase/add">Publicar Clase</Link>
-          </Button>
+          {props.userState.role !== "student" && 
+            <Button
+              colorScheme="teal"
+              leftIcon={<PlusSquareIcon />}
+              variant="outline"
+              display={{ base: "none", md: "inline-flex" }}
+            >
+              <Link href="/clase/add">Publicar Clase</Link>
+            </Button>
+          }
+          
 
           <Button
             colorScheme="teal"
@@ -84,7 +87,7 @@ const NavBar = (props) => {
           >
             Log Out
           </Button>
-          {props.userState && props.userState.role && <Text color="red">{"Rol: " + props.userState.role}</Text>} 
+          {/* {props.userState && props.userState.role && <Text color="red">{"Rol: " + props.userState.role}</Text>}  */}
         </HStack>
       </>
     );
@@ -192,7 +195,7 @@ const NavBar = (props) => {
         >
           <DrawerOverlay />
           <DrawerContent>
-            <SidebarContent w="full" borderRight="none" onOpen={sidebar.onOpen} onClose={sidebar.onClose} isOpen={sidebar.isOpen} />
+            <SidebarContent w="full" userState={props.userState} borderRight="none" onOpen={sidebar.onOpen} onClose={sidebar.onClose} isOpen={sidebar.isOpen} />
           </DrawerContent>
         </Drawer>
       </Box>
