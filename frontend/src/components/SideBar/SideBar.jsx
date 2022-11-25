@@ -92,7 +92,7 @@ const SidebarContent = (props) => {
           >
             Buscar Clases
           </NavItem>
-          {props.userState.role !== "student" &&
+          {props && props.userState && props.userState.role !== "student" &&
             <NavItem icon={AddIcon}
               onClick={() => {handleNavigate("/clase/add")}}
               >
