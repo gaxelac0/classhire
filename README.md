@@ -1,3 +1,16 @@
+# Tabla de Contenidos
+1. [Introducción](#Introduccion)
+2. [Instalación](#Instalacion)
+3. [Documentación](#Documentacion)
+4. [Equipo de Trabajo](#Team)
+5. [Conclusión](#End)##
+
+
+# Introduccion
+Este trabajo se realizo para la materia "Aplicaciones Interativas" ciclo 2022.
+Proyecto que conecta profesores con estudiantes a traves de la contratacion de clases y la gestion de las mismas dentro de la aplicacion. 
+Utiliza react en el frontend, express y mongo en el backend, y el estandar JWT para autenticacion y autorizacion.
+
 # Instalacion
 
 ### Opcion 1: Docker / Docker Compose
@@ -76,3 +89,14 @@ Para ver documentacion especifica de backend, dirigirse a ./backend/README.md
 
 ## Frontend
 Para ver documentacion especifica de frontend, dirigirse a ./frontend/README.md
+
+# Team
+| Nombre                    | Legajo    | Tareas                           |
+| ------------------------- | --------- | -------------------------------- |
+| Lacuesta, Gaston Axel     | 1117695   | Backend, Frontend, Documentacion, QA |
+| Dodaro, Luciano           | 1052888   | Backend, Frontend, Documentacion, QA |
+
+
+
+# End
+Al comienzo de este proyecto ninguno de los integrantes sabiamos React ni nada de frontend. En este proyecto aprendimos a disenar, implementar e integrar con el backend una pagina completa desde cero, lo cual es de gran valor para nuestra carrera. Del lado del backend era la segunda vez que implementamos algo en Javascript/NodeJS asi que esto ayudo a mejorar los conocimientos respecto a este lenguaje. Lo mismo paso con la base de datos, primera vez que se utiliza mongo y javascript en una aplicacion de backend. 
