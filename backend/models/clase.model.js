@@ -4,10 +4,12 @@ var moment = require("moment");
 const Contratacion = require("./contratacion.model");
 
 const MateriaEnum = [
+  "quimica",
   "ruby",
   "java",
   "golang",
   "cplusplus",
+  "matematica",
   "python",
   "javascript",
 ];

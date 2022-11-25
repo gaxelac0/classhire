@@ -608,13 +608,33 @@ async function patchReview(body) {
           accessToken: accessToken,
         },
       });
+
+      let authorProfile = await Profile.findOne({ _id: existingReview.profile_author_id});
+      if (!authorProfile) {
+        throw new BaseError(
+          "err",
+          HttpStatusCodes.NOT_FOUND,
+          true,
+          "authorProfile not found"
+        );
+      }
+
+      let authorUser = await User.findOne({ profile: authorProfile._id });
+      if (!authorUser) {
+        throw new BaseError(
+          "err",
+          HttpStatusCodes.NOT_FOUND,
+          true,
+          "authorUser not found"
+        );
+      }
   
       const mailOptions = {
         ...constants.mailoptions,
         from: "classhire",
-        to: user.email,
+        to: authorUser.email,
         text:
-          `Hola el profesor borro tu review por xxxx razon`,
+          `Hola, te escribimos de Classhire \n El profesor borro tu comentario de review por la siguiente razon: ${body.state_reason}`,
       };
   
       // descargo al alumno

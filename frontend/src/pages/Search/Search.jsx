@@ -136,12 +136,14 @@ const SearchComponent = (props) => {
                       setMateria(e.target.options[e.target.selectedIndex].id)
                     }
                   >
+                    <option id="quimica">Quimica</option>
                     <option id="ruby">Ruby</option>
                     <option id="java">Java</option>
                     <option id="golang">Go / Golang</option>
                     <option id="javascript">JavaScript</option>
                     <option id="cplusplus">C++</option>
                     <option id="python">Python</option>
+                    <option id="matematica">Matematica</option>
                   </Select>
                 </FormControl>
 

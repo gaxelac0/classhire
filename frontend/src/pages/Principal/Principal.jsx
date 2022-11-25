@@ -83,6 +83,9 @@ const PrincipalComponent = () => {
             w="full"
             rounded="md"
           >
+             <option id="quimica" value={"quimica"}>
+                      Quimica
+                    </option>
             <option id="golang" value={"golang"}>
               Go / Golang
             </option>
@@ -101,6 +104,9 @@ const PrincipalComponent = () => {
             <option id="cplusplus" value={"cplusplus"}>
               C++
             </option>
+            <option id="matematica" value={"matematica"}>
+                      Matematica
+                    </option>
           </Select>
 
           <SimpleGrid columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing="1em">

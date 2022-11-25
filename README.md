@@ -57,6 +57,9 @@ Frontend
 5. cd ../frontend
 6. npm run start
 7. Conectarse a localhost:3000
+8. Credenciales de prueba con clases y contrataciones cargadas: 
+    - Estudiante: student@uade.edu.ar pw 123456
+    - Profesor: teacher@uade.edu.ar pw 123456
 
 ```
 
@@ -79,6 +82,9 @@ Frontend:
 5. npm run start en la terminal de VSCode.
 6. F5 en la pantalla de VSCode hara un attach al proceso corriendo en la maquina.
 7. Conectarse a localhost:3000
+8. Credenciales de prueba con clases y contrataciones cargadas: 
+    - Estudiante: student@uade.edu.ar pw 123456
+    - Profesor: teacher@uade.edu.ar pw 123456
 ```
 
 # Documentacion

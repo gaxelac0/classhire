@@ -198,6 +198,9 @@ const CrearClaseComponent = (props) => {
                     w="full"
                     rounded="md"
                   >
+                    <option id="quimica" value={"quimica"}>
+                      Quimica
+                    </option>
                     <option id="golang" value={"golang"}>
                       Go / Golang
                     </option>
@@ -215,6 +218,9 @@ const CrearClaseComponent = (props) => {
                     </option>
                     <option id="cplusplus" value={"cplusplus"}>
                       C++
+                    </option>
+                    <option id="matematica" value={"matematica"}>
+                      Matematica
                     </option>
                   </Select>
                   {isErrorMateria && (
