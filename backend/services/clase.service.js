@@ -618,7 +618,11 @@ async function patchReview(body) {
       };
   
       // descargo al alumno
-      transport.sendMail(mailOptions);
+      try {
+        transport.sendMail(mailOptions);
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     clase.comments[existingIdx] = existingReview;

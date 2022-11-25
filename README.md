@@ -47,15 +47,32 @@ Frontend
 
 ```
 
+### Debugging
+#### Prerequisitos
+```
+Tener makefile
+```
+```
+Para debuggear, pararse en la raiz del repositorio y ejecutar
+1. make code
+
+Backend: quedarse en la carpeta raiz y ejecutar
+2. make webup en la terminal de VSCode.
+3. F5 en la pantalla de VSCode hara un attach al proceso en el contenedor.
+
+Frontend:
+4. cd ./frontend
+5. npm run start en la terminal de VSCode.
+6. F5 en la pantalla de VSCode hara un attach al proceso corriendo en la maquina.
+7. Conectarse a localhost:3000
+```
+
 # Documentacion
 ## Backend
-Para ver la documentacion de endpoints acceder a localhost:8080/doc con credenciales  admin@admin *_(user@pw)_*
+Para ver la documentacion (Swagger) de endpoints acceder a localhost:8080/doc con credenciales  admin@admin *_(user@pw)_*
 
-### Dependencias
-Insertar tabla
+Para ver documentacion especifica de backend, dirigirse a ./backend/README.md
 
 
 ## Frontend
-
-### Dependencias
-Insertar tabla
+Para ver documentacion especifica de frontend, dirigirse a ./frontend/README.md

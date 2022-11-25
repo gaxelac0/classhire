@@ -196,6 +196,7 @@ const EditProfileFrm = (props) => {
           profileNew["photo"] = result.image_url;
           setProfile(profileNew);
           updateMessage("Foto actualizada", "success");
+          navigate("/profile");
         }
         //console.log("profilePhoto: " + JSON.stringify(result))
       };
