@@ -3,7 +3,7 @@
 2. [Instalación](#Instalacion)
 3. [Documentación](#Documentacion)
 4. [Equipo de Trabajo](#Team)
-5. [Conclusión](#End)##
+5. [Conclusión](#End)
 
 
 # Introduccion
@@ -63,6 +63,7 @@ Frontend
 ### Debugging
 #### Prerequisitos
 ```
+Tener VSCode
 Tener makefile
 ```
 ```
@@ -84,11 +85,11 @@ Frontend:
 ## Backend
 Para ver la documentacion (Swagger) de endpoints acceder a localhost:8080/doc con credenciales  admin@admin *_(user@pw)_*
 
-Para ver documentacion especifica de backend, dirigirse a ./backend/README.md
+Para ver documentacion especifica de backend, dirigirse a https://github.com/gaxelac0/classhire/blob/main/backend/README.md
 
 
 ## Frontend
-Para ver documentacion especifica de frontend, dirigirse a ./frontend/README.md
+Para ver documentacion especifica de frontend, dirigirse a https://github.com/gaxelac0/classhire/blob/main/frontend/README.md
 
 # Team
 | Nombre                    | Legajo    | Tareas                           |
