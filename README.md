@@ -62,9 +62,7 @@ Frontend
 6. npm install --save --force  (el --force es obligatorio por una dependencia utilizada)
 6. npm run start
 7. Conectarse a localhost:3000
-8. Credenciales de prueba con clases y contrataciones cargadas: 
-    - Estudiante: student@uade.edu.ar pw 123456
-    - Profesor: teacher@uade.edu.ar pw 123456
+8. No hay cosas precargadas ya que conecta al mongoatlas y esta vacio.
 
 ```
 
