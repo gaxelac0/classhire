@@ -1,2 +1,0 @@
-- Sistema de notificaciones para usuario: llegan notificaciones de comentarios, contrataciones, publicaciones, recomendaciones
-- cambiar base de datos a mongo atlas 
