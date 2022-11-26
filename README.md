@@ -25,16 +25,19 @@ Tener makefile
 1. git clone git@github.com:gaxelac0/classhire.git
 
 Backend
-2. cd ./classhire
+2. cd ./classhire (desde la raiz, no ./backend)
 3. make webup
 
 Frontend
-4. cd ./frontend
+4. cd ./classhire/frontend
 6. npm install --save --force (el --force es obligatorio por una dependencia utilizada)
 7. npm run start
 
 Para finalizar
 8. Conectarse a localhost:3000
+9. Credenciales de prueba con clases y contrataciones cargadas: 
+    - Estudiante: student@uade.edu.ar pw 123456
+    - Profesor: teacher@uade.edu.ar pw 123456
 
 ```
 
@@ -55,7 +58,8 @@ Backend
 
 
 Frontend
-5. cd ../frontend
+5. cd ./classhire/frontend
+6. npm install --save --force  (el --force es obligatorio por una dependencia utilizada)
 6. npm run start
 7. Conectarse a localhost:3000
 8. Credenciales de prueba con clases y contrataciones cargadas: 
@@ -72,18 +76,20 @@ Tener makefile
 ```
 ```
 Para debuggear, pararse en la raiz del repositorio y ejecutar
-1. make code
+0. cd ./classhire/
+1. make code (abre una ventana de VSCode para el back y otra para el front)
 
 Backend: quedarse en la carpeta raiz y ejecutar
 2. make webup en la terminal de VSCode.
 3. F5 en la pantalla de VSCode hara un attach al proceso en el contenedor.
 
 Frontend:
-4. cd ./frontend
-5. npm run start en la terminal de VSCode.
-6. F5 en la pantalla de VSCode hara un attach al proceso corriendo en la maquina.
-7. Conectarse a localhost:3000
-8. Credenciales de prueba con clases y contrataciones cargadas: 
+4. cd ./classhire/frontend
+5. npm install --save --force (si no se ejecuto ya previamente)
+6. npm run start en la terminal de VSCode.
+7. F5 en la pantalla de VSCode hara un attach al proceso corriendo en la maquina.
+8. Conectarse a localhost:3000
+9. Credenciales de prueba con clases y contrataciones cargadas: 
     - Estudiante: student@uade.edu.ar pw 123456
     - Profesor: teacher@uade.edu.ar pw 123456
 ```
