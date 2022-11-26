@@ -12,7 +12,6 @@ import {
   DrawerContent,
   DrawerOverlay,
   Link,
-  Text,
   Box,
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
@@ -20,7 +19,7 @@ import { ArrowForwardIcon, SearchIcon, PlusSquareIcon } from "@chakra-ui/icons";
 
 import SidebarContent from "../../components/SideBar/SideBar";
 import ClasshireLogo from "../Logo/ClasshireLogo";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = (props) => {
   const bg = useColorModeValue("white", "gray.800");

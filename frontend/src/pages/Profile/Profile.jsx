@@ -53,7 +53,6 @@ import { useToast } from "@chakra-ui/react";
 import EditProfileFrm from "./EditProfileFrm";
 
 import {
-  AddIcon,
   ArrowUpIcon,
   CheckIcon,
   DeleteIcon,

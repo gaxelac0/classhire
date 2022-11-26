@@ -6,13 +6,10 @@ import {
   FormControl,
   Box,
   FormLabel,
-  Checkbox,
   Stack,
-  Link,
   Button,
   Text,
 } from "@chakra-ui/react";
-import { useNavigate, useParams } from "react-router-dom";
 import * as authService from "../../services/authService";
 import BackgroundLayout from "../../components/Layout/BackgroundLayout";
 
@@ -20,7 +17,7 @@ import { useToast } from "@chakra-ui/react";
 
 import {} from "@chakra-ui/react";
 
-const ForgotPasswordComponent = (props) => {
+const ForgotPasswordComponent = () => {
 
   const toast = useToast();
   const [formData, setFormData] = useState({

@@ -30,10 +30,11 @@ Backend
 
 Frontend
 4. cd ./frontend
-5. npm run start
+6. npm install --save --force (el --force es obligatorio por una dependencia utilizada)
+7. npm run start
 
 Para finalizar
-6. Conectarse a localhost:3000
+8. Conectarse a localhost:3000
 
 ```
 

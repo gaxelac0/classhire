@@ -2,14 +2,9 @@ import { React } from "react";
 import {
   chakra,
   Box,
-  Image,
-  Link,
   Flex,
   Text,
   HStack,
-  Tag,
-  TagLabel,
-  TagCloseButton,
   Icon,
 } from "@chakra-ui/react";
 
@@ -18,7 +13,6 @@ import {
   ArrowDownIcon,
   ArrowUpIcon,
   DeleteIcon,
-  StarIcon,
 } from "@chakra-ui/icons";
 
 const ReviewCard = (props) => {

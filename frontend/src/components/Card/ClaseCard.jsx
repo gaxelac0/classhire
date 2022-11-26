@@ -9,7 +9,6 @@ import {
   HStack,
   Tag,
   TagLabel,
-  TagCloseButton,
 } from "@chakra-ui/react";
 
 import { StarIcon } from "@chakra-ui/icons";
