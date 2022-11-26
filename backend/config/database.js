@@ -4,12 +4,18 @@ const db = mongoose.connection;
 
 mongoose.Promise = global.Promise
 
-mongoose.connect(process.env.DATABASE_URL, {
-  user: process.env.MONGO_USER,
-  pass: process.env.MONGO_PASSWORD,
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+if(process.env.DATABASE_URL.includes("retryWrites")) {
+  mongoose.connect(process.env.DATABASE_URL, {
+  });
+  
+} else {
+  mongoose.connect(process.env.DATABASE_URL, {
+    user: process.env.MONGO_USER,
+    pass: process.env.MONGO_PASSWORD,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+}
 
 //console.log("DATABASE_URL", process.env.DATABASE_URL)
 //console.log("MONGO_USER", process.env.MONGO_USER)
